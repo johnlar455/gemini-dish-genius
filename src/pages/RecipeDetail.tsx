@@ -4,6 +4,7 @@ import { Navbar } from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import { RecipeCard } from "@/components/RecipeCard";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Clock, Users, ChefHat, Heart, ShoppingCart, ArrowLeft } from "lucide-react";
@@ -14,11 +15,22 @@ export default function RecipeDetail() {
   const [recipe, setRecipe] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [otherRecipes, setOtherRecipes] = useState<any[]>([]);
+  const [userId, setUserId] = useState<string | null>(null);
+
+  useEffect(() => {
+    const initUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUserId(user?.id || null);
+    };
+    initUser();
+  }, []);
 
   useEffect(() => {
     if (id) {
       loadRecipe();
       checkFavorite();
+      loadOtherRecipes();
     }
   }, [id]);
 
@@ -41,6 +53,22 @@ export default function RecipeDetail() {
     }
   };
 
+  const loadOtherRecipes = async () => {
+    try {
+      const { data, error } = await supabase
+        .from("recipes")
+        .select("*")
+        .neq("id", id)
+        .order("created_at", { ascending: false })
+        .limit(6);
+
+      if (error) throw error;
+      setOtherRecipes(data || []);
+    } catch (error: any) {
+      console.error("Error loading other recipes:", error);
+    }
+  };
+
   const checkFavorite = async () => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) return;
@@ -50,7 +78,7 @@ export default function RecipeDetail() {
       .select("id")
       .eq("user_id", user.id)
       .eq("recipe_id", id)
-      .single();
+      .maybeSingle();
 
     setIsFavorite(!!data);
   };
@@ -227,6 +255,30 @@ export default function RecipeDetail() {
             </CardContent>
           </Card>
         </div>
+
+        {otherRecipes.length > 0 && (
+          <section className="mt-16">
+            <h2 className="text-3xl font-bold mb-8">More Recipes</h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {otherRecipes.map((otherRecipe) => (
+                <RecipeCard
+                  key={otherRecipe.id}
+                  id={otherRecipe.id}
+                  title={otherRecipe.title}
+                  description={otherRecipe.description}
+                  image_url={otherRecipe.image_url}
+                  image_data={otherRecipe.image_data}
+                  prep_time={otherRecipe.prep_time}
+                  cook_time={otherRecipe.cook_time}
+                  servings={otherRecipe.servings}
+                  difficulty={otherRecipe.difficulty}
+                  cuisine_type={otherRecipe.cuisine_type}
+                  isFavorite={false}
+                />
+              ))}
+            </div>
+          </section>
+        )}
       </div>
     </div>
   );
