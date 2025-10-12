@@ -27,10 +27,12 @@ export default function EditRecipe() {
   const [ingredients, setIngredients] = useState<any[]>([]);
   const [instructions, setInstructions] = useState<any[]>([]);
   const [dietaryPreferences, setDietaryPreferences] = useState<string[]>([]);
+  const [category, setCategory] = useState("");
 
   const cuisineOptions = ["Italian", "Chinese", "Mexican", "Indian", "Japanese", "Thai", "Mediterranean", "French"];
   const difficultyOptions = ["easy", "medium", "hard"];
   const dietaryOptions = ["vegetarian", "vegan", "gluten-free", "dairy-free", "keto", "low-carb"];
+  const categoryOptions = ["Breakfast", "Desserts", "Dinner", "Gluten-Free", "Lunch", "Snacks", "Vegan", "Vegetarian"];
 
   useEffect(() => {
     loadRecipe();
@@ -47,7 +49,7 @@ export default function EditRecipe() {
 
       const { data, error } = await supabase
         .from("recipes")
-        .select("*")
+        .select("*, categories(name)")
         .eq("id", id)
         .single();
 
@@ -69,6 +71,11 @@ export default function EditRecipe() {
       setIngredients(Array.isArray(data.ingredients) ? data.ingredients : []);
       setInstructions(Array.isArray(data.instructions) ? data.instructions : []);
       setDietaryPreferences(Array.isArray(data.dietary_preferences) ? data.dietary_preferences : []);
+      
+      // Load category name from the joined categories table
+      if (data.categories && typeof data.categories === 'object' && 'name' in data.categories) {
+        setCategory(data.categories.name || "");
+      }
     } catch (error: any) {
       console.error("Error loading recipe:", error);
       toast.error("Failed to load recipe");
@@ -86,6 +93,20 @@ export default function EditRecipe() {
 
     setSaving(true);
     try {
+      // Map category name to category_id if category is selected
+      let categoryId = null;
+      if (category) {
+        const { data: categoryData, error: categoryError } = await supabase
+          .from("categories")
+          .select("id")
+          .eq("name", category)
+          .maybeSingle();
+
+        if (!categoryError && categoryData) {
+          categoryId = categoryData.id;
+        }
+      }
+
       const { error } = await supabase
         .from("recipes")
         .update({
@@ -99,6 +120,7 @@ export default function EditRecipe() {
           ingredients,
           instructions,
           dietary_preferences: dietaryPreferences,
+          category_id: categoryId,
         })
         .eq("id", id);
 
@@ -189,6 +211,22 @@ export default function EditRecipe() {
                 placeholder="Brief description of the recipe"
                 rows={3}
               />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="category">Recipe Category</Label>
+              <Select value={category} onValueChange={setCategory}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a category" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categoryOptions.map((cat) => (
+                    <SelectItem key={cat} value={cat}>
+                      {cat}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
