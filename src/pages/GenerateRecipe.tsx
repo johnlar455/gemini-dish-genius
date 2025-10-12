@@ -20,9 +20,11 @@ export default function GenerateRecipe() {
   const [ingredients, setIngredients] = useState<string[]>([]);
   const [currentIngredient, setCurrentIngredient] = useState("");
   const [dietaryPreferences, setDietaryPreferences] = useState<string[]>([]);
+  const [category, setCategory] = useState("");
 
   const dietaryOptions = ["vegetarian", "vegan", "gluten-free", "dairy-free", "keto", "low-carb"];
   const cuisineOptions = ["Italian", "Chinese", "Mexican", "Indian", "Japanese", "Thai", "Mediterranean", "French"];
+  const categoryOptions = ["Breakfast", "Desserts", "Dinner", "Gluten-Free", "Lunch", "Snacks", "Vegan", "Vegetarian"];
 
   const addIngredient = () => {
     if (currentIngredient.trim()) {
@@ -58,6 +60,11 @@ export default function GenerateRecipe() {
       return;
     }
 
+    if (!category) {
+      toast.error("Please select a recipe category");
+      return;
+    }
+
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
       toast.error("Please sign in to generate recipes");
@@ -74,6 +81,7 @@ export default function GenerateRecipe() {
           cuisineType,
           ingredients,
           dietaryPreferences,
+          category,
         },
       });
 
@@ -208,9 +216,25 @@ export default function GenerateRecipe() {
               </div>
             </div>
 
+            <div className="space-y-2">
+              <Label htmlFor="category">Recipe Category *</Label>
+              <Select value={category} onValueChange={setCategory}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select a category" />
+                </SelectTrigger>
+                <SelectContent>
+                  {categoryOptions.map((cat) => (
+                    <SelectItem key={cat} value={cat}>
+                      {cat}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
             <Button
               onClick={handleGenerate}
-              disabled={loading || !prompt.trim()}
+              disabled={loading || !prompt.trim() || !category}
               className="w-full"
               variant="hero"
               size="lg"
