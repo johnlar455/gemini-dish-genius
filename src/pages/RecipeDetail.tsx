@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { RecipeCard } from "@/components/RecipeCard";
+import { AdBanner } from "@/components/AdBanner";
+import { usePremiumStatus } from "@/hooks/usePremiumStatus";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Clock, Users, ChefHat, Heart, ShoppingCart, ArrowLeft } from "lucide-react";
@@ -17,6 +19,7 @@ export default function RecipeDetail() {
   const [isFavorite, setIsFavorite] = useState(false);
   const [otherRecipes, setOtherRecipes] = useState<any[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
+  const { isPremium } = usePremiumStatus();
 
   useEffect(() => {
     const initUser = async () => {
@@ -222,6 +225,8 @@ export default function RecipeDetail() {
           </div>
         </div>
 
+        <AdBanner slot="2468135790" format="horizontal" isPremium={isPremium} />
+
         <div className="grid lg:grid-cols-2 gap-8 mt-12">
           <Card className="shadow-card">
             <CardContent className="pt-6">
@@ -255,6 +260,8 @@ export default function RecipeDetail() {
             </CardContent>
           </Card>
         </div>
+
+        <AdBanner slot="1357924680" format="horizontal" isPremium={isPremium} />
 
         {otherRecipes.length > 0 && (
           <section className="mt-16">

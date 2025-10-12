@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { RecipeCard } from "@/components/RecipeCard";
+import { AdBanner } from "@/components/AdBanner";
+import { usePremiumStatus } from "@/hooks/usePremiumStatus";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
@@ -13,6 +15,7 @@ export default function Search() {
   const [query, setQuery] = useState(searchParams.get("q") || "");
   const [recipes, setRecipes] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+  const { isPremium } = usePremiumStatus();
 
   useEffect(() => {
     const q = searchParams.get("q");
@@ -68,6 +71,8 @@ export default function Search() {
           </div>
         </div>
 
+        <AdBanner slot="6419753082" format="horizontal" isPremium={isPremium} />
+
         {loading ? (
           <div className="text-center py-12">
             <p className="text-muted-foreground">Searching recipes...</p>
@@ -90,6 +95,8 @@ export default function Search() {
             </p>
           </div>
         ) : null}
+
+        <AdBanner slot="3570862419" format="horizontal" isPremium={isPremium} />
       </div>
     </div>
   );
