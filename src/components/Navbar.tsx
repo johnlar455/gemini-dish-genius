@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
-import { ChefHat, Heart, Search, User, BookOpen, ShoppingCart, Menu, X } from "lucide-react";
+import { ChefHat, Heart, Search, User, BookOpen, ShoppingCart, Menu, Sparkles } from "lucide-react";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { User as SupabaseUser } from "@supabase/supabase-js";
@@ -27,6 +27,7 @@ export const Navbar = () => {
     { path: "/", label: "Home", icon: ChefHat },
     { path: "/search", label: "Search", icon: Search },
     { path: "/categories", label: "Categories", icon: BookOpen },
+    { path: "/generate", label: "Generate", icon: Sparkles },
     ...(user ? [
       { path: "/favorites", label: "Favorites", icon: Heart },
       { path: "/shopping-list", label: "Shopping", icon: ShoppingCart }
@@ -63,6 +64,14 @@ export const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-2">
+          {user && (
+            <Button variant="hero" size="sm" asChild className="hidden md:flex">
+              <Link to="/generate">
+                <Sparkles className="w-4 h-4" />
+                Add Recipe
+              </Link>
+            </Button>
+          )}
           {user ? (
             <Button variant="ghost" size="sm" asChild className="hidden md:flex">
               <Link to="/profile">
@@ -102,7 +111,15 @@ export const Navbar = () => {
                     </Link>
                   );
                 })}
-                <div className="border-t border-border pt-4 mt-2">
+                <div className="border-t border-border pt-4 mt-2 space-y-2">
+                  {user && (
+                    <Button variant="hero" size="sm" asChild className="w-full">
+                      <Link to="/generate" onClick={() => setIsOpen(false)}>
+                        <Sparkles className="w-4 h-4 mr-2" />
+                        Add Recipe
+                      </Link>
+                    </Button>
+                  )}
                   {user ? (
                     <Button variant="ghost" size="sm" asChild className="w-full justify-start">
                       <Link to="/profile" onClick={() => setIsOpen(false)}>
