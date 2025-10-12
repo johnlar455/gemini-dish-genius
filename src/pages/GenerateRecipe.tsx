@@ -93,6 +93,20 @@ export default function GenerateRecipe() {
 
       const { recipe, imageData } = data;
 
+      // Map category name to category_id
+      let categoryId = null;
+      if (category) {
+        const { data: categoryData, error: categoryError } = await supabase
+          .from("categories")
+          .select("id")
+          .eq("name", category)
+          .maybeSingle();
+
+        if (!categoryError && categoryData) {
+          categoryId = categoryData.id;
+        }
+      }
+
       // Save recipe to database
       const { data: savedRecipe, error: saveError } = await supabase
         .from("recipes")
@@ -108,6 +122,7 @@ export default function GenerateRecipe() {
           ingredients: recipe.ingredients,
           instructions: recipe.instructions,
           image_data: imageData,
+          category_id: categoryId,
           user_id: user.id,
           is_ai_generated: true,
         })
