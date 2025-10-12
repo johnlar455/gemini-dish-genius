@@ -25,9 +25,20 @@ export default function GenerateRecipe() {
   const cuisineOptions = ["Italian", "Chinese", "Mexican", "Indian", "Japanese", "Thai", "Mediterranean", "French"];
 
   const addIngredient = () => {
-    if (currentIngredient.trim() && !ingredients.includes(currentIngredient.trim())) {
-      setIngredients([...ingredients, currentIngredient.trim()]);
-      setCurrentIngredient("");
+    if (currentIngredient.trim()) {
+      // Split by comma and process each ingredient
+      const newIngredients = currentIngredient
+        .split(',')
+        .map(item => item.trim())
+        .filter(item => item.length > 0 && !ingredients.includes(item));
+      
+      if (newIngredients.length > 0) {
+        setIngredients([...ingredients, ...newIngredients]);
+        setCurrentIngredient("");
+      } else if (currentIngredient.includes(',')) {
+        // If input had commas but all items were duplicates/empty, still clear the input
+        setCurrentIngredient("");
+      }
     }
   };
 
