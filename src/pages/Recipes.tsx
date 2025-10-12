@@ -203,23 +203,21 @@ export default function Recipes() {
                         </span>
                       )}
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex gap-3 pt-2">
                       <Button
-                        variant="outline"
                         size="sm"
-                        className="flex-1"
+                        className="flex-1 bg-primary/10 hover:bg-primary hover:text-primary-foreground text-primary border border-primary/20 rounded-full shadow-sm transition-all duration-200 hover:shadow-md hover:scale-105"
                         onClick={() => navigate(`/recipe/${recipe.id}/edit`)}
                       >
-                        <Pencil className="w-4 h-4 mr-1" />
+                        <Pencil className="w-3.5 h-3.5 mr-1.5" />
                         Edit
                       </Button>
                       <Button
-                        variant="outline"
                         size="sm"
-                        className="flex-1 hover:bg-destructive/10 hover:text-destructive hover:border-destructive"
+                        className="flex-1 bg-destructive/10 hover:bg-destructive hover:text-destructive-foreground text-destructive border border-destructive/20 rounded-full shadow-sm transition-all duration-200 hover:shadow-md hover:scale-105"
                         onClick={() => setDeleteRecipeId(recipe.id)}
                       >
-                        <Trash2 className="w-4 h-4 mr-1" />
+                        <Trash2 className="w-3.5 h-3.5 mr-1.5" />
                         Delete
                       </Button>
                     </div>
