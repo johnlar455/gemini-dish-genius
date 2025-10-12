@@ -16,6 +16,8 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Resources from "./pages/Resources";
 import NotFound from "./pages/NotFound";
+import Recipes from "./pages/Recipes";
+import EditRecipe from "./pages/EditRecipe";
 
 const queryClient = new QueryClient();
 
@@ -29,7 +31,9 @@ const App = () => (
           <Route path="/" element={<Home />} />
           <Route path="/auth" element={<Auth />} />
           <Route path="/generate" element={<GenerateRecipe />} />
+          <Route path="/recipes" element={<Recipes />} />
           <Route path="/recipe/:id" element={<RecipeDetail />} />
+          <Route path="/recipe/:id/edit" element={<EditRecipe />} />
           <Route path="/search" element={<Search />} />
           <Route path="/categories" element={<Categories />} />
           <Route path="/favorites" element={<Favorites />} />
