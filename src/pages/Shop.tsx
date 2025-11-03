@@ -3,7 +3,7 @@ import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ExternalLink, ShoppingCart, Sparkles } from "lucide-react";
+import { ExternalLink, ShoppingCart, Sparkles, TrendingUp, Award, Package } from "lucide-react";
 import airFryerImg from "@/assets/air-fryer.jpg";
 import instantPotImg from "@/assets/instant-pot.jpg";
 import standMixerImg from "@/assets/stand-mixer.jpg";
@@ -89,82 +89,170 @@ const products: Product[] = [
   }
 ];
 
+const features = [
+  {
+    icon: Award,
+    title: "Premium Quality",
+    description: "Hand-picked essentials from trusted brands"
+  },
+  {
+    icon: TrendingUp,
+    title: "Top Rated",
+    description: "Highly rated by cooking enthusiasts"
+  },
+  {
+    icon: Package,
+    title: "Fast Delivery",
+    description: "Quick shipping on all products"
+  }
+];
+
 export default function Shop() {
   return (
-    <div className="min-h-screen bg-gradient-warm flex flex-col">
+    <div className="min-h-screen bg-gradient-warm flex flex-col font-sans">
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative py-20 px-4 overflow-hidden bg-gradient-to-br from-primary/10 via-secondary/5 to-primary/5">
-        <div className="absolute inset-0 bg-gradient-hero opacity-5"></div>
+      <section className="relative py-24 md:py-32 px-4 overflow-hidden">
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5"></div>
+        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        
         <div className="container mx-auto max-w-7xl text-center relative z-10">
-          <Badge className="mb-6 text-base px-6 py-2 shadow-lg">
-            <Sparkles className="w-5 h-5 mr-2" />
-            Premium Kitchen Collection
-          </Badge>
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
-            Essential Kitchen Tools
-            <span className="block text-primary mt-3">For Modern Cooking</span>
+          <div className="animate-fade-in-up">
+            <Badge className="mb-6 text-base px-6 py-2.5 shadow-lg bg-gradient-to-r from-primary to-primary-hover border-0 text-primary-foreground">
+              <Sparkles className="w-5 h-5 mr-2 animate-pulse" />
+              Curated Kitchen Essentials
+            </Badge>
+          </div>
+          
+          <h1 className="font-display text-5xl md:text-7xl font-black mb-6 animate-fade-in-up leading-tight" style={{ animationDelay: '0.1s' }}>
+            <span className="bg-gradient-to-r from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent">
+              Premium Kitchen Tools
+            </span>
+            <br />
+            <span className="bg-gradient-to-r from-primary via-primary-hover to-primary bg-clip-text text-transparent mt-2 inline-block">
+              For Modern Cooking
+            </span>
           </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Curated selection of top-rated kitchen essentials to elevate your cooking experience
+          
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-12 animate-fade-in-up font-light" style={{ animationDelay: '0.2s' }}>
+            Discover the finest selection of kitchen essentials that transform your cooking experience
           </p>
+
+          {/* Feature Pills */}
+          <div className="flex flex-wrap justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+            {features.map((feature, index) => (
+              <div 
+                key={index}
+                className="flex items-center gap-3 px-6 py-3 bg-background/80 backdrop-blur-sm rounded-full border border-border/50 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5"
+              >
+                <feature.icon className="w-5 h-5 text-primary" />
+                <div className="text-left">
+                  <p className="font-semibold text-sm">{feature.title}</p>
+                  <p className="text-xs text-muted-foreground">{feature.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
       {/* Products Grid */}
-      <section className="py-16 px-4">
+      <section className="py-16 px-4 relative">
         <div className="container mx-auto max-w-7xl">
+          {/* Section Header */}
+          <div className="text-center mb-16">
+            <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
+              Shop The Collection
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              Each product is carefully selected to meet the highest standards of quality and performance
+            </p>
+          </div>
+
+          {/* Product Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            {products.map((product) => (
-              <Card 
-                key={product.id} 
-                className="shadow-elegant hover:shadow-glow transition-all duration-500 hover:-translate-y-2 overflow-hidden group border-2 hover:border-primary/20"
+            {products.map((product, index) => (
+              <div 
+                key={product.id}
+                className="animate-fade-in-up"
+                style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <div className="relative overflow-hidden bg-background/50">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-64 object-contain p-6 group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <CardHeader className="space-y-4 pb-4">
-                  <div className="flex items-start justify-between gap-3">
-                    <CardTitle className="text-xl font-bold leading-tight group-hover:text-primary transition-colors">
-                      {product.name}
-                    </CardTitle>
-                  </div>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <CardDescription className="text-base leading-relaxed min-h-[160px]">
-                    {product.description}
-                  </CardDescription>
-                  
-                  <div className="flex flex-wrap gap-2">
-                    {product.hashtags.map((tag, index) => (
-                      <Badge 
-                        key={index} 
-                        variant="secondary" 
-                        className="text-xs font-medium"
-                      >
-                        #{tag}
-                      </Badge>
-                    ))}
+                <Card className="group h-full shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 overflow-hidden border-2 border-border/50 hover:border-primary/30 bg-card/50 backdrop-blur-sm">
+                  {/* Product Image */}
+                  <div className="relative overflow-hidden bg-gradient-to-br from-background to-muted/20">
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <img 
+                      src={product.image} 
+                      alt={product.name}
+                      className="w-full h-72 object-contain p-8 group-hover:scale-110 transition-transform duration-700 ease-out"
+                    />
+                    {/* Trending Badge */}
+                    {index < 3 && (
+                      <div className="absolute top-4 right-4 bg-gradient-to-r from-primary to-primary-hover text-primary-foreground px-3 py-1.5 rounded-full text-xs font-bold shadow-lg flex items-center gap-1">
+                        <TrendingUp className="w-3 h-3" />
+                        Trending
+                      </div>
+                    )}
                   </div>
 
-                  <Button 
-                    variant="default"
-                    size="lg"
-                    className="w-full gap-2 shadow-lg hover:shadow-xl transition-all group/btn"
-                    onClick={() => window.open(product.affiliateLink, '_blank')}
-                  >
-                    <ShoppingCart className="w-5 h-5 group-hover/btn:scale-110 transition-transform" />
-                    Shop Now
-                    <ExternalLink className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-                  </Button>
-                </CardContent>
-              </Card>
+                  {/* Product Content */}
+                  <CardHeader className="space-y-3 pb-3">
+                    <CardTitle className="text-xl font-display font-bold leading-tight group-hover:text-primary transition-colors line-clamp-2">
+                      {product.name}
+                    </CardTitle>
+                  </CardHeader>
+
+                  <CardContent className="space-y-5">
+                    <CardDescription className="text-sm leading-relaxed line-clamp-4 text-muted-foreground">
+                      {product.description}
+                    </CardDescription>
+                    
+                    {/* Hashtags */}
+                    <div className="flex flex-wrap gap-2">
+                      {product.hashtags.map((tag, tagIndex) => (
+                        <Badge 
+                          key={tagIndex} 
+                          variant="secondary" 
+                          className="text-xs font-medium px-3 py-1 rounded-full bg-secondary/50 hover:bg-secondary transition-colors"
+                        >
+                          #{tag}
+                        </Badge>
+                      ))}
+                    </div>
+
+                    {/* CTA Button */}
+                    <Button 
+                      className="w-full gap-2 shadow-lg hover:shadow-xl transition-all group/btn font-semibold text-base py-6 bg-gradient-to-r from-primary to-primary-hover hover:from-primary-hover hover:to-primary"
+                      onClick={() => window.open(product.affiliateLink, '_blank')}
+                    >
+                      <ShoppingCart className="w-5 h-5 group-hover/btn:scale-110 transition-transform" />
+                      Shop Now
+                      <ExternalLink className="w-4 h-4 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
+                    </Button>
+                  </CardContent>
+                </Card>
+              </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Trust Section */}
+      <section className="py-20 px-4 bg-gradient-to-br from-muted/30 to-background relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-hero opacity-5"></div>
+        <div className="container mx-auto max-w-4xl text-center relative z-10">
+          <div className="bg-card/50 backdrop-blur-sm rounded-3xl p-12 shadow-xl border border-border/50">
+            <Sparkles className="w-12 h-12 mx-auto mb-6 text-primary" />
+            <h3 className="font-display text-3xl md:text-4xl font-bold mb-4">
+              Why Shop With Us?
+            </h3>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              Every product in our collection has been carefully tested and approved by professional chefs and cooking enthusiasts. 
+              We only recommend tools that we would use in our own kitchens, ensuring you get the best value and quality.
+            </p>
           </div>
         </div>
       </section>
