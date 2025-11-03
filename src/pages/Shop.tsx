@@ -4,6 +4,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ExternalLink, ShoppingCart, Sparkles } from "lucide-react";
+import airFryerImg from "@/assets/air-fryer.jpg";
+import instantPotImg from "@/assets/instant-pot.jpg";
+import standMixerImg from "@/assets/stand-mixer.jpg";
+import bundtPanImg from "@/assets/bundt-pan.jpg";
+import meatThermometerImg from "@/assets/meat-thermometer.jpg";
+import vegetableChopperImg from "@/assets/vegetable-chopper.jpg";
+import foodStorageImg from "@/assets/food-storage.jpg";
+import airtightContainersImg from "@/assets/airtight-containers.jpg";
 
 interface Product {
   id: number;
@@ -11,6 +19,7 @@ interface Product {
   description: string;
   affiliateLink: string;
   hashtags: string[];
+  image: string;
 }
 
 const products: Product[] = [
@@ -19,56 +28,64 @@ const products: Product[] = [
     name: "Ninja Air Fryer Max XL",
     description: "Rapid meals with advanced hot air technology for healthier results and crispy textures. Large 5.5-quart capacity ideal for families and batch cooking. Simple digital controls with multiple presets for convenience. Nonstick, dishwasher-safe basket guarantees easy cleanup. Perfect for air frying, roasting, reheating, or dehydrating—one versatile appliance.",
     affiliateLink: "https://amzn.to/3WyomUr",
-    hashtags: ["AirFryer", "HealthyCooking", "QuickMeals"]
+    hashtags: ["AirFryer", "HealthyCooking", "QuickMeals"],
+    image: airFryerImg
   },
   {
     id: 2,
     name: "Instant Pot Duo 7-in-1 Electric Pressure Cooker",
     description: "Transform your kitchen routine—pressure cook, slow cook, steam, sauté, make yogurt, and more with this all-in-one cooker. Intuitive smart programs deliver fast, consistent meals up to 70% quicker than traditional methods. Durable stainless steel pot designed for safety and easy cleaning. Trusted by families and chefs worldwide for everyday meals or batch prep.",
     affiliateLink: "https://amzn.to/4hGaiSt",
-    hashtags: ["InstantPot", "MealPrep", "MultiCooker"]
+    hashtags: ["InstantPot", "MealPrep", "MultiCooker"],
+    image: instantPotImg
   },
   {
     id: 3,
     name: "KitchenAid Artisan Series Stand Mixer",
     description: "Unleash creativity with a powerful 325-watt motor—handles large batches and dense doughs with ease. Features 10 speeds, a flat beater, dough hook, wire whip, and iconic design in many colors. The professional choice for cookies, bread, cakes, and more.",
     affiliateLink: "https://amzn.to/3WxTWl9",
-    hashtags: ["StandMixer", "BakingEssentials", "KitchenAid"]
+    hashtags: ["StandMixer", "BakingEssentials", "KitchenAid"],
+    image: standMixerImg
   },
   {
     id: 4,
     name: "Nordic Ware Platinum Collection Bundt Pan",
     description: "Showcase your baking—premium nonstick coating for flawless cake release and effortless cleaning. Cast aluminum for even heating and beautiful design for celebration-ready cakes. Made in the USA—reliability you can trust for generations.",
     affiliateLink: "https://amzn.to/3X8qFO5",
-    hashtags: ["BundtPan", "CakeBaking", "NordicWare"]
+    hashtags: ["BundtPan", "CakeBaking", "NordicWare"],
+    image: bundtPanImg
   },
   {
     id: 5,
     name: "ThermoPro TP03 Digital Instant-Read Meat Thermometer",
     description: "Get perfectly cooked meat every time—3-5 second rapid readings with a backlit LCD for any lighting. Foldable probe for safety and storage, wide temperature range for all proteins. Essential tool for grilling, roasts, BBQ, and more.",
     affiliateLink: "https://amzn.to/4nB77g7",
-    hashtags: ["MeatThermometer", "Grilling", "KitchenGadgets"]
+    hashtags: ["MeatThermometer", "Grilling", "KitchenGadgets"],
+    image: meatThermometerImg
   },
   {
     id: 6,
     name: "Fullstar All-in-One Vegetable Chopper",
     description: "Prep meals in minutes—interchangeable blades for chopping, slicing, dicing, and julienne. BPA-free, dishwasher-safe parts, large catch container, and nonslip base for safety. The must-have for salads, salsas, and healthy eating.",
     affiliateLink: "https://amzn.to/4qKOgSO",
-    hashtags: ["VegetableChopper", "FoodPrep", "KitchenTools"]
+    hashtags: ["VegetableChopper", "FoodPrep", "KitchenTools"],
+    image: vegetableChopperImg
   },
   {
     id: 7,
     name: "Rubbermaid Brilliance Leak-Proof Food Storage Set",
     description: "Lock in freshness—airtight, leak-proof seals with stain-resistant, crystal-clear design. Microwave, freezer, and dishwasher safe. Modular containers stack easily for pantry, fridge, or on-the-go meals. BPA-free and durable for daily use.",
     affiliateLink: "https://amzn.to/490Xl3g",
-    hashtags: ["FoodStorage", "MealPrep", "Rubbermaid"]
+    hashtags: ["FoodStorage", "MealPrep", "Rubbermaid"],
+    image: foodStorageImg
   },
   {
     id: 8,
     name: "OXO Good Grips POP Airtight Container Set",
     description: "Airtight, push-button seal preserves freshness and prevents spills. Space-saving stackable design and rounded corners for easy pouring. Instantly see contents and quantities. Perfect for flour, sugar, rice, snacks, or coffee storage.",
     affiliateLink: "https://amzn.to/3LiHEKZ",
-    hashtags: ["PantryOrganization", "AirtightContainers", "OXOGoodGrips"]
+    hashtags: ["PantryOrganization", "AirtightContainers", "OXOGoodGrips"],
+    image: airtightContainersImg
   }
 ];
 
@@ -104,6 +121,13 @@ export default function Shop() {
                 key={product.id} 
                 className="shadow-elegant hover:shadow-glow transition-all duration-500 hover:-translate-y-2 overflow-hidden group border-2 hover:border-primary/20"
               >
+                <div className="relative overflow-hidden bg-background/50">
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="w-full h-64 object-contain p-6 group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
                 <CardHeader className="space-y-4 pb-4">
                   <div className="flex items-start justify-between gap-3">
                     <CardTitle className="text-xl font-bold leading-tight group-hover:text-primary transition-colors">
