@@ -8,9 +8,8 @@ import { RecipeCard } from "@/components/RecipeCard";
 import { AdBanner } from "@/components/AdBanner";
 import { usePremiumStatus } from "@/hooks/usePremiumStatus";
 import { supabase } from "@/integrations/supabase/client";
-import { Search, Sparkles, Crown, Check } from "lucide-react";
+import { Search, Sparkles } from "lucide-react";
 import { toast } from "sonner";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -18,8 +17,7 @@ export default function Home() {
   const [recipes, setRecipes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
-  const { isPremium, loading: premiumLoading } = usePremiumStatus();
-  const [checkoutLoading, setCheckoutLoading] = useState(false);
+  const { isPremium } = usePremiumStatus();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -62,29 +60,6 @@ export default function Home() {
     }
   };
 
-  const handleUpgradeToPremium = async () => {
-    if (!user) {
-      toast.error("Please sign in to upgrade to premium");
-      navigate("/auth");
-      return;
-    }
-
-    setCheckoutLoading(true);
-    try {
-      const { data, error } = await supabase.functions.invoke("create-checkout");
-      
-      if (error) throw error;
-      
-      if (data?.url) {
-        window.open(data.url, "_blank");
-      }
-    } catch (error: any) {
-      console.error("Checkout error:", error);
-      toast.error("Failed to start checkout. Please try again.");
-    } finally {
-      setCheckoutLoading(false);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-gradient-warm flex flex-col">
@@ -128,67 +103,6 @@ export default function Home() {
       </section>
 
       <AdBanner slot="1234567890" format="horizontal" isPremium={isPremium} />
-
-      {/* Premium Subscription Section */}
-      {!isPremium && !premiumLoading && (
-        <section className="py-16 px-4 bg-gradient-to-br from-primary/5 to-secondary/5">
-          <div className="container mx-auto max-w-4xl">
-            <Card className="border-2 border-primary/20 shadow-xl">
-              <CardHeader className="text-center">
-                <div className="flex justify-center mb-4">
-                  <Crown className="w-16 h-16 text-primary" />
-                </div>
-                <CardTitle className="text-4xl mb-2">Go Premium Ad-Free</CardTitle>
-                <CardDescription className="text-lg">
-                  Enjoy FlavorAI without interruptions for just $3/month
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid gap-4">
-                  <div className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-primary shrink-0" />
-                    <span className="text-lg">Remove all advertisements</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-primary shrink-0" />
-                    <span className="text-lg">Enjoy uninterrupted recipe browsing</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-primary shrink-0" />
-                    <span className="text-lg">Support FlavorAI development</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Check className="w-5 h-5 text-primary shrink-0" />
-                    <span className="text-lg">Cancel anytime, no commitment</span>
-                  </div>
-                </div>
-                
-                <div className="text-center pt-4">
-                  <p className="text-3xl font-bold mb-2">
-                    $3<span className="text-lg font-normal text-muted-foreground">/month</span>
-                  </p>
-                  <Button 
-                    variant="hero" 
-                    size="lg" 
-                    onClick={handleUpgradeToPremium}
-                    disabled={checkoutLoading}
-                    className="w-full max-w-sm"
-                  >
-                    {checkoutLoading ? (
-                      "Processing..."
-                    ) : (
-                      <>
-                        <Crown className="w-5 h-5 mr-2" />
-                        Upgrade to Premium
-                      </>
-                    )}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </section>
-      )}
 
       {/* Featured Recipes Section */}
       <section className="py-16 px-4">
