@@ -113,45 +113,45 @@ export default function Shop() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative py-24 md:py-32 px-4 overflow-hidden">
+      <section className="relative py-16 sm:py-20 md:py-28 lg:py-32 px-4 sm:px-6 overflow-hidden">
         {/* Animated Background Elements */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5"></div>
-        <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+        <div className="absolute top-10 sm:top-20 left-5 sm:left-10 w-48 h-48 sm:w-72 sm:h-72 bg-primary/10 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-10 sm:bottom-20 right-5 sm:right-10 w-56 h-56 sm:w-96 sm:h-96 bg-secondary/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
         
         <div className="container mx-auto max-w-7xl text-center relative z-10">
           <div className="animate-fade-in-up">
-            <Badge className="mb-6 text-base px-6 py-2.5 shadow-lg bg-gradient-to-r from-primary to-primary-hover border-0 text-primary-foreground">
-              <Sparkles className="w-5 h-5 mr-2 animate-pulse" />
+            <Badge className="mb-4 sm:mb-6 text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-2.5 shadow-lg bg-gradient-to-r from-primary to-primary-hover border-0 text-primary-foreground">
+              <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-pulse" />
               Curated Kitchen Essentials
             </Badge>
           </div>
           
-          <h1 className="font-display text-5xl md:text-7xl font-black mb-6 animate-fade-in-up leading-tight" style={{ animationDelay: '0.1s' }}>
+          <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 sm:mb-6 animate-fade-in-up leading-tight px-2" style={{ animationDelay: '0.1s' }}>
             <span className="bg-gradient-to-r from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent">
               Premium Kitchen Tools
             </span>
-            <br />
-            <span className="bg-gradient-to-r from-primary via-primary-hover to-primary bg-clip-text text-transparent mt-2 inline-block">
+            <br className="hidden sm:block" />
+            <span className="bg-gradient-to-r from-primary via-primary-hover to-primary bg-clip-text text-transparent mt-1 sm:mt-2 inline-block">
               For Modern Cooking
             </span>
           </h1>
           
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-12 animate-fade-in-up font-light" style={{ animationDelay: '0.2s' }}>
+          <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-8 sm:mb-10 md:mb-12 animate-fade-in-up font-light px-4" style={{ animationDelay: '0.2s' }}>
             Discover the finest selection of kitchen essentials that transform your cooking experience
           </p>
 
           {/* Feature Pills */}
-          <div className="flex flex-wrap justify-center gap-4 animate-fade-in-up" style={{ animationDelay: '0.3s' }}>
+          <div className="flex flex-wrap justify-center gap-3 sm:gap-4 animate-fade-in-up px-2" style={{ animationDelay: '0.3s' }}>
             {features.map((feature, index) => (
               <div 
                 key={index}
-                className="flex items-center gap-3 px-6 py-3 bg-background/80 backdrop-blur-sm rounded-full border border-border/50 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5"
+                className="flex items-center gap-2 sm:gap-3 px-4 sm:px-6 py-2.5 sm:py-3 bg-background/80 backdrop-blur-sm rounded-full border border-border/50 shadow-sm hover:shadow-md transition-all hover:-translate-y-0.5 active:scale-95"
               >
-                <feature.icon className="w-5 h-5 text-primary" />
+                <feature.icon className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0" />
                 <div className="text-left">
-                  <p className="font-semibold text-sm">{feature.title}</p>
-                  <p className="text-xs text-muted-foreground">{feature.description}</p>
+                  <p className="font-semibold text-xs sm:text-sm">{feature.title}</p>
+                  <p className="text-xs text-muted-foreground hidden sm:block">{feature.description}</p>
                 </div>
               </div>
             ))}
@@ -160,63 +160,63 @@ export default function Shop() {
       </section>
 
       {/* Products Grid */}
-      <section className="py-16 px-4 relative">
+      <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 relative">
         <div className="container mx-auto max-w-7xl">
           {/* Section Header */}
-          <div className="text-center mb-16">
-            <h2 className="font-display text-4xl md:text-5xl font-bold mb-4">
+          <div className="text-center mb-10 sm:mb-12 md:mb-16">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 px-2">
               Shop The Collection
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
               Each product is carefully selected to meet the highest standards of quality and performance
             </p>
           </div>
 
           {/* Product Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 sm:gap-6 md:gap-8">
             {products.map((product, index) => (
               <div 
                 key={product.id}
                 className="animate-fade-in-up"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
-                <Card className="group h-full shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 overflow-hidden border-2 border-border/50 hover:border-primary/30 bg-card/50 backdrop-blur-sm">
+                <Card className="group h-full shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 md:hover:-translate-y-3 overflow-hidden border-2 border-border/50 hover:border-primary/30 bg-card/50 backdrop-blur-sm active:scale-[0.98]">
                   {/* Product Image */}
                   <div className="relative overflow-hidden bg-gradient-to-br from-background to-muted/20">
                     <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                     <img 
                       src={product.image} 
                       alt={product.name}
-                      className="w-full h-72 object-contain p-8 group-hover:scale-110 transition-transform duration-700 ease-out"
+                      className="w-full h-52 sm:h-60 md:h-72 object-contain p-6 sm:p-8 group-hover:scale-110 transition-transform duration-700 ease-out"
                     />
                     {/* Trending Badge */}
                     {index < 3 && (
-                      <div className="absolute top-4 right-4 bg-gradient-to-r from-primary to-primary-hover text-primary-foreground px-3 py-1.5 rounded-full text-xs font-bold shadow-lg flex items-center gap-1">
+                      <div className="absolute top-3 sm:top-4 right-3 sm:right-4 bg-gradient-to-r from-primary to-primary-hover text-primary-foreground px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs font-bold shadow-lg flex items-center gap-1">
                         <TrendingUp className="w-3 h-3" />
-                        Trending
+                        <span className="hidden sm:inline">Trending</span>
                       </div>
                     )}
                   </div>
 
                   {/* Product Content */}
-                  <CardHeader className="space-y-3 pb-3">
-                    <CardTitle className="text-xl font-display font-bold leading-tight group-hover:text-primary transition-colors line-clamp-2">
+                  <CardHeader className="space-y-2 sm:space-y-3 pb-3 px-4 sm:px-6 pt-4 sm:pt-6">
+                    <CardTitle className="text-lg sm:text-xl font-display font-bold leading-tight group-hover:text-primary transition-colors line-clamp-2">
                       {product.name}
                     </CardTitle>
                   </CardHeader>
 
-                  <CardContent className="space-y-5">
-                    <CardDescription className="text-sm leading-relaxed line-clamp-4 text-muted-foreground">
+                  <CardContent className="space-y-4 sm:space-y-5 px-4 sm:px-6 pb-4 sm:pb-6">
+                    <CardDescription className="text-sm leading-relaxed line-clamp-3 sm:line-clamp-4 text-muted-foreground">
                       {product.description}
                     </CardDescription>
                     
                     {/* Hashtags */}
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-1.5 sm:gap-2">
                       {product.hashtags.map((tag, tagIndex) => (
                         <Badge 
                           key={tagIndex} 
                           variant="secondary" 
-                          className="text-xs font-medium px-3 py-1 rounded-full bg-secondary/50 hover:bg-secondary transition-colors"
+                          className="text-xs font-medium px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-secondary/50 hover:bg-secondary transition-colors"
                         >
                           #{tag}
                         </Badge>
@@ -225,12 +225,12 @@ export default function Shop() {
 
                     {/* CTA Button */}
                     <Button 
-                      className="w-full gap-2 shadow-lg hover:shadow-xl transition-all group/btn font-semibold text-base py-6 bg-gradient-to-r from-primary to-primary-hover hover:from-primary-hover hover:to-primary"
+                      className="w-full gap-2 shadow-lg hover:shadow-xl active:shadow-md transition-all group/btn font-semibold text-sm sm:text-base py-5 sm:py-6 bg-gradient-to-r from-primary to-primary-hover hover:from-primary-hover hover:to-primary active:scale-95 touch-manipulation"
                       onClick={() => window.open(product.affiliateLink, '_blank')}
                     >
-                      <ShoppingCart className="w-5 h-5 group-hover/btn:scale-110 transition-transform" />
+                      <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5 group-hover/btn:scale-110 transition-transform" />
                       Shop Now
-                      <ExternalLink className="w-4 h-4 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
+                      <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
                     </Button>
                   </CardContent>
                 </Card>
@@ -241,15 +241,15 @@ export default function Shop() {
       </section>
 
       {/* Trust Section */}
-      <section className="py-20 px-4 bg-gradient-to-br from-muted/30 to-background relative overflow-hidden">
+      <section className="py-12 sm:py-16 md:py-20 px-4 sm:px-6 bg-gradient-to-br from-muted/30 to-background relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-hero opacity-5"></div>
         <div className="container mx-auto max-w-4xl text-center relative z-10">
-          <div className="bg-card/50 backdrop-blur-sm rounded-3xl p-12 shadow-xl border border-border/50">
-            <Sparkles className="w-12 h-12 mx-auto mb-6 text-primary" />
-            <h3 className="font-display text-3xl md:text-4xl font-bold mb-4">
+          <div className="bg-card/50 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 shadow-xl border border-border/50">
+            <Sparkles className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-4 sm:mb-6 text-primary" />
+            <h3 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 px-2">
               Why Shop With Us?
             </h3>
-            <p className="text-lg text-muted-foreground leading-relaxed">
+            <p className="text-base sm:text-lg text-muted-foreground leading-relaxed px-2">
               Every product in our collection has been carefully tested and approved by professional chefs and cooking enthusiasts. 
               We only recommend tools that we would use in our own kitchens, ensuring you get the best value and quality.
             </p>
