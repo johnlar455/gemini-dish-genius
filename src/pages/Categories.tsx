@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { RecipeCard } from "@/components/RecipeCard";
-import { AdBanner } from "@/components/AdBanner";
-import { usePremiumStatus } from "@/hooks/usePremiumStatus";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { supabase } from "@/integrations/supabase/client";
@@ -23,7 +21,7 @@ export default function Categories() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
   const [recipesLoading, setRecipesLoading] = useState(false);
-  const { isPremium } = usePremiumStatus();
+  
 
   useEffect(() => {
     loadCategories();
@@ -175,8 +173,6 @@ export default function Categories() {
           )}
         </section>
 
-        <AdBanner slot="9753108642" format="horizontal" isPremium={isPremium} />
-
         {/* Selected Category Recipes */}
         {selectedCategory && (
           <section aria-label={`${categories.find((c) => c.id === selectedCategory)?.name} recipes`}>
@@ -212,8 +208,6 @@ export default function Categories() {
             )}
           </section>
         )}
-
-        <AdBanner slot="8024691357" format="horizontal" isPremium={isPremium} />
       </main>
     </div>
   );

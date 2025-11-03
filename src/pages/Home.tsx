@@ -5,8 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { RecipeCard } from "@/components/RecipeCard";
-import { AdBanner } from "@/components/AdBanner";
-import { usePremiumStatus } from "@/hooks/usePremiumStatus";
 import { supabase } from "@/integrations/supabase/client";
 import { Search, Sparkles } from "lucide-react";
 import { toast } from "sonner";
@@ -17,7 +15,6 @@ export default function Home() {
   const [recipes, setRecipes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
-  const { isPremium } = usePremiumStatus();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -102,8 +99,6 @@ export default function Home() {
         </div>
       </section>
 
-      <AdBanner slot="1234567890" format="horizontal" isPremium={isPremium} />
-
       {/* Featured Recipes Section */}
       <section className="py-16 px-4">
         <div className="container mx-auto">
@@ -137,8 +132,6 @@ export default function Home() {
           )}
         </div>
       </section>
-
-      <AdBanner slot="9876543210" format="horizontal" isPremium={isPremium} />
 
       <Footer />
     </div>

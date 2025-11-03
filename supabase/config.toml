@@ -2,9 +2,3 @@ project_id = "yncnmpknuwutddhepmpg"
 
 [functions.generate-recipe]
 verify_jwt = false
-
-[functions.create-checkout]
-verify_jwt = true
-
-[functions.check-subscription]
-verify_jwt = true

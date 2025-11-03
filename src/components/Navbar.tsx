@@ -28,6 +28,7 @@ export const Navbar = () => {
     { path: "/search", label: "Search", icon: Search },
     { path: "/categories", label: "Categories", icon: BookOpen },
     { path: "/generate", label: "Generate", icon: Sparkles },
+    { path: "/shop", label: "Shop", icon: ShoppingCart },
     ...(user ? [
       { path: "/recipes", label: "Recipes", icon: Notebook },
       { path: "/favorites", label: "Favorites", icon: Heart },
