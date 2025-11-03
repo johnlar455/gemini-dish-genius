@@ -11,6 +11,15 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Sparkles, Loader2, X } from "lucide-react";
+import { z } from "zod";
+
+const recipeInputSchema = z.object({
+  prompt: z.string().trim().min(1, "Please describe what you'd like to cook").max(500, "Description is too long (max 500 characters)"),
+  cuisineType: z.string().max(50).optional(),
+  ingredients: z.array(z.string().trim().max(100, "Ingredient name is too long")).max(20, "Maximum 20 ingredients allowed"),
+  dietaryPreferences: z.array(z.string()).max(10, "Maximum 10 dietary preferences allowed"),
+  category: z.string().min(1, "Please select a recipe category"),
+});
 
 export default function GenerateRecipe() {
   const navigate = useNavigate();
@@ -55,13 +64,18 @@ export default function GenerateRecipe() {
   };
 
   const handleGenerate = async () => {
-    if (!prompt.trim()) {
-      toast.error("Please describe what you'd like to cook");
-      return;
-    }
+    // Validate inputs
+    const validationResult = recipeInputSchema.safeParse({
+      prompt,
+      cuisineType,
+      ingredients,
+      dietaryPreferences,
+      category,
+    });
 
-    if (!category) {
-      toast.error("Please select a recipe category");
+    if (!validationResult.success) {
+      const firstError = validationResult.error.errors[0];
+      toast.error(firstError.message);
       return;
     }
 
@@ -76,13 +90,7 @@ export default function GenerateRecipe() {
 
     try {
       const { data, error } = await supabase.functions.invoke("generate-recipe", {
-        body: {
-          prompt,
-          cuisineType,
-          ingredients,
-          dietaryPreferences,
-          category,
-        },
+        body: validationResult.data,
       });
 
       if (error) throw error;

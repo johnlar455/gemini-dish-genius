@@ -1,9 +1,36 @@
 import { serve } from 'https://deno.land/std@0.168.0/http/server.ts';
+import { createClient } from 'https://esm.sh/@supabase/supabase-js@2.74.0';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
+
+// Input validation function
+function validateInput(data: any): { valid: boolean; error?: string } {
+  if (!data.prompt || typeof data.prompt !== 'string') {
+    return { valid: false, error: 'Prompt is required and must be a string' };
+  }
+  if (data.prompt.trim().length === 0 || data.prompt.length > 500) {
+    return { valid: false, error: 'Prompt must be between 1 and 500 characters' };
+  }
+  if (data.cuisineType && (typeof data.cuisineType !== 'string' || data.cuisineType.length > 50)) {
+    return { valid: false, error: 'Cuisine type must be a string with max 50 characters' };
+  }
+  if (data.ingredients && (!Array.isArray(data.ingredients) || data.ingredients.length > 20)) {
+    return { valid: false, error: 'Ingredients must be an array with max 20 items' };
+  }
+  if (data.ingredients && data.ingredients.some((i: any) => typeof i !== 'string' || i.length > 100)) {
+    return { valid: false, error: 'Each ingredient must be a string with max 100 characters' };
+  }
+  if (data.dietaryPreferences && (!Array.isArray(data.dietaryPreferences) || data.dietaryPreferences.length > 10)) {
+    return { valid: false, error: 'Dietary preferences must be an array with max 10 items' };
+  }
+  if (!data.category || typeof data.category !== 'string' || data.category.trim().length === 0) {
+    return { valid: false, error: 'Category is required and must be a string' };
+  }
+  return { valid: true };
+}
 
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
@@ -11,7 +38,42 @@ serve(async (req) => {
   }
 
   try {
-    const { prompt, dietaryPreferences, ingredients, cuisineType } = await req.json();
+    // Get authorization header to verify JWT
+    const authHeader = req.headers.get('authorization');
+    if (!authHeader) {
+      return new Response(
+        JSON.stringify({ error: 'Authorization header required' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    // Verify JWT by creating authenticated Supabase client
+    const supabaseClient = createClient(
+      Deno.env.get('SUPABASE_URL') ?? '',
+      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
+      { global: { headers: { Authorization: authHeader } } }
+    );
+
+    const { data: { user }, error: authError } = await supabaseClient.auth.getUser();
+    if (authError || !user) {
+      return new Response(
+        JSON.stringify({ error: 'Invalid authentication token' }),
+        { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const requestData = await req.json();
+    
+    // Validate input
+    const validation = validateInput(requestData);
+    if (!validation.valid) {
+      return new Response(
+        JSON.stringify({ error: validation.error }),
+        { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+      );
+    }
+
+    const { prompt, dietaryPreferences, ingredients, cuisineType } = requestData;
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
 
     if (!LOVABLE_API_KEY) {
