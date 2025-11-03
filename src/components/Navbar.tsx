@@ -31,8 +31,7 @@ export const Navbar = () => {
     { path: "/shop", label: "Shop", icon: ShoppingCart },
     ...(user ? [
       { path: "/recipes", label: "Recipes", icon: Notebook },
-      { path: "/favorites", label: "Favorites", icon: Heart },
-      { path: "/shopping-list", label: "Shopping", icon: ShoppingCart }
+      { path: "/favorites", label: "Favorites", icon: Heart }
     ] : [])
   ];
 
