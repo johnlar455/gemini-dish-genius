@@ -1,1 +1,13 @@
 project_id = "yncnmpknuwutddhepmpg"
+
+[functions.generate-recipe]
+verify_jwt = false
+
+[functions.translate-recipe]
+verify_jwt = false
+
+[functions.check-subscription]
+verify_jwt = false
+
+[functions.create-checkout]
+verify_jwt = false

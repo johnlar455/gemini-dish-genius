@@ -113,6 +113,7 @@ export type Database = {
           ingredients: Json
           instructions: Json
           is_ai_generated: boolean | null
+          language: string | null
           prep_time: number | null
           servings: number | null
           title: string
@@ -133,6 +134,7 @@ export type Database = {
           ingredients: Json
           instructions: Json
           is_ai_generated?: boolean | null
+          language?: string | null
           prep_time?: number | null
           servings?: number | null
           title: string
@@ -153,6 +155,7 @@ export type Database = {
           ingredients?: Json
           instructions?: Json
           is_ai_generated?: boolean | null
+          language?: string | null
           prep_time?: number | null
           servings?: number | null
           title?: string
