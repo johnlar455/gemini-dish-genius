@@ -6,6 +6,19 @@ const corsHeaders = {
   'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
 };
 
+// Supported languages with their codes and names
+const SUPPORTED_LANGUAGES: Record<string, { name: string; nativeName: string }> = {
+  en: { name: 'English', nativeName: 'English' },
+  ar: { name: 'Arabic', nativeName: 'العربية' },
+  zh: { name: 'Chinese', nativeName: '中文' },
+  ja: { name: 'Japanese', nativeName: '日本語' },
+  de: { name: 'German', nativeName: 'Deutsch' },
+  nl: { name: 'Dutch', nativeName: 'Nederlands' },
+  es: { name: 'Spanish', nativeName: 'Español' },
+  it: { name: 'Italian', nativeName: 'Italiano' },
+  ru: { name: 'Russian', nativeName: 'Русский' },
+};
+
 // Input validation function
 function validateInput(data: any): { valid: boolean; error?: string } {
   if (!data.prompt || typeof data.prompt !== 'string') {
@@ -29,7 +42,58 @@ function validateInput(data: any): { valid: boolean; error?: string } {
   if (!data.category || typeof data.category !== 'string' || data.category.trim().length === 0) {
     return { valid: false, error: 'Category is required and must be a string' };
   }
+  if (data.language && typeof data.language === 'string' && !SUPPORTED_LANGUAGES[data.language]) {
+    return { valid: false, error: 'Unsupported language code' };
+  }
   return { valid: true };
+}
+
+// Detect language from text using AI
+async function detectLanguage(text: string, apiKey: string): Promise<string> {
+  try {
+    const response = await fetch('https://ai.gateway.lovable.dev/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'google/gemini-2.5-flash-lite',
+        messages: [
+          {
+            role: 'system',
+            content: `You are a language detection assistant. Analyze the text and return ONLY the ISO 639-1 language code (2 letters). 
+Supported codes: en (English), ar (Arabic), zh (Chinese), ja (Japanese), de (German), nl (Dutch), es (Spanish), it (Italian), ru (Russian).
+If unsure or the language is not in the list, return "en".
+Return ONLY the 2-letter code, nothing else.`
+          },
+          {
+            role: 'user',
+            content: text
+          }
+        ],
+      }),
+    });
+
+    if (!response.ok) {
+      console.log('Language detection failed, defaulting to English');
+      return 'en';
+    }
+
+    const data = await response.json();
+    const detectedCode = data.choices[0].message.content.trim().toLowerCase();
+    
+    // Validate detected code
+    if (SUPPORTED_LANGUAGES[detectedCode]) {
+      console.log(`Detected language: ${detectedCode} (${SUPPORTED_LANGUAGES[detectedCode].name})`);
+      return detectedCode;
+    }
+    
+    return 'en';
+  } catch (error) {
+    console.error('Language detection error:', error);
+    return 'en';
+  }
 }
 
 serve(async (req) => {
@@ -73,14 +137,23 @@ serve(async (req) => {
       );
     }
 
-    const { prompt, dietaryPreferences, ingredients, cuisineType } = requestData;
+    const { prompt, dietaryPreferences, ingredients, cuisineType, language: requestedLanguage } = requestData;
     const LOVABLE_API_KEY = Deno.env.get('LOVABLE_API_KEY');
 
     if (!LOVABLE_API_KEY) {
       throw new Error('LOVABLE_API_KEY is not configured');
     }
 
-    // Build the prompt for recipe generation
+    // Detect or use provided language
+    let targetLanguage = requestedLanguage;
+    if (!targetLanguage || targetLanguage === 'auto') {
+      targetLanguage = await detectLanguage(prompt, LOVABLE_API_KEY);
+    }
+    
+    const langInfo = SUPPORTED_LANGUAGES[targetLanguage] || SUPPORTED_LANGUAGES['en'];
+    console.log(`Generating recipe in ${langInfo.name} (${targetLanguage})`);
+
+    // Build the prompt for recipe generation with language instruction
     let fullPrompt = `Generate a detailed recipe`;
     
     if (prompt) fullPrompt += ` for ${prompt}`;
@@ -90,35 +163,42 @@ serve(async (req) => {
       fullPrompt += `. This recipe must be ${dietaryPreferences.join(', ')} friendly`;
     }
 
-    fullPrompt += `.
+    // Add language-specific instructions
+    const languageInstruction = targetLanguage !== 'en' 
+      ? `\n\nIMPORTANT: Generate the ENTIRE recipe in ${langInfo.name} (${langInfo.nativeName}). All text including title, description, ingredients, and instructions must be in ${langInfo.name}. Do NOT translate measurement units or use English anywhere.`
+      : '';
+
+    fullPrompt += `.${languageInstruction}
 
 Please provide:
-1. A catchy recipe title
-2. A brief description (2-3 sentences)
+1. A catchy recipe title${targetLanguage !== 'en' ? ` in ${langInfo.name}` : ''}
+2. A brief description (2-3 sentences)${targetLanguage !== 'en' ? ` in ${langInfo.name}` : ''}
 3. Prep time in minutes
 4. Cook time in minutes
 5. Number of servings
-6. Difficulty level (easy, medium, or hard)
-7. Complete list of ingredients with measurements
-8. Step-by-step cooking instructions
+6. Difficulty level (easy, medium, or hard)${targetLanguage !== 'en' ? ` - translate these terms to ${langInfo.name}` : ''}
+7. Complete list of ingredients with measurements${targetLanguage !== 'en' ? ` in ${langInfo.name}` : ''}
+8. Step-by-step cooking instructions${targetLanguage !== 'en' ? ` in ${langInfo.name}` : ''}
 
 Format the response as JSON with this structure:
 {
-  "title": "Recipe Title",
-  "description": "Brief description",
+  "title": "Recipe Title${targetLanguage !== 'en' ? ` (in ${langInfo.name})` : ''}",
+  "description": "Brief description${targetLanguage !== 'en' ? ` (in ${langInfo.name})` : ''}",
   "prepTime": 15,
   "cookTime": 30,
   "servings": 4,
-  "difficulty": "medium",
+  "difficulty": "${targetLanguage !== 'en' ? `translated difficulty level` : 'medium'}",
   "ingredients": [
-    { "item": "ingredient name", "amount": "measurement" }
+    { "item": "ingredient name${targetLanguage !== 'en' ? ` (in ${langInfo.name})` : ''}", "amount": "measurement" }
   ],
   "instructions": [
-    { "step": 1, "instruction": "First step..." },
-    { "step": 2, "instruction": "Second step..." }
+    { "step": 1, "instruction": "First step...${targetLanguage !== 'en' ? ` (in ${langInfo.name})` : ''}" },
+    { "step": 2, "instruction": "Second step...${targetLanguage !== 'en' ? ` (in ${langInfo.name})` : ''}" }
   ],
   "cuisineType": "${cuisineType || 'International'}",
-  "dietaryPreferences": ${JSON.stringify(dietaryPreferences || [])}
+  "dietaryPreferences": ${JSON.stringify(dietaryPreferences || [])},
+  "language": "${targetLanguage}",
+  "languageName": "${langInfo.name}"
 }`;
 
     console.log('Generating recipe with prompt:', fullPrompt);
@@ -135,7 +215,7 @@ Format the response as JSON with this structure:
         messages: [
           {
             role: 'system',
-            content: 'You are a professional chef and recipe creator. Generate detailed, delicious recipes in JSON format exactly as requested.'
+            content: `You are a professional chef and recipe creator who is fluent in multiple languages. Generate detailed, delicious recipes in JSON format exactly as requested. When asked to generate in a specific language, ensure ALL text content is in that language.`
           },
           {
             role: 'user',
@@ -171,6 +251,9 @@ Format the response as JSON with this structure:
     let recipeData;
     try {
       recipeData = JSON.parse(recipeText);
+      // Ensure language info is in the response
+      recipeData.language = targetLanguage;
+      recipeData.languageName = langInfo.name;
     } catch (e) {
       console.error('Failed to parse recipe JSON:', e);
       throw new Error('Failed to parse recipe data');

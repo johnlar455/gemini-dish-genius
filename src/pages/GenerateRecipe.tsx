@@ -10,8 +10,21 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Sparkles, Loader2, X } from "lucide-react";
+import { Sparkles, Loader2, X, Globe } from "lucide-react";
 import { z } from "zod";
+
+const SUPPORTED_LANGUAGES = [
+  { code: "auto", name: "Auto-detect", nativeName: "🌐 Auto-detect" },
+  { code: "en", name: "English", nativeName: "🇬🇧 English" },
+  { code: "ar", name: "Arabic", nativeName: "🇸🇦 العربية" },
+  { code: "zh", name: "Chinese", nativeName: "🇨🇳 中文" },
+  { code: "ja", name: "Japanese", nativeName: "🇯🇵 日本語" },
+  { code: "de", name: "German", nativeName: "🇩🇪 Deutsch" },
+  { code: "nl", name: "Dutch", nativeName: "🇳🇱 Nederlands" },
+  { code: "es", name: "Spanish", nativeName: "🇪🇸 Español" },
+  { code: "it", name: "Italian", nativeName: "🇮🇹 Italiano" },
+  { code: "ru", name: "Russian", nativeName: "🇷🇺 Русский" },
+];
 
 const recipeInputSchema = z.object({
   prompt: z.string().trim().min(1, "Please describe what you'd like to cook").max(500, "Description is too long (max 500 characters)"),
@@ -19,6 +32,7 @@ const recipeInputSchema = z.object({
   ingredients: z.array(z.string().trim().max(100, "Ingredient name is too long")).max(20, "Maximum 20 ingredients allowed"),
   dietaryPreferences: z.array(z.string()).max(10, "Maximum 10 dietary preferences allowed"),
   category: z.string().min(1, "Please select a recipe category"),
+  language: z.string().optional(),
 });
 
 export default function GenerateRecipe() {
@@ -30,6 +44,7 @@ export default function GenerateRecipe() {
   const [currentIngredient, setCurrentIngredient] = useState("");
   const [dietaryPreferences, setDietaryPreferences] = useState<string[]>([]);
   const [category, setCategory] = useState("");
+  const [language, setLanguage] = useState("auto");
 
   const dietaryOptions = ["vegetarian", "vegan", "gluten-free", "dairy-free", "keto", "low-carb"];
   const cuisineOptions = ["Italian", "Chinese", "Mexican", "Indian", "Japanese", "Thai", "Mediterranean", "French"];
@@ -37,7 +52,6 @@ export default function GenerateRecipe() {
 
   const addIngredient = () => {
     if (currentIngredient.trim()) {
-      // Split by comma and process each ingredient
       const newIngredients = currentIngredient
         .split(',')
         .map(item => item.trim())
@@ -47,7 +61,6 @@ export default function GenerateRecipe() {
         setIngredients([...ingredients, ...newIngredients]);
         setCurrentIngredient("");
       } else if (currentIngredient.includes(',')) {
-        // If input had commas but all items were duplicates/empty, still clear the input
         setCurrentIngredient("");
       }
     }
@@ -64,13 +77,13 @@ export default function GenerateRecipe() {
   };
 
   const handleGenerate = async () => {
-    // Validate inputs
     const validationResult = recipeInputSchema.safeParse({
       prompt,
       cuisineType,
       ingredients,
       dietaryPreferences,
       category,
+      language,
     });
 
     if (!validationResult.success) {
@@ -101,7 +114,6 @@ export default function GenerateRecipe() {
 
       const { recipe, imageData } = data;
 
-      // Map category name to category_id
       let categoryId = null;
       if (category) {
         const { data: categoryData, error: categoryError } = await supabase
@@ -115,7 +127,6 @@ export default function GenerateRecipe() {
         }
       }
 
-      // Save recipe to database
       const { data: savedRecipe, error: saveError } = await supabase
         .from("recipes")
         .insert({
@@ -161,7 +172,7 @@ export default function GenerateRecipe() {
               Generate AI Recipe
             </CardTitle>
             <CardDescription>
-              Describe what you want to cook and let our AI create a custom recipe for you
+              Describe what you want to cook and let our AI create a custom recipe for you in your preferred language
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -169,11 +180,36 @@ export default function GenerateRecipe() {
               <Label htmlFor="prompt">What would you like to cook?</Label>
               <Textarea
                 id="prompt"
-                placeholder="E.g., A spicy pasta dish, Healthy breakfast bowl, Chocolate dessert..."
+                placeholder="E.g., A spicy pasta dish, Healthy breakfast bowl, Chocolate dessert... (Type in any language!)"
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 rows={3}
               />
+              <p className="text-xs text-muted-foreground">
+                Tip: Type in your native language and we'll auto-detect it, or select a language below
+              </p>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="language" className="flex items-center gap-2">
+                <Globe className="w-4 h-4" />
+                Recipe Language
+              </Label>
+              <Select value={language} onValueChange={setLanguage}>
+                <SelectTrigger>
+                  <SelectValue placeholder="Select language" />
+                </SelectTrigger>
+                <SelectContent>
+                  {SUPPORTED_LANGUAGES.map((lang) => (
+                    <SelectItem key={lang.code} value={lang.code}>
+                      {lang.nativeName}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <p className="text-xs text-muted-foreground">
+                Auto-detect will generate the recipe in the same language as your prompt
+              </p>
             </div>
 
             <div className="space-y-2">
