@@ -3,11 +3,26 @@ import { useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Search, Pencil, Trash2, ChefHat, Loader2 } from "lucide-react";
+import { Search, Pencil, Trash2, ChefHat, Loader2, Globe, X } from "lucide-react";
+
+const SUPPORTED_LANGUAGES = {
+  all: { name: 'All Languages', native: 'All' },
+  en: { name: 'English', native: 'English' },
+  ar: { name: 'Arabic', native: 'العربية' },
+  zh: { name: 'Chinese', native: '中文' },
+  ja: { name: 'Japanese', native: '日本語' },
+  de: { name: 'German', native: 'Deutsch' },
+  nl: { name: 'Dutch', native: 'Nederlands' },
+  es: { name: 'Spanish', native: 'Español' },
+  it: { name: 'Italian', native: 'Italiano' },
+  ru: { name: 'Russian', native: 'Русский' },
+};
 
 interface Recipe {
   id: string;
@@ -20,6 +35,7 @@ interface Recipe {
   cook_time: number | null;
   servings: number | null;
   user_id: string;
+  language: string | null;
 }
 
 export default function Recipes() {
@@ -28,6 +44,7 @@ export default function Recipes() {
   const [filteredRecipes, setFilteredRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
+  const [languageFilter, setLanguageFilter] = useState("all");
   const [deleteRecipeId, setDeleteRecipeId] = useState<string | null>(null);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
 
@@ -37,7 +54,7 @@ export default function Recipes() {
 
   useEffect(() => {
     filterRecipes();
-  }, [searchQuery, recipes]);
+  }, [searchQuery, languageFilter, recipes]);
 
   const checkAuthAndLoadRecipes = async () => {
     const { data: { user } } = await supabase.auth.getUser();
@@ -69,19 +86,27 @@ export default function Recipes() {
   };
 
   const filterRecipes = () => {
-    if (!searchQuery.trim()) {
-      setFilteredRecipes(recipes);
-      return;
+    let filtered = [...recipes];
+
+    // Filter by language
+    if (languageFilter !== "all") {
+      filtered = filtered.filter(
+        (recipe) => (recipe.language || 'en') === languageFilter
+      );
     }
 
-    const query = searchQuery.toLowerCase();
-    const filtered = recipes.filter(
-      (recipe) =>
-        recipe.title.toLowerCase().includes(query) ||
-        recipe.description?.toLowerCase().includes(query) ||
-        recipe.cuisine_type?.toLowerCase().includes(query) ||
-        recipe.difficulty?.toLowerCase().includes(query)
-    );
+    // Filter by search query
+    if (searchQuery.trim()) {
+      const query = searchQuery.toLowerCase();
+      filtered = filtered.filter(
+        (recipe) =>
+          recipe.title.toLowerCase().includes(query) ||
+          recipe.description?.toLowerCase().includes(query) ||
+          recipe.cuisine_type?.toLowerCase().includes(query) ||
+          recipe.difficulty?.toLowerCase().includes(query)
+      );
+    }
+
     setFilteredRecipes(filtered);
   };
 
@@ -103,6 +128,20 @@ export default function Recipes() {
       setDeleteRecipeId(null);
     }
   };
+
+  const clearFilters = () => {
+    setSearchQuery("");
+    setLanguageFilter("all");
+  };
+
+  const hasActiveFilters = searchQuery.trim() || languageFilter !== "all";
+
+  // Count recipes by language
+  const languageCounts = recipes.reduce((acc, recipe) => {
+    const lang = recipe.language || 'en';
+    acc[lang] = (acc[lang] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
 
   if (loading) {
     return (
@@ -127,16 +166,68 @@ export default function Recipes() {
               <p className="text-muted-foreground">Manage all your saved recipes in one place</p>
             </div>
             
-            <div className="relative max-w-md">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-              <Input
-                type="text"
-                placeholder="Search recipes..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10"
-              />
+            {/* Filters */}
+            <div className="flex flex-col sm:flex-row gap-3">
+              <div className="relative flex-1 max-w-md">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                <Input
+                  type="text"
+                  placeholder="Search recipes..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10"
+                />
+              </div>
+              
+              <Select value={languageFilter} onValueChange={setLanguageFilter}>
+                <SelectTrigger className="w-full sm:w-[200px]">
+                  <Globe className="w-4 h-4 mr-2" />
+                  <SelectValue placeholder="Filter by language" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">
+                    All Languages ({recipes.length})
+                  </SelectItem>
+                  {Object.entries(SUPPORTED_LANGUAGES)
+                    .filter(([code]) => code !== 'all' && languageCounts[code])
+                    .map(([code, lang]) => (
+                      <SelectItem key={code} value={code}>
+                        {lang.native} ({languageCounts[code] || 0})
+                      </SelectItem>
+                    ))}
+                </SelectContent>
+              </Select>
+
+              {hasActiveFilters && (
+                <Button variant="ghost" size="sm" onClick={clearFilters} className="self-center">
+                  <X className="w-4 h-4 mr-1" />
+                  Clear
+                </Button>
+              )}
             </div>
+
+            {/* Active filters display */}
+            {hasActiveFilters && (
+              <div className="flex flex-wrap gap-2">
+                {languageFilter !== "all" && (
+                  <Badge variant="secondary" className="gap-1">
+                    <Globe className="w-3 h-3" />
+                    {SUPPORTED_LANGUAGES[languageFilter as keyof typeof SUPPORTED_LANGUAGES]?.native}
+                    <button onClick={() => setLanguageFilter("all")} className="ml-1 hover:text-destructive">
+                      <X className="w-3 h-3" />
+                    </button>
+                  </Badge>
+                )}
+                {searchQuery && (
+                  <Badge variant="secondary" className="gap-1">
+                    Search: "{searchQuery}"
+                    <button onClick={() => setSearchQuery("")} className="ml-1 hover:text-destructive">
+                      <X className="w-3 h-3" />
+                    </button>
+                  </Badge>
+                )}
+              </div>
+            )}
           </div>
 
           {filteredRecipes.length === 0 ? (
@@ -145,14 +236,18 @@ export default function Recipes() {
                 <ChefHat className="w-16 h-16 text-muted-foreground" />
                 <div>
                   <h3 className="text-xl font-semibold mb-2">
-                    {searchQuery ? "No recipes found" : "No recipes yet"}
+                    {hasActiveFilters ? "No recipes found" : "No recipes yet"}
                   </h3>
                   <p className="text-muted-foreground mb-4">
-                    {searchQuery
-                      ? "Try adjusting your search terms"
+                    {hasActiveFilters
+                      ? "Try adjusting your filters"
                       : "Start creating delicious recipes!"}
                   </p>
-                  {!searchQuery && (
+                  {hasActiveFilters ? (
+                    <Button variant="outline" onClick={clearFilters}>
+                      Clear Filters
+                    </Button>
+                  ) : (
                     <Button onClick={() => navigate("/generate")}>
                       Create Your First Recipe
                     </Button>
@@ -162,68 +257,82 @@ export default function Recipes() {
             </Card>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredRecipes.map((recipe) => (
-                <Card key={recipe.id} className="overflow-hidden hover:shadow-card-hover transition-shadow">
-                  <div
-                    className="h-48 bg-gradient-to-br from-primary/20 to-primary-hover/20 cursor-pointer relative"
-                    onClick={() => navigate(`/recipe/${recipe.id}`)}
-                  >
-                    {recipe.image_data && (
-                      <img
-                        src={recipe.image_data}
-                        alt={recipe.title}
-                        className="w-full h-full object-cover"
-                      />
-                    )}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                    <div className="absolute bottom-0 left-0 right-0 p-4">
-                      <h3 className="text-white font-semibold text-lg line-clamp-2">{recipe.title}</h3>
-                    </div>
-                  </div>
-                  <CardHeader className="pb-3">
-                    <CardDescription className="line-clamp-2 min-h-[2.5rem]">
-                      {recipe.description}
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    <div className="flex flex-wrap gap-2 text-sm text-muted-foreground">
-                      {recipe.difficulty && (
-                        <span className="px-2 py-1 bg-secondary rounded-md capitalize">
-                          {recipe.difficulty}
-                        </span>
+              {filteredRecipes.map((recipe) => {
+                const recipeLang = recipe.language || 'en';
+                const langInfo = SUPPORTED_LANGUAGES[recipeLang as keyof typeof SUPPORTED_LANGUAGES];
+                
+                return (
+                  <Card key={recipe.id} className="overflow-hidden hover:shadow-card-hover transition-shadow">
+                    <div
+                      className="h-48 bg-gradient-to-br from-primary/20 to-primary-hover/20 cursor-pointer relative"
+                      onClick={() => navigate(`/recipe/${recipe.id}`)}
+                    >
+                      {recipe.image_data && (
+                        <img
+                          src={recipe.image_data}
+                          alt={recipe.title}
+                          className="w-full h-full object-cover"
+                        />
                       )}
-                      {recipe.cuisine_type && (
-                        <span className="px-2 py-1 bg-secondary rounded-md">
-                          {recipe.cuisine_type}
-                        </span>
-                      )}
-                      {recipe.prep_time && recipe.cook_time && (
-                        <span className="px-2 py-1 bg-secondary rounded-md">
-                          {recipe.prep_time + recipe.cook_time} min
-                        </span>
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                      <div className="absolute bottom-0 left-0 right-0 p-4">
+                        <h3 className="text-white font-semibold text-lg line-clamp-2">{recipe.title}</h3>
+                      </div>
+                      {/* Language badge */}
+                      {langInfo && recipeLang !== 'en' && (
+                        <Badge 
+                          variant="secondary" 
+                          className="absolute top-2 right-2 text-xs"
+                        >
+                          {langInfo.native}
+                        </Badge>
                       )}
                     </div>
-                    <div className="flex gap-3 pt-2">
-                      <Button
-                        size="sm"
-                        className="flex-1 bg-primary/10 hover:bg-primary hover:text-primary-foreground text-primary border border-primary/20 rounded-full shadow-sm transition-all duration-200 hover:shadow-md hover:scale-105"
-                        onClick={() => navigate(`/recipe/${recipe.id}/edit`)}
-                      >
-                        <Pencil className="w-3.5 h-3.5 mr-1.5" />
-                        Edit
-                      </Button>
-                      <Button
-                        size="sm"
-                        className="flex-1 bg-destructive/10 hover:bg-destructive hover:text-destructive-foreground text-destructive border border-destructive/20 rounded-full shadow-sm transition-all duration-200 hover:shadow-md hover:scale-105"
-                        onClick={() => setDeleteRecipeId(recipe.id)}
-                      >
-                        <Trash2 className="w-3.5 h-3.5 mr-1.5" />
-                        Delete
-                      </Button>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
+                    <CardHeader className="pb-3">
+                      <CardDescription className="line-clamp-2 min-h-[2.5rem]">
+                        {recipe.description}
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      <div className="flex flex-wrap gap-2 text-sm text-muted-foreground">
+                        {recipe.difficulty && (
+                          <span className="px-2 py-1 bg-secondary rounded-md capitalize">
+                            {recipe.difficulty}
+                          </span>
+                        )}
+                        {recipe.cuisine_type && (
+                          <span className="px-2 py-1 bg-secondary rounded-md">
+                            {recipe.cuisine_type}
+                          </span>
+                        )}
+                        {recipe.prep_time && recipe.cook_time && (
+                          <span className="px-2 py-1 bg-secondary rounded-md">
+                            {recipe.prep_time + recipe.cook_time} min
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex gap-3 pt-2">
+                        <Button
+                          size="sm"
+                          className="flex-1 bg-primary/10 hover:bg-primary hover:text-primary-foreground text-primary border border-primary/20 rounded-full shadow-sm transition-all duration-200 hover:shadow-md hover:scale-105"
+                          onClick={() => navigate(`/recipe/${recipe.id}/edit`)}
+                        >
+                          <Pencil className="w-3.5 h-3.5 mr-1.5" />
+                          Edit
+                        </Button>
+                        <Button
+                          size="sm"
+                          className="flex-1 bg-destructive/10 hover:bg-destructive hover:text-destructive-foreground text-destructive border border-destructive/20 rounded-full shadow-sm transition-all duration-200 hover:shadow-md hover:scale-105"
+                          onClick={() => setDeleteRecipeId(recipe.id)}
+                        >
+                          <Trash2 className="w-3.5 h-3.5 mr-1.5" />
+                          Delete
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
             </div>
           )}
         </div>

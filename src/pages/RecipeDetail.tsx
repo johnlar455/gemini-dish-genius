@@ -5,9 +5,23 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { RecipeCard } from "@/components/RecipeCard";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { Clock, Users, ChefHat, Heart, ShoppingCart, ArrowLeft } from "lucide-react";
+import { Clock, Users, ChefHat, Heart, ShoppingCart, ArrowLeft, Languages, Loader2, Globe } from "lucide-react";
+
+const SUPPORTED_LANGUAGES = {
+  en: { name: 'English', native: 'English', dir: 'ltr' },
+  ar: { name: 'Arabic', native: 'العربية', dir: 'rtl' },
+  zh: { name: 'Chinese', native: '中文', dir: 'ltr' },
+  ja: { name: 'Japanese', native: '日本語', dir: 'ltr' },
+  de: { name: 'German', native: 'Deutsch', dir: 'ltr' },
+  nl: { name: 'Dutch', native: 'Nederlands', dir: 'ltr' },
+  es: { name: 'Spanish', native: 'Español', dir: 'ltr' },
+  it: { name: 'Italian', native: 'Italiano', dir: 'ltr' },
+  ru: { name: 'Russian', native: 'Русский', dir: 'ltr' },
+};
 
 export default function RecipeDetail() {
   const { id } = useParams();
@@ -17,7 +31,13 @@ export default function RecipeDetail() {
   const [isFavorite, setIsFavorite] = useState(false);
   const [otherRecipes, setOtherRecipes] = useState<any[]>([]);
   const [userId, setUserId] = useState<string | null>(null);
-  
+  const [isTranslating, setIsTranslating] = useState(false);
+  const [translateDialogOpen, setTranslateDialogOpen] = useState(false);
+  const [selectedTargetLang, setSelectedTargetLang] = useState<string>("");
+
+  const recipeLanguage = recipe?.language || 'en';
+  const langConfig = SUPPORTED_LANGUAGES[recipeLanguage as keyof typeof SUPPORTED_LANGUAGES] || SUPPORTED_LANGUAGES.en;
+  const isRTL = langConfig.dir === 'rtl';
 
   useEffect(() => {
     const initUser = async () => {
@@ -138,12 +158,73 @@ export default function RecipeDetail() {
     }
   };
 
+  const handleTranslate = async () => {
+    if (!selectedTargetLang || selectedTargetLang === recipeLanguage) {
+      toast.error("Please select a different target language");
+      return;
+    }
+
+    const { data: { user } } = await supabase.auth.getUser();
+    if (!user) {
+      toast.error("Please sign in to translate recipes");
+      navigate("/auth");
+      return;
+    }
+
+    setIsTranslating(true);
+    try {
+      const response = await supabase.functions.invoke('translate-recipe', {
+        body: { recipe, targetLanguage: selectedTargetLang }
+      });
+
+      if (response.error) throw response.error;
+      
+      const { translatedRecipe } = response.data;
+      
+      // Save as a new recipe
+      const { data: newRecipe, error: insertError } = await supabase
+        .from("recipes")
+        .insert({
+          user_id: user.id,
+          title: translatedRecipe.title,
+          description: translatedRecipe.description,
+          ingredients: translatedRecipe.ingredients,
+          instructions: translatedRecipe.instructions,
+          language: selectedTargetLang,
+          image_data: recipe.image_data,
+          image_url: recipe.image_url,
+          prep_time: recipe.prep_time,
+          cook_time: recipe.cook_time,
+          servings: recipe.servings,
+          difficulty: recipe.difficulty,
+          cuisine_type: recipe.cuisine_type,
+          dietary_preferences: recipe.dietary_preferences,
+          category_id: recipe.category_id,
+          is_ai_generated: true,
+        })
+        .select()
+        .single();
+
+      if (insertError) throw insertError;
+
+      toast.success(`Recipe translated to ${SUPPORTED_LANGUAGES[selectedTargetLang as keyof typeof SUPPORTED_LANGUAGES]?.native || selectedTargetLang}!`);
+      setTranslateDialogOpen(false);
+      navigate(`/recipe/${newRecipe.id}`);
+    } catch (error: any) {
+      console.error("Translation error:", error);
+      toast.error(error.message || "Failed to translate recipe");
+    } finally {
+      setIsTranslating(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-warm">
         <Navbar />
         <div className="container mx-auto py-12 text-center">
-          <p className="text-muted-foreground">Loading recipe...</p>
+          <Loader2 className="w-8 h-8 animate-spin mx-auto text-primary" />
+          <p className="text-muted-foreground mt-2">Loading recipe...</p>
         </div>
       </div>
     );
@@ -158,10 +239,69 @@ export default function RecipeDetail() {
       <Navbar />
 
       <div className="container mx-auto py-8 px-4">
-        <Button variant="ghost" onClick={() => navigate(-1)} className="mb-4">
-          <ArrowLeft className="w-4 h-4 mr-2" />
-          Back
-        </Button>
+        <div className="flex items-center justify-between mb-4">
+          <Button variant="ghost" onClick={() => navigate(-1)}>
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back
+          </Button>
+          
+          {/* Language indicator and translate button */}
+          <div className="flex items-center gap-2">
+            <Badge variant="outline" className="gap-1">
+              <Globe className="w-3 h-3" />
+              {langConfig.native}
+            </Badge>
+            <Dialog open={translateDialogOpen} onOpenChange={setTranslateDialogOpen}>
+              <DialogTrigger asChild>
+                <Button variant="outline" size="sm">
+                  <Languages className="w-4 h-4 mr-2" />
+                  Translate
+                </Button>
+              </DialogTrigger>
+              <DialogContent>
+                <DialogHeader>
+                  <DialogTitle>Translate Recipe</DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4 pt-4">
+                  <p className="text-sm text-muted-foreground">
+                    Translate this recipe to another language. A new copy will be saved to your recipes.
+                  </p>
+                  <Select value={selectedTargetLang} onValueChange={setSelectedTargetLang}>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Select target language" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {Object.entries(SUPPORTED_LANGUAGES)
+                        .filter(([code]) => code !== recipeLanguage)
+                        .map(([code, lang]) => (
+                          <SelectItem key={code} value={code}>
+                            {lang.native} ({lang.name})
+                          </SelectItem>
+                        ))}
+                    </SelectContent>
+                  </Select>
+                  <Button 
+                    onClick={handleTranslate} 
+                    disabled={isTranslating || !selectedTargetLang}
+                    className="w-full"
+                  >
+                    {isTranslating ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Translating...
+                      </>
+                    ) : (
+                      <>
+                        <Languages className="w-4 h-4 mr-2" />
+                        Translate & Save
+                      </>
+                    )}
+                  </Button>
+                </div>
+              </DialogContent>
+            </Dialog>
+          </div>
+        </div>
 
         <div className="grid lg:grid-cols-2 gap-8">
           <div>
@@ -172,7 +312,7 @@ export default function RecipeDetail() {
             />
           </div>
 
-          <div className="space-y-6">
+          <div className={`space-y-6 ${isRTL ? 'text-right' : ''}`} dir={isRTL ? 'rtl' : 'ltr'}>
             <div>
               <h1 className="text-4xl font-bold mb-3">{recipe.title}</h1>
               {recipe.description && (
@@ -180,10 +320,10 @@ export default function RecipeDetail() {
               )}
             </div>
 
-            <div className="flex flex-wrap gap-2">
+            <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
               {recipe.difficulty && (
                 <Badge variant="secondary" className="capitalize">
-                  <ChefHat className="w-3 h-3 mr-1" />
+                  <ChefHat className={`w-3 h-3 ${isRTL ? 'ml-1' : 'mr-1'}`} />
                   {recipe.difficulty}
                 </Badge>
               )}
@@ -195,28 +335,28 @@ export default function RecipeDetail() {
               ))}
             </div>
 
-            <div className="flex items-center gap-6 text-muted-foreground">
+            <div className={`flex items-center gap-6 text-muted-foreground ${isRTL ? 'flex-row-reverse justify-end' : ''}`}>
               {totalTime > 0 && (
-                <div className="flex items-center gap-2">
+                <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
                   <Clock className="w-5 h-5" />
                   <span>{totalTime} mins</span>
                 </div>
               )}
               {recipe.servings && (
-                <div className="flex items-center gap-2">
+                <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
                   <Users className="w-5 h-5" />
                   <span>{recipe.servings} servings</span>
                 </div>
               )}
             </div>
 
-            <div className="flex gap-3">
+            <div className={`flex gap-3 ${isRTL ? 'flex-row-reverse' : ''}`}>
               <Button variant="hero" className="flex-1" onClick={toggleFavorite}>
-                <Heart className={`w-5 h-5 mr-2 ${isFavorite ? "fill-current" : ""}`} />
+                <Heart className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'} ${isFavorite ? "fill-current" : ""}`} />
                 {isFavorite ? "Saved" : "Save Recipe"}
               </Button>
               <Button variant="secondary" onClick={addToShoppingList}>
-                <ShoppingCart className="w-5 h-5 mr-2" />
+                <ShoppingCart className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'}`} />
                 Add to Shopping List
               </Button>
             </div>
@@ -225,12 +365,14 @@ export default function RecipeDetail() {
 
         <div className="grid lg:grid-cols-2 gap-8 mt-12">
           <Card className="shadow-card">
-            <CardContent className="pt-6">
-              <h2 className="text-2xl font-bold mb-4">Ingredients</h2>
+            <CardContent className="pt-6" dir={isRTL ? 'rtl' : 'ltr'}>
+              <h2 className={`text-2xl font-bold mb-4 ${isRTL ? 'text-right' : ''}`}>
+                {isRTL ? 'المكونات' : 'Ingredients'}
+              </h2>
               <ul className="space-y-3">
                 {recipe.ingredients.map((ingredient: any, index: number) => (
-                  <li key={index} className="flex items-start gap-3">
-                    <span className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></span>
+                  <li key={index} className={`flex items-start gap-3 ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
+                    <span className={`w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0`}></span>
                     <span>
                       <span className="font-medium">{ingredient.amount}</span> {ingredient.item}
                     </span>
@@ -241,11 +383,13 @@ export default function RecipeDetail() {
           </Card>
 
           <Card className="shadow-card">
-            <CardContent className="pt-6">
-              <h2 className="text-2xl font-bold mb-4">Instructions</h2>
+            <CardContent className="pt-6" dir={isRTL ? 'rtl' : 'ltr'}>
+              <h2 className={`text-2xl font-bold mb-4 ${isRTL ? 'text-right' : ''}`}>
+                {isRTL ? 'التعليمات' : 'Instructions'}
+              </h2>
               <ol className="space-y-4">
                 {recipe.instructions.map((instruction: any) => (
-                  <li key={instruction.step} className="flex gap-4">
+                  <li key={instruction.step} className={`flex gap-4 ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
                     <span className="flex-shrink-0 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-semibold">
                       {instruction.step}
                     </span>

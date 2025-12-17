@@ -144,6 +144,7 @@ export default function GenerateRecipe() {
           category_id: categoryId,
           user_id: user.id,
           is_ai_generated: true,
+          language: recipe.language || language || 'en',
         })
         .select()
         .single();

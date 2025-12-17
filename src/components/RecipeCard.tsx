@@ -18,9 +18,22 @@ interface RecipeCardProps {
   servings?: number;
   difficulty?: string;
   cuisine_type?: string;
+  language?: string;
   isFavorite?: boolean;
   onFavoriteChange?: () => void;
 }
+
+const LANGUAGE_LABELS: Record<string, string> = {
+  en: 'English',
+  ar: 'العربية',
+  zh: '中文',
+  ja: '日本語',
+  de: 'Deutsch',
+  nl: 'Nederlands',
+  es: 'Español',
+  it: 'Italiano',
+  ru: 'Русский',
+};
 
 export const RecipeCard = ({
   id,
@@ -33,6 +46,7 @@ export const RecipeCard = ({
   servings,
   difficulty,
   cuisine_type,
+  language,
   isFavorite = false,
   onFavoriteChange,
 }: RecipeCardProps) => {
@@ -104,6 +118,11 @@ export const RecipeCard = ({
               className={`w-5 h-5 ${localIsFavorite ? "fill-primary text-primary" : "text-foreground"}`}
             />
           </Button>
+          {language && language !== 'en' && LANGUAGE_LABELS[language] && (
+            <Badge variant="secondary" className="absolute top-2 left-2 text-xs">
+              {LANGUAGE_LABELS[language]}
+            </Badge>
+          )}
         </div>
 
         <CardHeader>
