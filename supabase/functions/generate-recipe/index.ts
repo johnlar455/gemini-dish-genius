@@ -42,7 +42,7 @@ function validateInput(data: any): { valid: boolean; error?: string } {
   if (!data.category || typeof data.category !== 'string' || data.category.trim().length === 0) {
     return { valid: false, error: 'Category is required and must be a string' };
   }
-  if (data.language && typeof data.language === 'string' && !SUPPORTED_LANGUAGES[data.language]) {
+  if (data.language && typeof data.language === 'string' && data.language !== 'auto' && !SUPPORTED_LANGUAGES[data.language]) {
     return { valid: false, error: 'Unsupported language code' };
   }
   return { valid: true };
