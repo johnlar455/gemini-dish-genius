@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
 import { Button } from "@/components/ui/button";
@@ -45,10 +45,31 @@ export default function GenerateRecipe() {
   const [dietaryPreferences, setDietaryPreferences] = useState<string[]>([]);
   const [category, setCategory] = useState("");
   const [language, setLanguage] = useState("auto");
+  const [userPreferredLanguage, setUserPreferredLanguage] = useState<string | null>(null);
 
   const dietaryOptions = ["vegetarian", "vegan", "gluten-free", "dairy-free", "keto", "low-carb"];
   const cuisineOptions = ["Italian", "Chinese", "Mexican", "Indian", "Japanese", "Thai", "Mediterranean", "French"];
   const categoryOptions = ["Breakfast", "Desserts", "Dinner", "Gluten-Free", "Lunch", "Snacks", "Vegan", "Vegetarian"];
+
+  // Load user's preferred language on mount
+  useEffect(() => {
+    const loadUserPreference = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("preferred_language")
+          .eq("id", user.id)
+          .single();
+        
+        if (profile?.preferred_language && profile.preferred_language !== "en") {
+          setUserPreferredLanguage(profile.preferred_language);
+          setLanguage(profile.preferred_language);
+        }
+      }
+    };
+    loadUserPreference();
+  }, []);
 
   const addIngredient = () => {
     if (currentIngredient.trim()) {
@@ -209,7 +230,9 @@ export default function GenerateRecipe() {
                 </SelectContent>
               </Select>
               <p className="text-xs text-muted-foreground">
-                Auto-detect will generate the recipe in the same language as your prompt
+                {userPreferredLanguage 
+                  ? `Using your preferred language from profile settings`
+                  : "Auto-detect will generate the recipe in the same language as your prompt"}
               </p>
             </div>
 

@@ -5,15 +5,29 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { User, LogOut } from "lucide-react";
+import { User, LogOut, Globe } from "lucide-react";
+
+const SUPPORTED_LANGUAGES = [
+  { code: "en", name: "English", nativeName: "🇬🇧 English" },
+  { code: "ar", name: "Arabic", nativeName: "🇸🇦 العربية" },
+  { code: "zh", name: "Chinese", nativeName: "🇨🇳 中文" },
+  { code: "ja", name: "Japanese", nativeName: "🇯🇵 日本語" },
+  { code: "de", name: "German", nativeName: "🇩🇪 Deutsch" },
+  { code: "nl", name: "Dutch", nativeName: "🇳🇱 Nederlands" },
+  { code: "es", name: "Spanish", nativeName: "🇪🇸 Español" },
+  { code: "it", name: "Italian", nativeName: "🇮🇹 Italiano" },
+  { code: "ru", name: "Russian", nativeName: "🇷🇺 Русский" },
+];
 
 export default function Profile() {
   const navigate = useNavigate();
   const [user, setUser] = useState<any>(null);
   const [profile, setProfile] = useState<any>(null);
   const [displayName, setDisplayName] = useState("");
+  const [preferredLanguage, setPreferredLanguage] = useState("en");
   const [loading, setLoading] = useState(true);
   const [updating, setUpdating] = useState(false);
 
@@ -44,6 +58,7 @@ export default function Profile() {
       if (error && error.code !== "PGRST116") throw error;
       setProfile(data);
       setDisplayName(data?.display_name || "");
+      setPreferredLanguage(data?.preferred_language || "en");
     } catch (error: any) {
       console.error("Error loading profile:", error);
       toast.error("Failed to load profile");
@@ -59,12 +74,15 @@ export default function Profile() {
     try {
       const { error } = await supabase
         .from("profiles")
-        .update({ display_name: displayName })
+        .update({ 
+          display_name: displayName,
+          preferred_language: preferredLanguage 
+        })
         .eq("id", user.id);
 
       if (error) throw error;
       toast.success("Profile updated successfully");
-      setProfile({ ...profile, display_name: displayName });
+      setProfile({ ...profile, display_name: displayName, preferred_language: preferredLanguage });
     } catch (error: any) {
       console.error("Error updating profile:", error);
       toast.error("Failed to update profile");
@@ -124,6 +142,28 @@ export default function Profile() {
                   onChange={(e) => setDisplayName(e.target.value)}
                   placeholder="Your name"
                 />
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="preferredLanguage" className="flex items-center gap-2">
+                  <Globe className="w-4 h-4" />
+                  Preferred Language
+                </Label>
+                <Select value={preferredLanguage} onValueChange={setPreferredLanguage}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select language" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {SUPPORTED_LANGUAGES.map((lang) => (
+                      <SelectItem key={lang.code} value={lang.code}>
+                        {lang.nativeName}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+                <p className="text-xs text-muted-foreground">
+                  This language will be used by default when generating new recipes
+                </p>
               </div>
 
               <Button
