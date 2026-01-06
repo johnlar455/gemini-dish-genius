@@ -12,6 +12,8 @@ import meatThermometerImg from "@/assets/meat-thermometer.jpg";
 import vegetableChopperImg from "@/assets/vegetable-chopper.jpg";
 import foodStorageImg from "@/assets/food-storage.jpg";
 import airtightContainersImg from "@/assets/airtight-containers.jpg";
+import { usePageTranslation } from "@/hooks/usePageTranslation";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface Product {
   id: number;
@@ -21,6 +23,25 @@ interface Product {
   hashtags: string[];
   image: string;
 }
+
+const PAGE_TEXTS = [
+  "Curated Kitchen Essentials",
+  "Premium Kitchen Tools",
+  "For Modern Cooking",
+  "Discover the finest selection of kitchen essentials that transform your cooking experience",
+  "Premium Quality",
+  "Hand-picked essentials from trusted brands",
+  "Top Rated",
+  "Highly rated by cooking enthusiasts",
+  "Fast Delivery",
+  "Quick shipping on all products",
+  "Shop The Collection",
+  "Each product is carefully selected to meet the highest standards of quality and performance",
+  "Trending",
+  "Shop Now",
+  "Why Shop With Us?",
+  "Every product in our collection has been carefully tested and approved by professional chefs and cooking enthusiasts. We only recommend tools that we would use in our own kitchens, ensuring you get the best value and quality.",
+];
 
 const products: Product[] = [
   {
@@ -89,27 +110,30 @@ const products: Product[] = [
   }
 ];
 
-const features = [
-  {
-    icon: Award,
-    title: "Premium Quality",
-    description: "Hand-picked essentials from trusted brands"
-  },
-  {
-    icon: TrendingUp,
-    title: "Top Rated",
-    description: "Highly rated by cooking enthusiasts"
-  },
-  {
-    icon: Package,
-    title: "Fast Delivery",
-    description: "Quick shipping on all products"
-  }
-];
-
 export default function Shop() {
+  const { t } = usePageTranslation(PAGE_TEXTS);
+  const { isRTL } = useLanguage();
+
+  const features = [
+    {
+      icon: Award,
+      title: t("Premium Quality"),
+      description: t("Hand-picked essentials from trusted brands")
+    },
+    {
+      icon: TrendingUp,
+      title: t("Top Rated"),
+      description: t("Highly rated by cooking enthusiasts")
+    },
+    {
+      icon: Package,
+      title: t("Fast Delivery"),
+      description: t("Quick shipping on all products")
+    }
+  ];
+
   return (
-    <div className="min-h-screen bg-gradient-warm flex flex-col font-sans">
+    <div className="min-h-screen bg-gradient-warm flex flex-col font-sans" dir={isRTL ? "rtl" : "ltr"}>
       <Navbar />
 
       {/* Hero Section */}
@@ -123,22 +147,22 @@ export default function Shop() {
           <div className="animate-fade-in-up">
             <Badge className="mb-4 sm:mb-6 text-sm sm:text-base px-4 sm:px-6 py-2 sm:py-2.5 shadow-lg bg-gradient-to-r from-primary to-primary-hover border-0 text-primary-foreground">
               <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 mr-2 animate-pulse" />
-              Curated Kitchen Essentials
+              {t("Curated Kitchen Essentials")}
             </Badge>
           </div>
           
           <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black mb-4 sm:mb-6 animate-fade-in-up leading-tight px-2" style={{ animationDelay: '0.1s' }}>
             <span className="bg-gradient-to-r from-foreground via-foreground to-foreground/70 bg-clip-text text-transparent">
-              Premium Kitchen Tools
+              {t("Premium Kitchen Tools")}
             </span>
             <br className="hidden sm:block" />
             <span className="bg-gradient-to-r from-primary via-primary-hover to-primary bg-clip-text text-transparent mt-1 sm:mt-2 inline-block">
-              For Modern Cooking
+              {t("For Modern Cooking")}
             </span>
           </h1>
           
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-muted-foreground max-w-3xl mx-auto leading-relaxed mb-8 sm:mb-10 md:mb-12 animate-fade-in-up font-light px-4" style={{ animationDelay: '0.2s' }}>
-            Discover the finest selection of kitchen essentials that transform your cooking experience
+            {t("Discover the finest selection of kitchen essentials that transform your cooking experience")}
           </p>
 
           {/* Feature Pills */}
@@ -165,10 +189,10 @@ export default function Shop() {
           {/* Section Header */}
           <div className="text-center mb-10 sm:mb-12 md:mb-16">
             <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold mb-3 sm:mb-4 px-2">
-              Shop The Collection
+              {t("Shop The Collection")}
             </h2>
             <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-4">
-              Each product is carefully selected to meet the highest standards of quality and performance
+              {t("Each product is carefully selected to meet the highest standards of quality and performance")}
             </p>
           </div>
 
@@ -193,7 +217,7 @@ export default function Shop() {
                     {index < 3 && (
                       <div className="absolute top-3 sm:top-4 right-3 sm:right-4 bg-gradient-to-r from-primary to-primary-hover text-primary-foreground px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-xs font-bold shadow-lg flex items-center gap-1">
                         <TrendingUp className="w-3 h-3" />
-                        <span className="hidden sm:inline">Trending</span>
+                        <span className="hidden sm:inline">{t("Trending")}</span>
                       </div>
                     )}
                   </div>
@@ -229,7 +253,7 @@ export default function Shop() {
                       onClick={() => window.open(product.affiliateLink, '_blank')}
                     >
                       <ShoppingCart className="w-4 h-4 sm:w-5 sm:h-5 group-hover/btn:scale-110 transition-transform" />
-                      Shop Now
+                      {t("Shop Now")}
                       <ExternalLink className="w-3.5 h-3.5 sm:w-4 sm:h-4 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
                     </Button>
                   </CardContent>
@@ -247,11 +271,10 @@ export default function Shop() {
           <div className="bg-card/50 backdrop-blur-sm rounded-2xl sm:rounded-3xl p-6 sm:p-8 md:p-12 shadow-xl border border-border/50">
             <Sparkles className="w-10 h-10 sm:w-12 sm:h-12 mx-auto mb-4 sm:mb-6 text-primary" />
             <h3 className="font-display text-2xl sm:text-3xl md:text-4xl font-bold mb-3 sm:mb-4 px-2">
-              Why Shop With Us?
+              {t("Why Shop With Us?")}
             </h3>
             <p className="text-base sm:text-lg text-muted-foreground leading-relaxed px-2">
-              Every product in our collection has been carefully tested and approved by professional chefs and cooking enthusiasts. 
-              We only recommend tools that we would use in our own kitchens, ensuring you get the best value and quality.
+              {t("Every product in our collection has been carefully tested and approved by professional chefs and cooking enthusiasts. We only recommend tools that we would use in our own kitchens, ensuring you get the best value and quality.")}
             </p>
           </div>
         </div>

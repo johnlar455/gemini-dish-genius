@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,6 +8,22 @@ import { RecipeCard } from "@/components/RecipeCard";
 import { supabase } from "@/integrations/supabase/client";
 import { Search, Sparkles } from "lucide-react";
 import { toast } from "sonner";
+import { usePageTranslation } from "@/hooks/usePageTranslation";
+import { useLanguage } from "@/contexts/LanguageContext";
+
+const PAGE_TEXTS = [
+  "Discover Your Next",
+  "Culinary Adventure",
+  "AI-powered recipe generation tailored to your taste, dietary preferences, and available ingredients",
+  "Search recipes or describe what you want to cook...",
+  "Generate AI Recipe",
+  "Featured Recipes",
+  "Explore our collection of AI-generated culinary delights",
+  "Loading delicious recipes...",
+  "No recipes yet. Be the first to create one!",
+  "Generate Your First Recipe",
+  "Failed to load recipes",
+];
 
 export default function Home() {
   const navigate = useNavigate();
@@ -15,6 +31,8 @@ export default function Home() {
   const [recipes, setRecipes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState<any>(null);
+  const { t } = usePageTranslation(PAGE_TEXTS);
+  const { isRTL } = useLanguage();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -45,7 +63,7 @@ export default function Home() {
       setRecipes(data || []);
     } catch (error: any) {
       console.error("Error loading recipes:", error);
-      toast.error("Failed to load recipes");
+      toast.error(t("Failed to load recipes"));
     } finally {
       setLoading(false);
     }
@@ -59,7 +77,7 @@ export default function Home() {
 
 
   return (
-    <div className="min-h-screen bg-gradient-warm flex flex-col">
+    <div className="min-h-screen bg-gradient-warm flex flex-col" dir={isRTL ? "rtl" : "ltr"}>
       <Navbar />
 
       {/* Hero Section */}
@@ -67,16 +85,16 @@ export default function Home() {
         <div className="absolute inset-0 bg-gradient-hero opacity-10"></div>
         <div className="container mx-auto max-w-5xl text-center relative z-10">
           <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text">
-            Discover Your Next
-            <span className="block text-primary mt-2">Culinary Adventure</span>
+            {t("Discover Your Next")}
+            <span className="block text-primary mt-2">{t("Culinary Adventure")}</span>
           </h1>
           <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            AI-powered recipe generation tailored to your taste, dietary preferences, and available ingredients
+            {t("AI-powered recipe generation tailored to your taste, dietary preferences, and available ingredients")}
           </p>
 
           <div className="flex gap-3 max-w-2xl mx-auto mb-6">
             <Input
-              placeholder="Search recipes or describe what you want to cook..."
+              placeholder={t("Search recipes or describe what you want to cook...")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyPress={(e) => e.key === "Enter" && handleSearch()}
@@ -94,7 +112,7 @@ export default function Home() {
             className="shadow-soft"
           >
             <Sparkles className="w-5 h-5 mr-2" />
-            Generate AI Recipe
+            {t("Generate AI Recipe")}
           </Button>
         </div>
       </section>
@@ -104,16 +122,16 @@ export default function Home() {
         <div className="container mx-auto">
           <div className="flex items-center justify-between mb-8">
             <div>
-              <h2 className="text-3xl font-bold mb-2">Featured Recipes</h2>
+              <h2 className="text-3xl font-bold mb-2">{t("Featured Recipes")}</h2>
               <p className="text-muted-foreground">
-                Explore our collection of AI-generated culinary delights
+                {t("Explore our collection of AI-generated culinary delights")}
               </p>
             </div>
           </div>
 
           {loading ? (
             <div className="text-center py-12">
-              <p className="text-muted-foreground">Loading delicious recipes...</p>
+              <p className="text-muted-foreground">{t("Loading delicious recipes...")}</p>
             </div>
           ) : recipes.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -123,10 +141,10 @@ export default function Home() {
             </div>
           ) : (
             <div className="text-center py-12 bg-muted rounded-lg">
-              <p className="text-muted-foreground mb-4">No recipes yet. Be the first to create one!</p>
+              <p className="text-muted-foreground mb-4">{t("No recipes yet. Be the first to create one!")}</p>
               <Button variant="hero" onClick={() => navigate("/generate")}>
                 <Sparkles className="w-5 h-5 mr-2" />
-                Generate Your First Recipe
+                {t("Generate Your First Recipe")}
               </Button>
             </div>
           )}
