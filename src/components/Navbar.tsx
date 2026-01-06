@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
-import { ChefHat, Heart, Search, User, BookOpen, ShoppingCart, Menu, Sparkles, Notebook, Globe } from "lucide-react";
+import { ChefHat, Heart, Search, User, BookOpen, ShoppingCart, Menu, Sparkles, Notebook, Globe, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { User as SupabaseUser } from "@supabase/supabase-js";
@@ -13,78 +13,25 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { toast } from "sonner";
-
-const SUPPORTED_LANGUAGES = [
-  { code: "en", name: "English", nativeName: "🇬🇧 English" },
-  { code: "ar", name: "Arabic", nativeName: "🇸🇦 العربية" },
-  { code: "zh", name: "Chinese", nativeName: "🇨🇳 中文" },
-  { code: "ja", name: "Japanese", nativeName: "🇯🇵 日本語" },
-  { code: "de", name: "German", nativeName: "🇩🇪 Deutsch" },
-  { code: "nl", name: "Dutch", nativeName: "🇳🇱 Nederlands" },
-  { code: "es", name: "Spanish", nativeName: "🇪🇸 Español" },
-  { code: "it", name: "Italian", nativeName: "🇮🇹 Italiano" },
-  { code: "ru", name: "Russian", nativeName: "🇷🇺 Русский" },
-];
+import { useLanguage, SUPPORTED_LANGUAGES } from "@/contexts/LanguageContext";
 
 export const Navbar = () => {
   const location = useLocation();
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const [currentLanguage, setCurrentLanguage] = useState("en");
+  const { currentLanguage, setLanguage, isTranslating } = useLanguage();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
-      if (session?.user) {
-        loadUserLanguage(session.user.id);
-      }
     });
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
-      if (session?.user) {
-        setTimeout(() => loadUserLanguage(session.user.id), 0);
-      }
     });
 
     return () => subscription.unsubscribe();
   }, []);
-
-  const loadUserLanguage = async (userId: string) => {
-    const { data: profile } = await supabase
-      .from("profiles")
-      .select("preferred_language")
-      .eq("id", userId)
-      .single();
-    
-    if (profile?.preferred_language) {
-      setCurrentLanguage(profile.preferred_language);
-    }
-  };
-
-  const handleLanguageChange = async (langCode: string) => {
-    if (!user) {
-      toast.error("Please sign in to change language preference");
-      return;
-    }
-
-    try {
-      const { error } = await supabase
-        .from("profiles")
-        .update({ preferred_language: langCode })
-        .eq("id", user.id);
-
-      if (error) throw error;
-      
-      setCurrentLanguage(langCode);
-      const langName = SUPPORTED_LANGUAGES.find(l => l.code === langCode)?.name || langCode;
-      toast.success(`Language changed to ${langName}`);
-    } catch (error) {
-      console.error("Error updating language:", error);
-      toast.error("Failed to update language preference");
-    }
-  };
 
   const navLinks = [
     { path: "/", label: "Home", icon: ChefHat },
@@ -134,7 +81,11 @@ export const Navbar = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="sm" className="gap-2">
-                <Globe className="w-4 h-4" />
+                {isTranslating ? (
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                ) : (
+                  <Globe className="w-4 h-4" />
+                )}
                 <span className="hidden sm:inline">{currentLangInfo.nativeName.split(' ')[0]}</span>
               </Button>
             </DropdownMenuTrigger>
@@ -144,7 +95,7 @@ export const Navbar = () => {
               {SUPPORTED_LANGUAGES.map((lang) => (
                 <DropdownMenuItem
                   key={lang.code}
-                  onClick={() => handleLanguageChange(lang.code)}
+                  onClick={() => setLanguage(lang.code)}
                   className={currentLanguage === lang.code ? "bg-accent" : ""}
                 >
                   {lang.nativeName}
@@ -214,7 +165,7 @@ export const Navbar = () => {
                         variant={currentLanguage === lang.code ? "default" : "outline"}
                         size="sm"
                         onClick={() => {
-                          handleLanguageChange(lang.code);
+                          setLanguage(lang.code);
                           setIsOpen(false);
                         }}
                         className="text-xs"
