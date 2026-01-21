@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
@@ -10,6 +11,8 @@ import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Search, Pencil, Trash2, ChefHat, Loader2, Globe, X } from "lucide-react";
+import { usePageTranslation } from "@/hooks/usePageTranslation";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const SUPPORTED_LANGUAGES = {
   all: { name: 'All Languages', native: 'All' },
@@ -23,6 +26,30 @@ const SUPPORTED_LANGUAGES = {
   it: { name: 'Italian', native: 'Italiano' },
   ru: { name: 'Russian', native: 'Русский' },
 };
+
+const PAGE_TEXTS = [
+  "My Recipes",
+  "Manage all your saved recipes in one place",
+  "Search recipes...",
+  "Filter by language",
+  "Clear",
+  "No recipes found",
+  "No recipes yet",
+  "Try adjusting your filters",
+  "Start creating delicious recipes!",
+  "Clear Filters",
+  "Create Your First Recipe",
+  "Edit",
+  "Delete",
+  "Delete Recipe",
+  "Are you sure you want to delete this recipe? This action cannot be undone.",
+  "Cancel",
+  "Recipe deleted successfully",
+  "Failed to delete recipe",
+  "Please sign in to view your recipes",
+  "Failed to load recipes",
+  "All Languages",
+];
 
 interface Recipe {
   id: string;
@@ -47,6 +74,8 @@ export default function Recipes() {
   const [languageFilter, setLanguageFilter] = useState("all");
   const [deleteRecipeId, setDeleteRecipeId] = useState<string | null>(null);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
+  const { t } = usePageTranslation(PAGE_TEXTS);
+  const { isRTL } = useLanguage();
 
   useEffect(() => {
     checkAuthAndLoadRecipes();
@@ -59,7 +88,7 @@ export default function Recipes() {
   const checkAuthAndLoadRecipes = async () => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
-      toast.error("Please sign in to view your recipes");
+      toast.error(t("Please sign in to view your recipes"));
       navigate("/auth");
       return;
     }
@@ -79,7 +108,7 @@ export default function Recipes() {
       setRecipes(data || []);
     } catch (error: any) {
       console.error("Error loading recipes:", error);
-      toast.error("Failed to load recipes");
+      toast.error(t("Failed to load recipes"));
     } finally {
       setLoading(false);
     }
@@ -88,14 +117,12 @@ export default function Recipes() {
   const filterRecipes = () => {
     let filtered = [...recipes];
 
-    // Filter by language
     if (languageFilter !== "all") {
       filtered = filtered.filter(
         (recipe) => (recipe.language || 'en') === languageFilter
       );
     }
 
-    // Filter by search query
     if (searchQuery.trim()) {
       const query = searchQuery.toLowerCase();
       filtered = filtered.filter(
@@ -120,10 +147,10 @@ export default function Recipes() {
       if (error) throw error;
 
       setRecipes(recipes.filter((r) => r.id !== recipeId));
-      toast.success("Recipe deleted successfully");
+      toast.success(t("Recipe deleted successfully"));
     } catch (error: any) {
       console.error("Error deleting recipe:", error);
-      toast.error("Failed to delete recipe");
+      toast.error(t("Failed to delete recipe"));
     } finally {
       setDeleteRecipeId(null);
     }
@@ -136,7 +163,6 @@ export default function Recipes() {
 
   const hasActiveFilters = searchQuery.trim() || languageFilter !== "all";
 
-  // Count recipes by language
   const languageCounts = recipes.reduce((acc, recipe) => {
     const lang = recipe.language || 'en';
     acc[lang] = (acc[lang] || 0) + 1;
@@ -155,38 +181,37 @@ export default function Recipes() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-warm">
+    <div className="min-h-screen bg-gradient-warm flex flex-col" dir={isRTL ? "rtl" : "ltr"}>
       <Navbar />
       
-      <div className="container mx-auto py-12 px-4">
+      <div className="container mx-auto py-12 px-4 flex-1">
         <div className="max-w-6xl mx-auto">
           <div className="flex flex-col gap-6 mb-8">
             <div>
-              <h1 className="text-4xl font-bold mb-2">My Recipes</h1>
-              <p className="text-muted-foreground">Manage all your saved recipes in one place</p>
+              <h1 className="text-4xl font-bold mb-2">{t("My Recipes")}</h1>
+              <p className="text-muted-foreground">{t("Manage all your saved recipes in one place")}</p>
             </div>
             
-            {/* Filters */}
-            <div className="flex flex-col sm:flex-row gap-3">
+            <div className={`flex flex-col sm:flex-row gap-3 ${isRTL ? 'sm:flex-row-reverse' : ''}`}>
               <div className="relative flex-1 max-w-md">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
+                <Search className={`absolute ${isRTL ? 'right-3' : 'left-3'} top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4`} />
                 <Input
                   type="text"
-                  placeholder="Search recipes..."
+                  placeholder={t("Search recipes...")}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
+                  className={isRTL ? 'pr-10' : 'pl-10'}
                 />
               </div>
               
               <Select value={languageFilter} onValueChange={setLanguageFilter}>
                 <SelectTrigger className="w-full sm:w-[200px]">
-                  <Globe className="w-4 h-4 mr-2" />
-                  <SelectValue placeholder="Filter by language" />
+                  <Globe className={`w-4 h-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+                  <SelectValue placeholder={t("Filter by language")} />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">
-                    All Languages ({recipes.length})
+                    {t("All Languages")} ({recipes.length})
                   </SelectItem>
                   {Object.entries(SUPPORTED_LANGUAGES)
                     .filter(([code]) => code !== 'all' && languageCounts[code])
@@ -200,20 +225,19 @@ export default function Recipes() {
 
               {hasActiveFilters && (
                 <Button variant="ghost" size="sm" onClick={clearFilters} className="self-center">
-                  <X className="w-4 h-4 mr-1" />
-                  Clear
+                  <X className={`w-4 h-4 ${isRTL ? 'ml-1' : 'mr-1'}`} />
+                  {t("Clear")}
                 </Button>
               )}
             </div>
 
-            {/* Active filters display */}
             {hasActiveFilters && (
-              <div className="flex flex-wrap gap-2">
+              <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
                 {languageFilter !== "all" && (
                   <Badge variant="secondary" className="gap-1">
                     <Globe className="w-3 h-3" />
                     {SUPPORTED_LANGUAGES[languageFilter as keyof typeof SUPPORTED_LANGUAGES]?.native}
-                    <button onClick={() => setLanguageFilter("all")} className="ml-1 hover:text-destructive">
+                    <button onClick={() => setLanguageFilter("all")} className={`${isRTL ? 'mr-1' : 'ml-1'} hover:text-destructive`}>
                       <X className="w-3 h-3" />
                     </button>
                   </Badge>
@@ -221,7 +245,7 @@ export default function Recipes() {
                 {searchQuery && (
                   <Badge variant="secondary" className="gap-1">
                     Search: "{searchQuery}"
-                    <button onClick={() => setSearchQuery("")} className="ml-1 hover:text-destructive">
+                    <button onClick={() => setSearchQuery("")} className={`${isRTL ? 'mr-1' : 'ml-1'} hover:text-destructive`}>
                       <X className="w-3 h-3" />
                     </button>
                   </Badge>
@@ -236,20 +260,20 @@ export default function Recipes() {
                 <ChefHat className="w-16 h-16 text-muted-foreground" />
                 <div>
                   <h3 className="text-xl font-semibold mb-2">
-                    {hasActiveFilters ? "No recipes found" : "No recipes yet"}
+                    {hasActiveFilters ? t("No recipes found") : t("No recipes yet")}
                   </h3>
                   <p className="text-muted-foreground mb-4">
                     {hasActiveFilters
-                      ? "Try adjusting your filters"
-                      : "Start creating delicious recipes!"}
+                      ? t("Try adjusting your filters")
+                      : t("Start creating delicious recipes!")}
                   </p>
                   {hasActiveFilters ? (
                     <Button variant="outline" onClick={clearFilters}>
-                      Clear Filters
+                      {t("Clear Filters")}
                     </Button>
                   ) : (
                     <Button onClick={() => navigate("/generate")}>
-                      Create Your First Recipe
+                      {t("Create Your First Recipe")}
                     </Button>
                   )}
                 </div>
@@ -278,7 +302,6 @@ export default function Recipes() {
                       <div className="absolute bottom-0 left-0 right-0 p-4">
                         <h3 className="text-white font-semibold text-lg line-clamp-2">{recipe.title}</h3>
                       </div>
-                      {/* Language badge */}
                       {langInfo && recipeLang !== 'en' && (
                         <Badge 
                           variant="secondary" 
@@ -311,22 +334,22 @@ export default function Recipes() {
                           </span>
                         )}
                       </div>
-                      <div className="flex gap-3 pt-2">
+                      <div className={`flex gap-3 pt-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
                         <Button
                           size="sm"
                           className="flex-1 bg-primary/10 hover:bg-primary hover:text-primary-foreground text-primary border border-primary/20 rounded-full shadow-sm transition-all duration-200 hover:shadow-md hover:scale-105"
                           onClick={() => navigate(`/recipe/${recipe.id}/edit`)}
                         >
-                          <Pencil className="w-3.5 h-3.5 mr-1.5" />
-                          Edit
+                          <Pencil className={`w-3.5 h-3.5 ${isRTL ? 'ml-1.5' : 'mr-1.5'}`} />
+                          {t("Edit")}
                         </Button>
                         <Button
                           size="sm"
                           className="flex-1 bg-destructive/10 hover:bg-destructive hover:text-destructive-foreground text-destructive border border-destructive/20 rounded-full shadow-sm transition-all duration-200 hover:shadow-md hover:scale-105"
                           onClick={() => setDeleteRecipeId(recipe.id)}
                         >
-                          <Trash2 className="w-3.5 h-3.5 mr-1.5" />
-                          Delete
+                          <Trash2 className={`w-3.5 h-3.5 ${isRTL ? 'ml-1.5' : 'mr-1.5'}`} />
+                          {t("Delete")}
                         </Button>
                       </div>
                     </CardContent>
@@ -338,21 +361,23 @@ export default function Recipes() {
         </div>
       </div>
 
+      <Footer />
+
       <AlertDialog open={!!deleteRecipeId} onOpenChange={(open) => !open && setDeleteRecipeId(null)}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Delete Recipe</AlertDialogTitle>
+            <AlertDialogTitle>{t("Delete Recipe")}</AlertDialogTitle>
             <AlertDialogDescription>
-              Are you sure you want to delete this recipe? This action cannot be undone.
+              {t("Are you sure you want to delete this recipe? This action cannot be undone.")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{t("Cancel")}</AlertDialogCancel>
             <AlertDialogAction
               onClick={() => deleteRecipeId && handleDelete(deleteRecipeId)}
               className="bg-destructive hover:bg-destructive/90"
             >
-              Delete
+              {t("Delete")}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
