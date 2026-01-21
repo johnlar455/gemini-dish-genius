@@ -8,6 +8,35 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { ChefHat, Github } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import { usePageTranslation } from "@/hooks/usePageTranslation";
+import { useLanguage } from "@/contexts/LanguageContext";
+
+const PAGE_TEXTS = [
+  "Reset Password",
+  "Welcome Back",
+  "Create Account",
+  "Enter your email to receive a password reset link",
+  "Sign in to access your saved recipes",
+  "Join FlavorAI and start discovering amazing recipes",
+  "Display Name",
+  "Your name",
+  "Email",
+  "Password",
+  "Forgot password?",
+  "Loading...",
+  "Send Reset Link",
+  "Sign In",
+  "Or continue with",
+  "Google",
+  "GitHub",
+  "Back to sign in",
+  "Don't have an account? Sign up",
+  "Already have an account? Sign in",
+  "Password reset email sent! Check your inbox.",
+  "Welcome back!",
+  "Account created! Welcome to FlavorAI!",
+  "Authentication failed",
+];
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
@@ -17,6 +46,8 @@ export default function Auth() {
   const [displayName, setDisplayName] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const { t } = usePageTranslation(PAGE_TEXTS);
+  const { isRTL } = useLanguage();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -37,7 +68,7 @@ export default function Auth() {
         });
 
         if (error) throw error;
-        toast.success("Password reset email sent! Check your inbox.");
+        toast.success(t("Password reset email sent! Check your inbox."));
         setIsForgotPassword(false);
       } else if (isLogin) {
         const { error } = await supabase.auth.signInWithPassword({
@@ -46,7 +77,7 @@ export default function Auth() {
         });
 
         if (error) throw error;
-        toast.success("Welcome back!");
+        toast.success(t("Welcome back!"));
         navigate("/");
       } else {
         const { error } = await supabase.auth.signUp({
@@ -61,12 +92,12 @@ export default function Auth() {
         });
 
         if (error) throw error;
-        toast.success("Account created! Welcome to FlavorAI!");
+        toast.success(t("Account created! Welcome to FlavorAI!"));
         navigate("/");
       }
     } catch (error: any) {
       console.error("Auth error:", error);
-      toast.error(error.message || "Authentication failed");
+      toast.error(error.message || t("Authentication failed"));
     } finally {
       setLoading(false);
     }
@@ -84,12 +115,12 @@ export default function Auth() {
       if (error) throw error;
     } catch (error: any) {
       console.error("OAuth error:", error);
-      toast.error(error.message || "Authentication failed");
+      toast.error(error.message || t("Authentication failed"));
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-muted/30 to-background p-4">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-muted/30 to-background p-4" dir={isRTL ? "rtl" : "ltr"}>
       <Card className="w-full max-w-md shadow-card">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
@@ -98,24 +129,24 @@ export default function Auth() {
             </div>
           </div>
           <CardTitle className="text-2xl">
-            {isForgotPassword ? "Reset Password" : isLogin ? "Welcome Back" : "Create Account"}
+            {isForgotPassword ? t("Reset Password") : isLogin ? t("Welcome Back") : t("Create Account")}
           </CardTitle>
           <CardDescription>
             {isForgotPassword
-              ? "Enter your email to receive a password reset link"
+              ? t("Enter your email to receive a password reset link")
               : isLogin
-              ? "Sign in to access your saved recipes"
-              : "Join FlavorAI and start discovering amazing recipes"}
+              ? t("Sign in to access your saved recipes")
+              : t("Join FlavorAI and start discovering amazing recipes")}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleAuth} className="space-y-4">
             {!isLogin && !isForgotPassword && (
               <div className="space-y-2">
-                <Label htmlFor="displayName">Display Name</Label>
+                <Label htmlFor="displayName">{t("Display Name")}</Label>
                 <Input
                   id="displayName"
-                  placeholder="Your name"
+                  placeholder={t("Your name")}
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
                   required={!isLogin}
@@ -124,7 +155,7 @@ export default function Auth() {
             )}
 
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t("Email")}</Label>
               <Input
                 id="email"
                 type="email"
@@ -137,8 +168,8 @@ export default function Auth() {
 
             {!isForgotPassword && (
               <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="password">Password</Label>
+                <div className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <Label htmlFor="password">{t("Password")}</Label>
                   {isLogin && (
                     <Button
                       type="button"
@@ -146,7 +177,7 @@ export default function Auth() {
                       className="h-auto p-0 text-sm"
                       onClick={() => setIsForgotPassword(true)}
                     >
-                      Forgot password?
+                      {t("Forgot password?")}
                     </Button>
                   )}
                 </div>
@@ -170,12 +201,12 @@ export default function Auth() {
               disabled={loading}
             >
               {loading 
-                ? "Loading..." 
+                ? t("Loading...") 
                 : isForgotPassword 
-                ? "Send Reset Link" 
+                ? t("Send Reset Link") 
                 : isLogin 
-                ? "Sign In" 
-                : "Create Account"}
+                ? t("Sign In") 
+                : t("Create Account")}
             </Button>
 
             {!isForgotPassword && (
@@ -186,7 +217,7 @@ export default function Auth() {
                   </div>
                   <div className="relative flex justify-center text-xs uppercase">
                     <span className="bg-card px-2 text-muted-foreground">
-                      Or continue with
+                      {t("Or continue with")}
                     </span>
                   </div>
                 </div>
@@ -198,7 +229,7 @@ export default function Auth() {
                     onClick={() => handleOAuthSignIn('google')}
                     className="w-full"
                   >
-                    <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
+                    <svg className={`h-4 w-4 ${isRTL ? 'ml-2' : 'mr-2'}`} viewBox="0 0 24 24">
                       <path
                         d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                         fill="#4285F4"
@@ -216,7 +247,7 @@ export default function Auth() {
                         fill="#EA4335"
                       />
                     </svg>
-                    Google
+                    {t("Google")}
                   </Button>
 
                   <Button
@@ -225,8 +256,8 @@ export default function Auth() {
                     onClick={() => handleOAuthSignIn('github')}
                     className="w-full"
                   >
-                    <Github className="mr-2 h-4 w-4" />
-                    GitHub
+                    <Github className={`h-4 w-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
+                    {t("GitHub")}
                   </Button>
                 </div>
               </>
@@ -242,10 +273,10 @@ export default function Auth() {
               }}
             >
               {isForgotPassword
-                ? "Back to sign in"
+                ? t("Back to sign in")
                 : isLogin
-                ? "Don't have an account? Sign up"
-                : "Already have an account? Sign in"}
+                ? t("Don't have an account? Sign up")
+                : t("Already have an account? Sign in")}
             </Button>
           </form>
         </CardContent>

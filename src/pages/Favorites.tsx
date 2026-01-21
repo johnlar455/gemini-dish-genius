@@ -1,15 +1,28 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
 import { RecipeCard } from "@/components/RecipeCard";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Heart } from "lucide-react";
+import { usePageTranslation } from "@/hooks/usePageTranslation";
+import { useLanguage } from "@/contexts/LanguageContext";
+
+const PAGE_TEXTS = [
+  "My Favorite Recipes",
+  "Loading your favorites...",
+  "No favorite recipes yet",
+  "Start exploring recipes and save your favorites!",
+  "Please sign in to view favorites",
+];
 
 export default function Favorites() {
   const navigate = useNavigate();
   const [recipes, setRecipes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const { t } = usePageTranslation(PAGE_TEXTS);
+  const { isRTL } = useLanguage();
 
   useEffect(() => {
     checkAuthAndLoadFavorites();
@@ -18,7 +31,7 @@ export default function Favorites() {
   const checkAuthAndLoadFavorites = async () => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
-      toast.error("Please sign in to view favorites");
+      toast.error(t("Please sign in to view favorites"));
       navigate("/auth");
       return;
     }
@@ -53,18 +66,18 @@ export default function Favorites() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-warm">
+    <div className="min-h-screen bg-gradient-warm flex flex-col" dir={isRTL ? "rtl" : "ltr"}>
       <Navbar />
 
-      <div className="container mx-auto py-12 px-4">
-        <div className="flex items-center gap-3 mb-8">
+      <div className="container mx-auto py-12 px-4 flex-1">
+        <div className={`flex items-center gap-3 mb-8 ${isRTL ? 'flex-row-reverse' : ''}`}>
           <Heart className="w-8 h-8 text-primary fill-primary" />
-          <h1 className="text-4xl font-bold">My Favorite Recipes</h1>
+          <h1 className="text-4xl font-bold">{t("My Favorite Recipes")}</h1>
         </div>
 
         {loading ? (
           <div className="text-center py-12">
-            <p className="text-muted-foreground">Loading your favorites...</p>
+            <p className="text-muted-foreground">{t("Loading your favorites...")}</p>
           </div>
         ) : recipes.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
@@ -78,15 +91,17 @@ export default function Favorites() {
             ))}
           </div>
         ) : (
-          <div className="text-center py-12 bg-muted rounded-lg">
+          <div className={`text-center py-12 bg-muted rounded-lg ${isRTL ? 'text-right' : ''}`}>
             <Heart className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-            <p className="text-muted-foreground text-lg mb-2">No favorite recipes yet</p>
+            <p className="text-muted-foreground text-lg mb-2">{t("No favorite recipes yet")}</p>
             <p className="text-sm text-muted-foreground">
-              Start exploring recipes and save your favorites!
+              {t("Start exploring recipes and save your favorites!")}
             </p>
           </div>
         )}
       </div>
+
+      <Footer />
     </div>
   );
 }
