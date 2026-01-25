@@ -50,6 +50,31 @@ const PAGE_TEXTS = [
   "Please sign in to edit recipes",
   "You don't have permission to edit this recipe",
   "Failed to load recipe",
+  // Cuisine options
+  "Italian",
+  "Chinese",
+  "Mexican",
+  "Indian",
+  "Japanese",
+  "Thai",
+  "Mediterranean",
+  "French",
+  // Dietary options
+  "vegetarian",
+  "vegan",
+  "gluten-free",
+  "dairy-free",
+  "keto",
+  "low-carb",
+  // Category options
+  "Breakfast",
+  "Desserts",
+  "Dinner",
+  "Gluten-Free",
+  "Lunch",
+  "Snacks",
+  "Vegan",
+  "Vegetarian",
 ];
 
 export default function EditRecipe() {
@@ -73,12 +98,15 @@ export default function EditRecipe() {
 
   const cuisineOptions = ["Italian", "Chinese", "Mexican", "Indian", "Japanese", "Thai", "Mediterranean", "French"];
   const difficultyOptions = [
-    { value: "easy", label: "Easy" },
-    { value: "medium", label: "Medium" },
-    { value: "hard", label: "Hard" },
+    { value: "easy", label: t("Easy") },
+    { value: "medium", label: t("Medium") },
+    { value: "hard", label: t("Hard") },
   ];
   const dietaryOptions = ["vegetarian", "vegan", "gluten-free", "dairy-free", "keto", "low-carb"];
   const categoryOptions = ["Breakfast", "Desserts", "Dinner", "Gluten-Free", "Lunch", "Snacks", "Vegan", "Vegetarian"];
+
+  // Translation helper for options
+  const translateOption = (option: string) => t(option) || option;
 
   useEffect(() => {
     loadRecipe();
@@ -266,7 +294,7 @@ export default function EditRecipe() {
                 <SelectContent>
                   {categoryOptions.map((cat) => (
                     <SelectItem key={cat} value={cat}>
-                      {cat}
+                      {translateOption(cat)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -283,7 +311,7 @@ export default function EditRecipe() {
                   <SelectContent>
                     {cuisineOptions.map((cuisine) => (
                       <SelectItem key={cuisine} value={cuisine}>
-                        {cuisine}
+                        {translateOption(cuisine)}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -350,7 +378,7 @@ export default function EditRecipe() {
                     className="cursor-pointer capitalize"
                     onClick={() => toggleDietary(option)}
                   >
-                    {option}
+                    {translateOption(option)}
                   </Badge>
                 ))}
               </div>

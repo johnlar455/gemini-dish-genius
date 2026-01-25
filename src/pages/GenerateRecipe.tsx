@@ -42,6 +42,31 @@ const PAGE_TEXTS = [
   "Failed to generate recipe",
   "Please describe what you'd like to cook",
   "Please select a recipe category",
+  // Dietary options
+  "vegetarian",
+  "vegan",
+  "gluten-free",
+  "dairy-free",
+  "keto",
+  "low-carb",
+  // Cuisine options
+  "Italian",
+  "Chinese",
+  "Mexican",
+  "Indian",
+  "Japanese",
+  "Thai",
+  "Mediterranean",
+  "French",
+  // Category options
+  "Breakfast",
+  "Desserts",
+  "Dinner",
+  "Gluten-Free",
+  "Lunch",
+  "Snacks",
+  "Vegan",
+  "Vegetarian",
 ];
 
 const recipeInputSchema = z.object({
@@ -70,6 +95,9 @@ export default function GenerateRecipe() {
   const dietaryOptions = ["vegetarian", "vegan", "gluten-free", "dairy-free", "keto", "low-carb"];
   const cuisineOptions = ["Italian", "Chinese", "Mexican", "Indian", "Japanese", "Thai", "Mediterranean", "French"];
   const categoryOptions = ["Breakfast", "Desserts", "Dinner", "Gluten-Free", "Lunch", "Snacks", "Vegan", "Vegetarian"];
+
+  // Translation helper for options
+  const translateOption = (option: string) => t(option) || option;
 
   const GENERATE_LANGUAGES = [
     { code: "auto", name: "Auto-detect", nativeName: "🌐 Auto-detect" },
@@ -277,7 +305,7 @@ export default function GenerateRecipe() {
                 <SelectContent>
                   {cuisineOptions.map((cuisine) => (
                     <SelectItem key={cuisine} value={cuisine}>
-                      {cuisine}
+                      {translateOption(cuisine)}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -325,7 +353,7 @@ export default function GenerateRecipe() {
                     className="cursor-pointer capitalize"
                     onClick={() => toggleDietary(option)}
                   >
-                    {option}
+                    {translateOption(option)}
                   </Badge>
                 ))}
               </div>
@@ -340,7 +368,7 @@ export default function GenerateRecipe() {
                 <SelectContent>
                   {categoryOptions.map((cat) => (
                     <SelectItem key={cat} value={cat}>
-                      {cat}
+                      {translateOption(cat)}
                     </SelectItem>
                   ))}
                 </SelectContent>
