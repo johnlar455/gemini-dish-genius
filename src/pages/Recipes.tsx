@@ -49,6 +49,8 @@ const PAGE_TEXTS = [
   "Please sign in to view your recipes",
   "Failed to load recipes",
   "All Languages",
+  "Search:",
+  "min",
 ];
 
 interface Recipe {
@@ -244,7 +246,7 @@ export default function Recipes() {
                 )}
                 {searchQuery && (
                   <Badge variant="secondary" className="gap-1">
-                    Search: "{searchQuery}"
+                    {t("Search:")} "{searchQuery}"
                     <button onClick={() => setSearchQuery("")} className={`${isRTL ? 'mr-1' : 'ml-1'} hover:text-destructive`}>
                       <X className="w-3 h-3" />
                     </button>
@@ -330,7 +332,7 @@ export default function Recipes() {
                         )}
                         {recipe.prep_time && recipe.cook_time && (
                           <span className="px-2 py-1 bg-secondary rounded-md">
-                            {recipe.prep_time + recipe.cook_time} min
+                            {recipe.prep_time + recipe.cook_time} {t("min")}
                           </span>
                         )}
                       </div>

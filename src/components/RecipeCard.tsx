@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
-import { Card, CardContent, CardHeader } from "./ui/card";
-import { Badge } from "./ui/badge";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 import { Clock, Users, ChefHat, Heart } from "lucide-react";
-import { Button } from "./ui/button";
+import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { usePageTranslation } from "@/hooks/usePageTranslation";
 
 interface RecipeCardProps {
   id: string;
@@ -48,17 +49,14 @@ const DIFFICULTY_TRANSLATIONS: Record<string, Record<string, string>> = {
   ru: { easy: 'Легко', medium: 'Средне', hard: 'Сложно' },
 };
 
-const SERVINGS_TRANSLATIONS: Record<string, string> = {
-  en: 'servings',
-  ar: 'حصص',
-  zh: '份',
-  ja: '人前',
-  de: 'Portionen',
-  nl: 'porties',
-  es: 'porciones',
-  it: 'porzioni',
-  ru: 'порций',
-};
+const CARD_TEXTS = [
+  "Please sign in to save favorites",
+  "Removed from favorites",
+  "Added to favorites",
+  "Failed to update favorites",
+  "min",
+  "servings",
+];
 
 export const RecipeCard = ({
   id,
@@ -78,6 +76,7 @@ export const RecipeCard = ({
   const [isTogglingFavorite, setIsTogglingFavorite] = useState(false);
   const [localIsFavorite, setLocalIsFavorite] = useState(isFavorite);
   const { currentLanguage, isRTL } = useLanguage();
+  const { t } = usePageTranslation(CARD_TEXTS);
   const [translatedTitle, setTranslatedTitle] = useState(title);
   const [translatedDescription, setTranslatedDescription] = useState(description || "");
   const [isTranslating, setIsTranslating] = useState(false);
@@ -142,7 +141,7 @@ export const RecipeCard = ({
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
-      toast.error("Please sign in to save favorites");
+      toast.error(t("Please sign in to save favorites"));
       setIsTogglingFavorite(false);
       return;
     }
@@ -157,7 +156,7 @@ export const RecipeCard = ({
 
         if (error) throw error;
         setLocalIsFavorite(false);
-        toast.success("Removed from favorites");
+        toast.success(t("Removed from favorites"));
       } else {
         const { error } = await supabase
           .from("favorites")
@@ -165,12 +164,12 @@ export const RecipeCard = ({
 
         if (error) throw error;
         setLocalIsFavorite(true);
-        toast.success("Added to favorites");
+        toast.success(t("Added to favorites"));
       }
       onFavoriteChange?.();
     } catch (error: any) {
       console.error("Error toggling favorite:", error);
-      toast.error("Failed to update favorites");
+      toast.error(t("Failed to update favorites"));
     } finally {
       setIsTogglingFavorite(false);
     }
@@ -188,11 +187,6 @@ export const RecipeCard = ({
            difficulty;
   };
 
-  // Get translated servings text
-  const getServingsText = () => {
-    return SERVINGS_TRANSLATIONS[currentLanguage] || SERVINGS_TRANSLATIONS.en;
-  };
-
   return (
     <Link to={`/recipe/${id}`}>
       <Card className={`group overflow-hidden hover:shadow-card transition-all duration-300 h-full ${isTranslating ? 'opacity-80' : ''}`}>
@@ -205,7 +199,7 @@ export const RecipeCard = ({
           <Button
             variant="ghost"
             size="icon"
-            className="absolute top-2 right-2 bg-background/80 backdrop-blur-sm hover:bg-background"
+            className={`absolute top-2 ${isRTL ? 'left-2' : 'right-2'} bg-background/80 backdrop-blur-sm hover:bg-background`}
             onClick={handleFavoriteToggle}
             disabled={isTogglingFavorite}
           >
@@ -214,7 +208,7 @@ export const RecipeCard = ({
             />
           </Button>
           {language && language !== 'en' && LANGUAGE_LABELS[language] && (
-            <Badge variant="secondary" className="absolute top-2 left-2 text-xs">
+            <Badge variant="secondary" className={`absolute top-2 ${isRTL ? 'right-2' : 'left-2'} text-xs`}>
               {LANGUAGE_LABELS[language]}
             </Badge>
           )}
@@ -236,7 +230,7 @@ export const RecipeCard = ({
         <CardContent dir={isRTL ? 'rtl' : 'ltr'}>
           <div className={`flex flex-wrap gap-2 mb-3 ${isRTL ? 'justify-end' : ''}`}>
             {difficulty && (
-              <Badge variant="secondary" className="capitalize">
+              <Badge variant="secondary" className={`capitalize ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <ChefHat className={`w-3 h-3 ${isRTL ? 'ml-1' : 'mr-1'}`} />
                 {getTranslatedDifficulty()}
               </Badge>
@@ -250,13 +244,13 @@ export const RecipeCard = ({
             {totalTime > 0 && (
               <div className={`flex items-center gap-1 ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <Clock className="w-4 h-4" />
-                <span>{totalTime}min</span>
+                <span>{totalTime} {t("min")}</span>
               </div>
             )}
             {servings && (
               <div className={`flex items-center gap-1 ${isRTL ? 'flex-row-reverse' : ''}`}>
                 <Users className="w-4 h-4" />
-                <span>{servings} {getServingsText()}</span>
+                <span>{servings} {t("servings")}</span>
               </div>
             )}
           </div>
