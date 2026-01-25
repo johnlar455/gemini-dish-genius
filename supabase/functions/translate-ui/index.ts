@@ -17,6 +17,41 @@ const SUPPORTED_LANGUAGES: Record<string, { name: string; native: string }> = {
   ru: { name: 'Russian', native: 'Русский' },
 };
 
+// Retry helper with exponential backoff
+async function fetchWithRetry(
+  url: string,
+  options: RequestInit,
+  maxRetries: number = 3,
+  baseDelay: number = 1000
+): Promise<Response> {
+  let lastError: Error | null = null;
+  
+  for (let attempt = 0; attempt < maxRetries; attempt++) {
+    try {
+      const response = await fetch(url, options);
+      
+      // If rate limited, wait and retry
+      if (response.status === 429) {
+        const delay = baseDelay * Math.pow(2, attempt) + Math.random() * 500;
+        console.log(`Rate limited, retrying in ${delay}ms (attempt ${attempt + 1}/${maxRetries})`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+        continue;
+      }
+      
+      return response;
+    } catch (error) {
+      lastError = error as Error;
+      if (attempt < maxRetries - 1) {
+        const delay = baseDelay * Math.pow(2, attempt);
+        console.log(`Request failed, retrying in ${delay}ms (attempt ${attempt + 1}/${maxRetries})`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+      }
+    }
+  }
+  
+  throw lastError || new Error("Max retries exceeded");
+}
+
 serve(async (req) => {
   if (req.method === 'OPTIONS') {
     return new Response(null, { headers: corsHeaders });
@@ -44,9 +79,9 @@ serve(async (req) => {
       );
     }
 
-    if (texts.length > 50) {
+    if (texts.length > 100) {
       return new Response(
-        JSON.stringify({ error: 'Maximum 50 texts per request' }),
+        JSON.stringify({ error: 'Maximum 100 texts per request' }),
         { status: 400, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
       );
     }
@@ -93,24 +128,40 @@ ${numberedTexts}
 
 Return as JSON object like: {"original text": "translated text", ...}`;
 
-    const response = await fetch("https://ai.gateway.lovable.dev/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${LOVABLE_API_KEY}`,
-        "Content-Type": "application/json",
+    const response = await fetchWithRetry(
+      "https://ai.gateway.lovable.dev/v1/chat/completions",
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${LOVABLE_API_KEY}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          model: "google/gemini-2.5-flash",
+          messages: [
+            { role: "system", content: systemPrompt },
+            { role: "user", content: userPrompt }
+          ],
+        }),
       },
-      body: JSON.stringify({
-        model: "google/gemini-2.5-flash",
-        messages: [
-          { role: "system", content: systemPrompt },
-          { role: "user", content: userPrompt }
-        ],
-      }),
-    });
+      3, // max retries
+      1500 // base delay ms
+    );
 
     if (!response.ok) {
       const errorText = await response.text();
       console.error("AI gateway error:", response.status, errorText);
+      
+      // If still rate limited after retries, return original texts as fallback
+      if (response.status === 429) {
+        console.log("Rate limit exceeded, returning original texts");
+        const translations = texts.reduce((acc, text) => ({ ...acc, [text]: text }), {});
+        return new Response(
+          JSON.stringify({ translations, rateLimited: true }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+      
       throw new Error("AI gateway error");
     }
 
@@ -145,6 +196,21 @@ Return as JSON object like: {"original text": "translated text", ...}`;
 
   } catch (error) {
     console.error("Translation error:", error);
+    // Return original texts on error instead of failing
+    try {
+      const body = await req.clone().json();
+      const { texts } = body as { texts: string[] };
+      if (texts && Array.isArray(texts)) {
+        const translations = texts.reduce((acc, text) => ({ ...acc, [text]: text }), {});
+        return new Response(
+          JSON.stringify({ translations, error: true }),
+          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+    } catch {
+      // Ignore parsing error
+    }
+    
     return new Response(
       JSON.stringify({ error: "Translation failed. Please try again." }),
       { status: 500, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
