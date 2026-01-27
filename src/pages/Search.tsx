@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { Search as SearchIcon } from "lucide-react";
 import { toast } from "sonner";
-import { usePageTranslation } from "@/hooks/usePageTranslation";
+import { useStaticTranslation } from "@/hooks/useStaticTranslation";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const PAGE_TEXTS = [
@@ -28,7 +28,7 @@ export default function Search() {
   const [query, setQuery] = useState(searchParams.get("q") || "");
   const [recipes, setRecipes] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
-  const { t } = usePageTranslation(PAGE_TEXTS);
+  const { t } = useStaticTranslation(PAGE_TEXTS);
   const { isRTL } = useLanguage();
 
   useEffect(() => {

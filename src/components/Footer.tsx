@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { ChefHat } from "lucide-react";
-import { usePageTranslation } from "@/hooks/usePageTranslation";
+import { useStaticTranslation } from "@/hooks/useStaticTranslation";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const FOOTER_TEXTS = [
@@ -23,7 +23,7 @@ const FOOTER_TEXTS = [
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const { t } = usePageTranslation(FOOTER_TEXTS);
+  const { t } = useStaticTranslation(FOOTER_TEXTS);
   const { isRTL } = useLanguage();
 
   return (

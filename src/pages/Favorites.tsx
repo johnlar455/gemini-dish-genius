@@ -6,7 +6,7 @@ import { RecipeCard } from "@/components/RecipeCard";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Heart } from "lucide-react";
-import { usePageTranslation } from "@/hooks/usePageTranslation";
+import { useStaticTranslation } from "@/hooks/useStaticTranslation";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const PAGE_TEXTS = [
@@ -21,7 +21,7 @@ export default function Favorites() {
   const navigate = useNavigate();
   const [recipes, setRecipes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const { t } = usePageTranslation(PAGE_TEXTS);
+  const { t } = useStaticTranslation(PAGE_TEXTS);
   const { isRTL } = useLanguage();
 
   useEffect(() => {
