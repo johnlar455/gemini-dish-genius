@@ -9,7 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import * as Icons from "lucide-react";
 import { Search, Loader2 } from "lucide-react";
-import { usePageTranslation } from "@/hooks/usePageTranslation";
+import { useStaticTranslation } from "@/hooks/useStaticTranslation";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const PAGE_TEXTS = [
@@ -38,7 +38,7 @@ export default function Categories() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
   const [recipesLoading, setRecipesLoading] = useState(false);
-  const { t } = usePageTranslation(PAGE_TEXTS);
+  const { t } = useStaticTranslation(PAGE_TEXTS);
   const { isRTL } = useLanguage();
 
   useEffect(() => {
