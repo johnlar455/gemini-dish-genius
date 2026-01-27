@@ -14,7 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 import { useLanguage, SUPPORTED_LANGUAGES } from "@/contexts/LanguageContext";
-import { usePageTranslation } from "@/hooks/usePageTranslation";
+import { useStaticTranslation } from "@/hooks/useStaticTranslation";
 
 const NAV_TEXTS = [
   "Home",
@@ -36,7 +36,7 @@ export const Navbar = () => {
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [isOpen, setIsOpen] = useState(false);
   const { currentLanguage, setLanguage, isTranslating, isRTL } = useLanguage();
-  const { t } = usePageTranslation(NAV_TEXTS);
+  const { t } = useStaticTranslation(NAV_TEXTS);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
