@@ -31,16 +31,28 @@ export const UI_TRANSLATIONS: Record<string, Record<string, string>> = {
   "Hard": { ar: "صعب", zh: "困难", ja: "難しい", de: "Schwer", nl: "Moeilijk", es: "Difícil", it: "Difficile", ru: "Difficile" },
   
   // Auth
+  "Reset Password": { ar: "إعادة تعيين كلمة المرور", zh: "重置密码", ja: "パスワードリセット", de: "Passwort zurücksetzen", nl: "Wachtwoord resetten", es: "Restablecer contraseña", it: "Reimposta password", ru: "Сбросить пароль" },
   "Welcome Back": { ar: "مرحباً بعودتك", zh: "欢迎回来", ja: "おかえりなさい", de: "Willkommen zurück", nl: "Welkom terug", es: "Bienvenido de nuevo", it: "Bentornato", ru: "С возвращением" },
-  "Sign in to continue": { ar: "سجل الدخول للمتابعة", zh: "登录以继续", ja: "続行するにはサインインしてください", de: "Melden Sie sich an, um fortzufahren", nl: "Log in om door te gaan", es: "Inicia sesión para continuar", it: "Accedi per continuare", ru: "Войдите, чтобы продолжить" },
   "Create Account": { ar: "إنشاء حساب", zh: "创建账户", ja: "アカウント作成", de: "Konto erstellen", nl: "Account aanmaken", es: "Crear cuenta", it: "Crea account", ru: "Создать аккаунт" },
-  "Join our community": { ar: "انضم إلى مجتمعنا", zh: "加入我们的社区", ja: "コミュニティに参加", de: "Treten Sie unserer Community bei", nl: "Word lid van onze community", es: "Únete a nuestra comunidad", it: "Unisciti alla nostra community", ru: "Присоединяйтесь к нашему сообществу" },
-  "Email": { ar: "البريد الإلكتروني", zh: "电子邮件", ja: "メール", de: "E-Mail", nl: "E-mail", es: "Correo electrónico", it: "Email", ru: "Электронная почта" },
+  "Enter your email to receive a password reset link": { ar: "أدخل بريدك الإلكتروني لتلقي رابط إعادة تعيين كلمة المرور", zh: "输入您的邮箱以接收密码重置链接", ja: "パスワードリセットリンクを受け取るためにメールを入力", de: "Geben Sie Ihre E-Mail ein, um einen Passwort-Reset-Link zu erhalten", nl: "Voer uw e-mail in om een link voor wachtwoordreset te ontvangen", es: "Ingresa tu correo para recibir un enlace de restablecimiento", it: "Inserisci la tua email per ricevere un link di reset", ru: "Введите email для получения ссылки сброса пароля" },
+  "Sign in to access your saved recipes": { ar: "سجل الدخول للوصول إلى وصفاتك المحفوظة", zh: "登录以访问您保存的食谱", ja: "保存したレシピにアクセスするにはログイン", de: "Melden Sie sich an, um auf gespeicherte Rezepte zuzugreifen", nl: "Log in om uw opgeslagen recepten te bekijken", es: "Inicia sesión para acceder a tus recetas guardadas", it: "Accedi per accedere alle tue ricette salvate", ru: "Войдите для доступа к сохраненным рецептам" },
+  "Join FlavorAI and start discovering amazing recipes": { ar: "انضم إلى FlavorAI وابدأ في اكتشاف وصفات مذهلة", zh: "加入FlavorAI，开始发现美味食谱", ja: "FlavorAIに参加して素晴らしいレシピを発見", de: "Treten Sie FlavorAI bei und entdecken Sie tolle Rezepte", nl: "Word lid van FlavorAI en ontdek geweldige recepten", es: "Únete a FlavorAI y descubre recetas increíbles", it: "Unisciti a FlavorAI e scopri ricette straordinarie", ru: "Присоединяйтесь к FlavorAI и открывайте рецепты" },
+  "Display Name": { ar: "اسم العرض", zh: "显示名称", ja: "表示名", de: "Anzeigename", nl: "Weergavenaam", es: "Nombre para mostrar", it: "Nome visualizzato", ru: "Отображаемое имя" },
+  "Your name": { ar: "اسمك", zh: "您的姓名", ja: "あなたの名前", de: "Ihr Name", nl: "Uw naam", es: "Tu nombre", it: "Il tuo nome", ru: "Ваше имя" },
+  "Email": { ar: "البريد الإلكتروني", zh: "邮箱", ja: "メール", de: "E-Mail", nl: "E-mail", es: "Correo electrónico", it: "Email", ru: "Электронная почта" },
   "Password": { ar: "كلمة المرور", zh: "密码", ja: "パスワード", de: "Passwort", nl: "Wachtwoord", es: "Contraseña", it: "Password", ru: "Пароль" },
-  "Signing in...": { ar: "جاري تسجيل الدخول...", zh: "登录中...", ja: "サインイン中...", de: "Anmeldung...", nl: "Inloggen...", es: "Iniciando sesión...", it: "Accesso...", ru: "Вход..." },
-  "Creating account...": { ar: "جاري إنشاء الحساب...", zh: "创建账户中...", ja: "アカウント作成中...", de: "Konto wird erstellt...", nl: "Account aanmaken...", es: "Creando cuenta...", it: "Creazione account...", ru: "Создание аккаунта..." },
-  "Don't have an account?": { ar: "ليس لديك حساب؟", zh: "没有账户？", ja: "アカウントをお持ちでないですか？", de: "Noch kein Konto?", nl: "Nog geen account?", es: "¿No tienes cuenta?", it: "Non hai un account?", ru: "Нет аккаунта?" },
-  "Already have an account?": { ar: "لديك حساب بالفعل؟", zh: "已有账户？", ja: "アカウントをお持ちですか？", de: "Bereits ein Konto?", nl: "Heb je al een account?", es: "¿Ya tienes cuenta?", it: "Hai già un account?", ru: "Уже есть аккаунт?" },
+  "Forgot password?": { ar: "نسيت كلمة المرور؟", zh: "忘记密码？", ja: "パスワードを忘れましたか？", de: "Passwort vergessen?", nl: "Wachtwoord vergeten?", es: "¿Olvidaste tu contraseña?", it: "Password dimenticata?", ru: "Забыли пароль?" },
+  "Send Reset Link": { ar: "إرسال رابط إعادة التعيين", zh: "发送重置链接", ja: "リセットリンクを送信", de: "Reset-Link senden", nl: "Reset-link verzenden", es: "Enviar enlace de restablecimiento", it: "Invia link di reset", ru: "Отправить ссылку сброса" },
+  "Or continue with": { ar: "أو تابع مع", zh: "或继续使用", ja: "または以下で続ける", de: "Oder fortfahren mit", nl: "Of ga verder met", es: "O continuar con", it: "Oppure continua con", ru: "Или продолжить с" },
+  "Google": { ar: "جوجل", zh: "谷歌", ja: "Google", de: "Google", nl: "Google", es: "Google", it: "Google", ru: "Google" },
+  "GitHub": { ar: "جيت هاب", zh: "GitHub", ja: "GitHub", de: "GitHub", nl: "GitHub", es: "GitHub", it: "GitHub", ru: "GitHub" },
+  "Back to sign in": { ar: "العودة لتسجيل الدخول", zh: "返回登录", ja: "サインインに戻る", de: "Zurück zur Anmeldung", nl: "Terug naar inloggen", es: "Volver a iniciar sesión", it: "Torna all'accesso", ru: "Вернуться к входу" },
+  "Don't have an account? Sign up": { ar: "ليس لديك حساب؟ سجل الآن", zh: "没有账户？注册", ja: "アカウントがない？サインアップ", de: "Noch kein Konto? Registrieren", nl: "Geen account? Registreren", es: "¿No tienes cuenta? Regístrate", it: "Non hai un account? Registrati", ru: "Нет аккаунта? Зарегистрируйтесь" },
+  "Already have an account? Sign in": { ar: "لديك حساب؟ سجل الدخول", zh: "已有账户？登录", ja: "アカウントをお持ち？サインイン", de: "Bereits ein Konto? Anmelden", nl: "Al een account? Inloggen", es: "¿Ya tienes cuenta? Inicia sesión", it: "Hai già un account? Accedi", ru: "Уже есть аккаунт? Войти" },
+  "Password reset email sent! Check your inbox.": { ar: "تم إرسال بريد إعادة تعيين كلمة المرور!", zh: "密码重置邮件已发送！", ja: "パスワードリセットメールを送信しました！", de: "Passwort-Reset-E-Mail gesendet!", nl: "Wachtwoord reset e-mail verzonden!", es: "¡Correo de restablecimiento enviado!", it: "Email di reset inviata!", ru: "Письмо для сброса отправлено!" },
+  "Welcome back!": { ar: "مرحباً بعودتك!", zh: "欢迎回来！", ja: "おかえりなさい！", de: "Willkommen zurück!", nl: "Welkom terug!", es: "¡Bienvenido de nuevo!", it: "Bentornato!", ru: "С возвращением!" },
+  "Account created! Welcome to FlavorAI!": { ar: "تم إنشاء الحساب! مرحباً بك!", zh: "账户创建成功！欢迎！", ja: "アカウント作成完了！ようこそ！", de: "Konto erstellt! Willkommen!", nl: "Account aangemaakt! Welkom!", es: "¡Cuenta creada! ¡Bienvenido!", it: "Account creato! Benvenuto!", ru: "Аккаунт создан! Добро пожаловать!" },
+  "Authentication failed": { ar: "فشل المصادقة", zh: "认证失败", ja: "認証に失敗しました", de: "Authentifizierung fehlgeschlagen", nl: "Authenticatie mislukt", es: "Autenticación fallida", it: "Autenticazione fallita", ru: "Ошибка аутентификации" },
   
   // Recipe detail
   "Ingredients": { ar: "المكونات", zh: "食材", ja: "材料", de: "Zutaten", nl: "Ingrediënten", es: "Ingredientes", it: "Ingredienti", ru: "Ингредиенты" },
@@ -92,7 +104,6 @@ export const UI_TRANSLATIONS: Record<string, Record<string, string>> = {
   
   // Profile
   "My Profile": { ar: "ملفي الشخصي", zh: "我的资料", ja: "マイプロフィール", de: "Mein Profil", nl: "Mijn profiel", es: "Mi perfil", it: "Il mio profilo", ru: "Мой профиль" },
-  "Display Name": { ar: "الاسم المعروض", zh: "显示名称", ja: "表示名", de: "Anzeigename", nl: "Weergavenaam", es: "Nombre para mostrar", it: "Nome visualizzato", ru: "Отображаемое имя" },
   "Language": { ar: "اللغة", zh: "语言", ja: "言語", de: "Sprache", nl: "Taal", es: "Idioma", it: "Lingua", ru: "Язык" },
   "Update Profile": { ar: "تحديث الملف الشخصي", zh: "更新资料", ja: "プロフィールを更新", de: "Profil aktualisieren", nl: "Profiel bijwerken", es: "Actualizar perfil", it: "Aggiorna profilo", ru: "Обновить профиль" },
   "My Recipes": { ar: "وصفاتي", zh: "我的食谱", ja: "マイレシピ", de: "Meine Rezepte", nl: "Mijn recepten", es: "Mis recetas", it: "Le mie ricette", ru: "Мои рецепты" },
