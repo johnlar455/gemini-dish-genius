@@ -8,35 +8,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { ChefHat, Github } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { usePageTranslation } from "@/hooks/usePageTranslation";
-import { useLanguage } from "@/contexts/LanguageContext";
-
-const PAGE_TEXTS = [
-  "Reset Password",
-  "Welcome Back",
-  "Create Account",
-  "Enter your email to receive a password reset link",
-  "Sign in to access your saved recipes",
-  "Join FlavorAI and start discovering amazing recipes",
-  "Display Name",
-  "Your name",
-  "Email",
-  "Password",
-  "Forgot password?",
-  "Loading...",
-  "Send Reset Link",
-  "Sign In",
-  "Or continue with",
-  "Google",
-  "GitHub",
-  "Back to sign in",
-  "Don't have an account? Sign up",
-  "Already have an account? Sign in",
-  "Password reset email sent! Check your inbox.",
-  "Welcome back!",
-  "Account created! Welcome to FlavorAI!",
-  "Authentication failed",
-];
+import { useTranslate } from "@/hooks/useStaticTranslation";
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
@@ -46,8 +18,7 @@ export default function Auth() {
   const [displayName, setDisplayName] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { t } = usePageTranslation(PAGE_TEXTS);
-  const { isRTL } = useLanguage();
+  const { t, isRTL } = useTranslate();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
