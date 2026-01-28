@@ -11,8 +11,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Clock, Users, ChefHat, Heart, ShoppingCart, ArrowLeft, Languages, Loader2, Globe } from "lucide-react";
-import { usePageTranslation } from "@/hooks/usePageTranslation";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useTranslate } from "@/hooks/useStaticTranslation";
 
 const SUPPORTED_LANGUAGES = {
   en: { name: 'English', native: 'English', dir: 'ltr' },
@@ -26,37 +25,6 @@ const SUPPORTED_LANGUAGES = {
   ru: { name: 'Russian', native: 'Русский', dir: 'ltr' },
 };
 
-const PAGE_TEXTS = [
-  "Back",
-  "Translate",
-  "Translate Recipe",
-  "Translate this recipe to another language. A new copy will be saved to your recipes.",
-  "Select target language",
-  "Translating...",
-  "Translate & Save",
-  "Ingredients",
-  "Instructions",
-  "More Recipes",
-  "Save Recipe",
-  "Saved",
-  "Add to Shopping List",
-  "Loading recipe...",
-  "Please sign in to save favorites",
-  "Removed from favorites",
-  "Added to favorites",
-  "Failed to update favorites",
-  "Please sign in to use shopping lists",
-  "Added to shopping list!",
-  "Failed to add to shopping list",
-  "Please select a different target language",
-  "Please sign in to translate recipes",
-  "Recipe translated to",
-  "Failed to translate recipe",
-  "Failed to load recipe",
-  "mins",
-  "servings",
-];
-
 export default function RecipeDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -64,24 +32,14 @@ export default function RecipeDetail() {
   const [loading, setLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
   const [otherRecipes, setOtherRecipes] = useState<any[]>([]);
-  const [userId, setUserId] = useState<string | null>(null);
   const [isTranslating, setIsTranslating] = useState(false);
   const [translateDialogOpen, setTranslateDialogOpen] = useState(false);
   const [selectedTargetLang, setSelectedTargetLang] = useState<string>("");
-  const { t } = usePageTranslation(PAGE_TEXTS);
-  const { isRTL } = useLanguage();
+  const { t, isRTL } = useTranslate();
 
   const recipeLanguage = recipe?.language || 'en';
   const langConfig = SUPPORTED_LANGUAGES[recipeLanguage as keyof typeof SUPPORTED_LANGUAGES] || SUPPORTED_LANGUAGES.en;
   const isRecipeRTL = langConfig.dir === 'rtl';
-
-  useEffect(() => {
-    const initUser = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
-      setUserId(user?.id || null);
-    };
-    initUser();
-  }, []);
 
   useEffect(() => {
     if (id) {
@@ -101,9 +59,9 @@ export default function RecipeDetail() {
 
       if (error) throw error;
       setRecipe(data);
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error loading recipe:", error);
-      toast.error(t("Failed to load recipe"));
+      toast.error("Failed to load recipe");
       navigate("/");
     } finally {
       setLoading(false);
@@ -112,16 +70,15 @@ export default function RecipeDetail() {
 
   const loadOtherRecipes = async () => {
     try {
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from("recipes")
         .select("*")
         .neq("id", id)
         .order("created_at", { ascending: false })
         .limit(6);
 
-      if (error) throw error;
       setOtherRecipes(data || []);
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error loading other recipes:", error);
     }
   };
@@ -158,7 +115,7 @@ export default function RecipeDetail() {
         setIsFavorite(true);
         toast.success(t("Added to favorites"));
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error toggling favorite:", error);
       toast.error(t("Failed to update favorites"));
     }
@@ -167,7 +124,7 @@ export default function RecipeDetail() {
   const addToShoppingList = async () => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
-      toast.error(t("Please sign in to use shopping lists"));
+      toast.error("Please sign in to use shopping lists");
       navigate("/auth");
       return;
     }
@@ -186,23 +143,22 @@ export default function RecipeDetail() {
       });
 
       if (error) throw error;
-      toast.success(t("Added to shopping list!"));
-      navigate("/shopping-list");
-    } catch (error: any) {
+      toast.success("Added to shopping list!");
+    } catch (error) {
       console.error("Error adding to shopping list:", error);
-      toast.error(t("Failed to add to shopping list"));
+      toast.error("Failed to add to shopping list");
     }
   };
 
   const handleTranslate = async () => {
     if (!selectedTargetLang || selectedTargetLang === recipeLanguage) {
-      toast.error(t("Please select a different target language"));
+      toast.error("Please select a different target language");
       return;
     }
 
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
-      toast.error(t("Please sign in to translate recipes"));
+      toast.error("Please sign in to translate recipes");
       navigate("/auth");
       return;
     }
@@ -242,12 +198,12 @@ export default function RecipeDetail() {
 
       if (insertError) throw insertError;
 
-      toast.success(`${t("Recipe translated to")} ${SUPPORTED_LANGUAGES[selectedTargetLang as keyof typeof SUPPORTED_LANGUAGES]?.native || selectedTargetLang}!`);
+      toast.success(`Recipe translated to ${SUPPORTED_LANGUAGES[selectedTargetLang as keyof typeof SUPPORTED_LANGUAGES]?.native || selectedTargetLang}!`);
       setTranslateDialogOpen(false);
       navigate(`/recipe/${newRecipe.id}`);
     } catch (error: any) {
       console.error("Translation error:", error);
-      toast.error(error.message || t("Failed to translate recipe"));
+      toast.error(error.message || "Failed to translate recipe");
     } finally {
       setIsTranslating(false);
     }
@@ -259,7 +215,7 @@ export default function RecipeDetail() {
         <Navbar />
         <div className="container mx-auto py-12 text-center">
           <Loader2 className="w-8 h-8 animate-spin mx-auto text-primary" />
-          <p className="text-muted-foreground mt-2">{t("Loading recipe...")}</p>
+          <p className="text-muted-foreground mt-2">{t("Loading...")}</p>
         </div>
       </div>
     );
@@ -277,7 +233,7 @@ export default function RecipeDetail() {
         <div className={`flex items-center justify-between mb-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
           <Button variant="ghost" onClick={() => navigate(-1)}>
             <ArrowLeft className={`w-4 h-4 ${isRTL ? 'ml-2 rotate-180' : 'mr-2'}`} />
-            {t("Back")}
+            Back
           </Button>
           
           <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
@@ -289,20 +245,20 @@ export default function RecipeDetail() {
               <DialogTrigger asChild>
                 <Button variant="outline" size="sm">
                   <Languages className={`w-4 h-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
-                  {t("Translate")}
+                  Translate
                 </Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>{t("Translate Recipe")}</DialogTitle>
+                  <DialogTitle>Translate Recipe</DialogTitle>
                 </DialogHeader>
                 <div className="space-y-4 pt-4">
                   <p className="text-sm text-muted-foreground">
-                    {t("Translate this recipe to another language. A new copy will be saved to your recipes.")}
+                    Translate this recipe to another language. A new copy will be saved.
                   </p>
                   <Select value={selectedTargetLang} onValueChange={setSelectedTargetLang}>
                     <SelectTrigger>
-                      <SelectValue placeholder={t("Select target language")} />
+                      <SelectValue placeholder="Select target language" />
                     </SelectTrigger>
                     <SelectContent>
                       {Object.entries(SUPPORTED_LANGUAGES)
@@ -321,13 +277,13 @@ export default function RecipeDetail() {
                   >
                     {isTranslating ? (
                       <>
-                        <Loader2 className={`w-4 h-4 ${isRTL ? 'ml-2' : 'mr-2'} animate-spin`} />
-                        {t("Translating...")}
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        Translating...
                       </>
                     ) : (
                       <>
-                        <Languages className={`w-4 h-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
-                        {t("Translate & Save")}
+                        <Languages className="w-4 h-4 mr-2" />
+                        Translate & Save
                       </>
                     )}
                   </Button>
@@ -342,6 +298,7 @@ export default function RecipeDetail() {
             <img
               src={recipe.image_data || recipe.image_url || "/placeholder.svg"}
               alt={recipe.title}
+              loading="lazy"
               className="w-full aspect-square object-cover rounded-lg shadow-card"
             />
           </div>
@@ -363,9 +320,7 @@ export default function RecipeDetail() {
               )}
               {recipe.cuisine_type && <Badge variant="outline">{recipe.cuisine_type}</Badge>}
               {recipe.dietary_preferences?.map((pref: string) => (
-                <Badge key={pref} variant="outline" className="capitalize">
-                  {pref}
-                </Badge>
+                <Badge key={pref} variant="outline" className="capitalize">{pref}</Badge>
               ))}
             </div>
 
@@ -373,7 +328,7 @@ export default function RecipeDetail() {
               {totalTime > 0 && (
                 <div className={`flex items-center gap-2 ${isRecipeRTL ? 'flex-row-reverse' : ''}`}>
                   <Clock className="w-5 h-5" />
-                  <span>{totalTime} {t("mins")}</span>
+                  <span>{totalTime} {t("min")}</span>
                 </div>
               )}
               {recipe.servings && (
@@ -387,11 +342,11 @@ export default function RecipeDetail() {
             <div className={`flex gap-3 ${isRecipeRTL ? 'flex-row-reverse' : ''}`}>
               <Button variant="hero" className="flex-1" onClick={toggleFavorite}>
                 <Heart className={`w-5 h-5 ${isRecipeRTL ? 'ml-2' : 'mr-2'} ${isFavorite ? "fill-current" : ""}`} />
-                {isFavorite ? t("Saved") : t("Save Recipe")}
+                {isFavorite ? "Saved" : t("Save")}
               </Button>
               <Button variant="secondary" onClick={addToShoppingList}>
                 <ShoppingCart className={`w-5 h-5 ${isRecipeRTL ? 'ml-2' : 'mr-2'}`} />
-                {t("Add to Shopping List")}
+                Add to List
               </Button>
             </div>
           </div>
@@ -400,13 +355,11 @@ export default function RecipeDetail() {
         <div className="grid lg:grid-cols-2 gap-8 mt-12">
           <Card className="shadow-card">
             <CardContent className="pt-6" dir={isRecipeRTL ? 'rtl' : 'ltr'}>
-              <h2 className={`text-2xl font-bold mb-4 ${isRecipeRTL ? 'text-right' : ''}`}>
-                {t("Ingredients")}
-              </h2>
+              <h2 className={`text-2xl font-bold mb-4 ${isRecipeRTL ? 'text-right' : ''}`}>Ingredients</h2>
               <ul className="space-y-3">
                 {recipe.ingredients.map((ingredient: any, index: number) => (
                   <li key={index} className={`flex items-start gap-3 ${isRecipeRTL ? 'flex-row-reverse text-right' : ''}`}>
-                    <span className={`w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0`}></span>
+                    <span className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></span>
                     <span>
                       <span className="font-medium">{ingredient.amount}</span> {ingredient.item}
                     </span>
@@ -418,9 +371,7 @@ export default function RecipeDetail() {
 
           <Card className="shadow-card">
             <CardContent className="pt-6" dir={isRecipeRTL ? 'rtl' : 'ltr'}>
-              <h2 className={`text-2xl font-bold mb-4 ${isRecipeRTL ? 'text-right' : ''}`}>
-                {t("Instructions")}
-              </h2>
+              <h2 className={`text-2xl font-bold mb-4 ${isRecipeRTL ? 'text-right' : ''}`}>Instructions</h2>
               <ol className="space-y-4">
                 {recipe.instructions.map((instruction: any) => (
                   <li key={instruction.step} className={`flex gap-4 ${isRecipeRTL ? 'flex-row-reverse text-right' : ''}`}>
@@ -437,7 +388,7 @@ export default function RecipeDetail() {
 
         {otherRecipes.length > 0 && (
           <section className="mt-16">
-            <h2 className="text-3xl font-bold mb-8">{t("More Recipes")}</h2>
+            <h2 className="text-3xl font-bold mb-8">More {t("Recipes")}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {otherRecipes.map((otherRecipe) => (
                 <RecipeCard

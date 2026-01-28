@@ -11,8 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Search, Pencil, Trash2, ChefHat, Loader2, Globe, X } from "lucide-react";
-import { usePageTranslation } from "@/hooks/usePageTranslation";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useTranslate } from "@/hooks/useStaticTranslation";
 
 const SUPPORTED_LANGUAGES = {
   all: { name: 'All Languages', native: 'All' },
@@ -76,8 +75,7 @@ export default function Recipes() {
   const [languageFilter, setLanguageFilter] = useState("all");
   const [deleteRecipeId, setDeleteRecipeId] = useState<string | null>(null);
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
-  const { t } = usePageTranslation(PAGE_TEXTS);
-  const { isRTL } = useLanguage();
+  const { t, isRTL } = useTranslate();
 
   useEffect(() => {
     checkAuthAndLoadRecipes();

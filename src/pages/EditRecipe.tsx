@@ -12,8 +12,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Loader2, Save, X } from "lucide-react";
-import { usePageTranslation } from "@/hooks/usePageTranslation";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useTranslate } from "@/hooks/useStaticTranslation";
 
 const PAGE_TEXTS = [
   "Edit Recipe",
@@ -93,8 +92,7 @@ export default function EditRecipe() {
   const [instructions, setInstructions] = useState<any[]>([]);
   const [dietaryPreferences, setDietaryPreferences] = useState<string[]>([]);
   const [category, setCategory] = useState("");
-  const { t } = usePageTranslation(PAGE_TEXTS);
-  const { isRTL } = useLanguage();
+  const { t, isRTL } = useTranslate();
 
   const cuisineOptions = ["Italian", "Chinese", "Mexican", "Indian", "Japanese", "Thai", "Mediterranean", "French"];
   const difficultyOptions = [
