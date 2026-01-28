@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
-import { ChefHat, Heart, Search, User, BookOpen, ShoppingCart, Menu, Sparkles, Notebook, Globe, Loader2 } from "lucide-react";
+import { ChefHat, Heart, Search, User, BookOpen, ShoppingCart, Menu, Sparkles, Notebook, Globe } from "lucide-react";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { User as SupabaseUser } from "@supabase/supabase-js";
@@ -35,7 +35,7 @@ export const Navbar = () => {
   const location = useLocation();
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [isOpen, setIsOpen] = useState(false);
-  const { currentLanguage, setLanguage, isTranslating, isRTL } = useLanguage();
+  const { currentLanguage, setLanguage, isRTL } = useLanguage();
   const { t } = useStaticTranslation(NAV_TEXTS);
 
   useEffect(() => {
@@ -98,11 +98,7 @@ export const Navbar = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="ghost" size="sm" className="gap-2">
-                {isTranslating ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  <Globe className="w-4 h-4" />
-                )}
+                <Globe className="w-4 h-4" />
                 <span className="hidden sm:inline">{currentLangInfo.nativeName.split(' ')[0]}</span>
               </Button>
             </DropdownMenuTrigger>

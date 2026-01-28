@@ -4,24 +4,45 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { lazy, Suspense } from "react";
+import { Loader2 } from "lucide-react";
+
+// Eager load critical pages
 import Home from "./pages/Home";
 import Auth from "./pages/Auth";
-import GenerateRecipe from "./pages/GenerateRecipe";
-import RecipeDetail from "./pages/RecipeDetail";
-import Search from "./pages/Search";
-import Categories from "./pages/Categories";
-import Favorites from "./pages/Favorites";
 
-import Profile from "./pages/Profile";
-import About from "./pages/About";
-import Contact from "./pages/Contact";
-import Resources from "./pages/Resources";
-import NotFound from "./pages/NotFound";
-import Recipes from "./pages/Recipes";
-import EditRecipe from "./pages/EditRecipe";
-import Shop from "./pages/Shop";
+// Lazy load non-critical pages
+const GenerateRecipe = lazy(() => import("./pages/GenerateRecipe"));
+const RecipeDetail = lazy(() => import("./pages/RecipeDetail"));
+const Search = lazy(() => import("./pages/Search"));
+const Categories = lazy(() => import("./pages/Categories"));
+const Favorites = lazy(() => import("./pages/Favorites"));
+const Profile = lazy(() => import("./pages/Profile"));
+const Recipes = lazy(() => import("./pages/Recipes"));
+const EditRecipe = lazy(() => import("./pages/EditRecipe"));
+const Shop = lazy(() => import("./pages/Shop"));
+const About = lazy(() => import("./pages/About"));
+const Contact = lazy(() => import("./pages/Contact"));
+const Resources = lazy(() => import("./pages/Resources"));
+const NotFound = lazy(() => import("./pages/NotFound"));
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 5 * 60 * 1000, // 5 minutes
+      gcTime: 10 * 60 * 1000, // 10 minutes (formerly cacheTime)
+      retry: 1,
+      refetchOnWindowFocus: false,
+    },
+  },
+});
+
+// Minimal loading fallback
+const PageLoader = () => (
+  <div className="min-h-screen flex items-center justify-center bg-background">
+    <Loader2 className="w-8 h-8 animate-spin text-primary" />
+  </div>
+);
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -30,25 +51,25 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route path="/generate" element={<GenerateRecipe />} />
-            <Route path="/recipes" element={<Recipes />} />
-            <Route path="/recipe/:id" element={<RecipeDetail />} />
-            <Route path="/recipe/:id/edit" element={<EditRecipe />} />
-            <Route path="/search" element={<Search />} />
-            <Route path="/categories" element={<Categories />} />
-            <Route path="/favorites" element={<Favorites />} />
-            
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/contact" element={<Contact />} />
-            <Route path="/resources" element={<Resources />} />
-            <Route path="/shop" element={<Shop />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/auth" element={<Auth />} />
+              <Route path="/generate" element={<GenerateRecipe />} />
+              <Route path="/recipes" element={<Recipes />} />
+              <Route path="/recipe/:id" element={<RecipeDetail />} />
+              <Route path="/recipe/:id/edit" element={<EditRecipe />} />
+              <Route path="/search" element={<Search />} />
+              <Route path="/categories" element={<Categories />} />
+              <Route path="/favorites" element={<Favorites />} />
+              <Route path="/profile" element={<Profile />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/resources" element={<Resources />} />
+              <Route path="/shop" element={<Shop />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Suspense>
         </BrowserRouter>
       </TooltipProvider>
     </LanguageProvider>

@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Clock, Users, ChefHat, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, memo } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { useTranslate } from "@/hooks/useStaticTranslation";
@@ -36,7 +36,7 @@ const LANGUAGE_LABELS: Record<string, string> = {
   ru: 'Русский',
 };
 
-export const RecipeCard = ({
+export const RecipeCard = memo(function RecipeCard({
   id,
   title,
   description,
@@ -50,7 +50,7 @@ export const RecipeCard = ({
   language,
   isFavorite = false,
   onFavoriteChange,
-}: RecipeCardProps) => {
+}: RecipeCardProps) {
   const [isTogglingFavorite, setIsTogglingFavorite] = useState(false);
   const [localIsFavorite, setLocalIsFavorite] = useState(isFavorite);
   const { t, isRTL } = useTranslate();
@@ -89,7 +89,7 @@ export const RecipeCard = ({
         toast.success(t("Added to favorites"));
       }
       onFavoriteChange?.();
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error toggling favorite:", error);
       toast.error(t("Failed to update favorites"));
     } finally {
@@ -100,10 +100,8 @@ export const RecipeCard = ({
   const totalTime = (prep_time || 0) + (cook_time || 0);
   const displayImage = image_data || image_url || "/placeholder.svg";
 
-  // Get translated difficulty using static translations
   const getTranslatedDifficulty = () => {
     if (!difficulty) return null;
-    // Capitalize first letter for lookup
     const capitalized = difficulty.charAt(0).toUpperCase() + difficulty.slice(1).toLowerCase();
     return t(capitalized);
   };
@@ -115,6 +113,8 @@ export const RecipeCard = ({
           <img
             src={displayImage}
             alt={title}
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
           />
           <Button
@@ -179,4 +179,4 @@ export const RecipeCard = ({
       </Card>
     </Link>
   );
-};
+});
