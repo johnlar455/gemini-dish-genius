@@ -26,32 +26,6 @@ const SUPPORTED_LANGUAGES = {
   ru: { name: 'Russian', native: 'Русский' },
 };
 
-const PAGE_TEXTS = [
-  "My Recipes",
-  "Manage all your saved recipes in one place",
-  "Search recipes...",
-  "Filter by language",
-  "Clear",
-  "No recipes found",
-  "No recipes yet",
-  "Try adjusting your filters",
-  "Start creating delicious recipes!",
-  "Clear Filters",
-  "Create Your First Recipe",
-  "Edit",
-  "Delete",
-  "Delete Recipe",
-  "Are you sure you want to delete this recipe? This action cannot be undone.",
-  "Cancel",
-  "Recipe deleted successfully",
-  "Failed to delete recipe",
-  "Please sign in to view your recipes",
-  "Failed to load recipes",
-  "All Languages",
-  "Search:",
-  "min",
-];
-
 interface Recipe {
   id: string;
   title: string;

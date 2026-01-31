@@ -43,8 +43,8 @@ export default function GenerateRecipe() {
   const [currentIngredient, setCurrentIngredient] = useState("");
   const [dietaryPreferences, setDietaryPreferences] = useState<string[]>([]);
   const [category, setCategory] = useState("");
-  const [language, setLanguage] = useState("auto");
-  const { t, isRTL } = useTranslate();
+  const { t, isRTL, currentLanguage } = useTranslate();
+  const [language, setLanguage] = useState<string>(currentLanguage);
 
   const addIngredient = () => {
     if (currentIngredient.trim()) {
@@ -90,7 +90,7 @@ export default function GenerateRecipe() {
 
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
-      toast.error("Please sign in to generate recipes");
+      toast.error(t("Please sign in to generate recipes"));
       navigate("/auth");
       return;
     }
@@ -142,11 +142,11 @@ export default function GenerateRecipe() {
 
       if (saveError) throw saveError;
 
-      toast.success("Recipe generated successfully!");
+      toast.success(t("Recipe generated successfully!"));
       navigate(`/recipe/${savedRecipe.id}`);
     } catch (error: any) {
       console.error("Error generating recipe:", error);
-      toast.error(error.message || "Failed to generate recipe");
+      toast.error(error.message || t("Failed to generate recipe"));
     } finally {
       setLoading(false);
     }
@@ -161,18 +161,18 @@ export default function GenerateRecipe() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-3xl">
               <Sparkles className="w-8 h-8 text-primary" />
-              {t("Generate")} AI Recipe
+              {t("Generate AI Recipe")}
             </CardTitle>
             <CardDescription>
-              Describe what you want to cook and let AI create a custom recipe
+              {t("Describe what you want to cook and let AI create a custom recipe")}
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="prompt">What would you like to cook?</Label>
+              <Label htmlFor="prompt">{t("What would you like to cook?")}</Label>
               <Textarea
                 id="prompt"
-                placeholder="E.g., A spicy pasta dish, Healthy breakfast bowl, Chocolate dessert..."
+                placeholder={t("E.g., A spicy pasta dish, Healthy breakfast bowl, Chocolate dessert...")}
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 rows={3}
@@ -182,11 +182,11 @@ export default function GenerateRecipe() {
             <div className="space-y-2">
               <Label htmlFor="language" className="flex items-center gap-2">
                 <Globe className="w-4 h-4" />
-                Recipe Language
+                {t("Recipe Language")}
               </Label>
               <Select value={language} onValueChange={setLanguage}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select language" />
+                  <SelectValue placeholder={t("Select language")} />
                 </SelectTrigger>
                 <SelectContent>
                   {GENERATE_LANGUAGES.map((lang) => (
@@ -199,10 +199,10 @@ export default function GenerateRecipe() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="cuisine">Cuisine Type (Optional)</Label>
+              <Label htmlFor="cuisine">{t("Cuisine Type (Optional)")}</Label>
               <Select value={cuisineType} onValueChange={setCuisineType}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select cuisine" />
+                  <SelectValue placeholder={t("Select cuisine")} />
                 </SelectTrigger>
                 <SelectContent>
                   {cuisineOptions.map((cuisine) => (
@@ -213,16 +213,16 @@ export default function GenerateRecipe() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="ingredients">Available Ingredients (Optional)</Label>
+              <Label htmlFor="ingredients">{t("Available Ingredients (Optional)")}</Label>
               <div className="flex gap-2">
                 <Input
                   id="ingredients"
-                  placeholder="Add an ingredient..."
+                  placeholder={t("Add an ingredient...")}
                   value={currentIngredient}
                   onChange={(e) => setCurrentIngredient(e.target.value)}
                   onKeyPress={(e) => e.key === "Enter" && addIngredient()}
                 />
-                <Button type="button" onClick={addIngredient} variant="secondary">Add</Button>
+                <Button type="button" onClick={addIngredient} variant="secondary">{t("Add")}</Button>
               </div>
               {ingredients.length > 0 && (
                 <div className="flex flex-wrap gap-2 mt-2">
@@ -239,7 +239,7 @@ export default function GenerateRecipe() {
             </div>
 
             <div className="space-y-2">
-              <Label>Dietary Preferences (Optional)</Label>
+              <Label>{t("Dietary Preferences (Optional)")}</Label>
               <div className="flex flex-wrap gap-2">
                 {dietaryOptions.map((option) => (
                   <Badge
@@ -255,10 +255,10 @@ export default function GenerateRecipe() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="category">Recipe Category *</Label>
+              <Label htmlFor="category">{t("Recipe Category *")}</Label>
               <Select value={category} onValueChange={setCategory}>
                 <SelectTrigger>
-                  <SelectValue placeholder="Select a category" />
+                  <SelectValue placeholder={t("Select a category")} />
                 </SelectTrigger>
                 <SelectContent>
                   {categoryOptions.map((cat) => (
@@ -278,12 +278,12 @@ export default function GenerateRecipe() {
               {loading ? (
                 <>
                   <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                  Generating Recipe...
+                  {t("Generating Recipe...")}
                 </>
               ) : (
                 <>
                   <Sparkles className="w-5 h-5 mr-2" />
-                  {t("Generate")} Recipe
+                  {t("Generate Recipe")}
                 </>
               )}
             </Button>
