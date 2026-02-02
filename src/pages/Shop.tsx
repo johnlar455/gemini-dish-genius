@@ -93,12 +93,6 @@ const products: Product[] = [
 export default function Shop() {
   const { t, isRTL } = useTranslate();
 
-  const features = [
-    { icon: Award, title: "Premium Quality", description: "Hand-picked from trusted brands" },
-    { icon: TrendingUp, title: "Top Rated", description: "Highly rated by enthusiasts" },
-    { icon: Package, title: "Fast Delivery", description: "Quick shipping on all products" }
-  ];
-
   return (
     <div className="min-h-screen bg-gradient-warm flex flex-col font-sans" dir={isRTL ? "rtl" : "ltr"}>
       <Navbar />
@@ -110,36 +104,37 @@ export default function Shop() {
         <div className="container mx-auto max-w-7xl text-center relative z-10">
           <Badge className="mb-4 sm:mb-6 px-4 py-2 shadow-lg bg-gradient-to-r from-primary to-primary-hover border-0 text-primary-foreground">
             <Sparkles className="w-4 h-4 mr-2" />
-            Curated Kitchen Essentials
+            {t("Curated Kitchen Essentials")}
           </Badge>
           
           <h1 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black mb-4 sm:mb-6 leading-tight px-2">
             <span className="bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
-              Premium Kitchen Tools
+              {t("Premium Kitchen Tools")}
             </span>
             <br />
             <span className="bg-gradient-to-r from-primary to-primary-hover bg-clip-text text-transparent mt-2 inline-block">
-              For Modern Cooking
+              {t("For Modern Cooking")}
             </span>
           </h1>
           
           <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8 px-4">
-            Discover the finest selection of kitchen essentials that transform your cooking experience
+            {t("Discover the finest selection of kitchen essentials that transform your cooking experience")}
           </p>
 
           {/* Feature Pills */}
           <div className="flex flex-wrap justify-center gap-3 sm:gap-4 px-2">
-            {features.map((feature, index) => (
-              <div 
-                key={index}
-                className="flex items-center gap-2 px-4 py-2.5 bg-background/80 backdrop-blur-sm rounded-full border border-border/50 shadow-sm"
-              >
-                <feature.icon className="w-4 h-4 text-primary flex-shrink-0" />
-                <div className="text-left">
-                  <p className="font-semibold text-xs sm:text-sm">{feature.title}</p>
-                </div>
-              </div>
-            ))}
+            <div className="flex items-center gap-2 px-4 py-2.5 bg-background/80 backdrop-blur-sm rounded-full border border-border/50 shadow-sm">
+              <Award className="w-4 h-4 text-primary flex-shrink-0" />
+              <p className="font-semibold text-xs sm:text-sm">{t("Premium Quality")}</p>
+            </div>
+            <div className="flex items-center gap-2 px-4 py-2.5 bg-background/80 backdrop-blur-sm rounded-full border border-border/50 shadow-sm">
+              <TrendingUp className="w-4 h-4 text-primary flex-shrink-0" />
+              <p className="font-semibold text-xs sm:text-sm">{t("Top Rated")}</p>
+            </div>
+            <div className="flex items-center gap-2 px-4 py-2.5 bg-background/80 backdrop-blur-sm rounded-full border border-border/50 shadow-sm">
+              <Package className="w-4 h-4 text-primary flex-shrink-0" />
+              <p className="font-semibold text-xs sm:text-sm">{t("Fast Delivery")}</p>
+            </div>
           </div>
         </div>
       </section>
@@ -148,9 +143,9 @@ export default function Shop() {
       <section className="py-12 sm:py-16 px-4 sm:px-6">
         <div className="container mx-auto max-w-7xl">
           <div className="text-center mb-10 sm:mb-12">
-            <h2 className="font-display text-3xl sm:text-4xl font-bold mb-3">{t("Shop")} The Collection</h2>
+            <h2 className="font-display text-3xl sm:text-4xl font-bold mb-3">{t("Shop The Collection")}</h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              Each product is carefully selected to meet the highest standards
+              {t("Each product is carefully selected to meet the highest standards")}
             </p>
           </div>
 
@@ -168,7 +163,7 @@ export default function Shop() {
                   {index < 3 && (
                     <div className="absolute top-3 right-3 bg-gradient-to-r from-primary to-primary-hover text-primary-foreground px-2.5 py-1 rounded-full text-xs font-bold flex items-center gap-1">
                       <TrendingUp className="w-3 h-3" />
-                      <span className="hidden sm:inline">Trending</span>
+                      <span className="hidden sm:inline">{t("Trending")}</span>
                     </div>
                   )}
                 </div>
@@ -197,7 +192,7 @@ export default function Shop() {
                     onClick={() => window.open(product.affiliateLink, '_blank')}
                   >
                     <ShoppingCart className="w-4 h-4" />
-                    {t("Shop")} Now
+                    {t("Shop Now")}
                     <ExternalLink className="w-3.5 h-3.5" />
                   </Button>
                 </CardContent>
@@ -212,9 +207,9 @@ export default function Shop() {
         <div className="container mx-auto max-w-4xl text-center">
           <div className="bg-card/50 backdrop-blur-sm rounded-2xl p-6 sm:p-8 shadow-xl border border-border/50">
             <Sparkles className="w-10 h-10 mx-auto mb-4 text-primary" />
-            <h3 className="font-display text-2xl sm:text-3xl font-bold mb-3">Why {t("Shop")} With Us?</h3>
+            <h3 className="font-display text-2xl sm:text-3xl font-bold mb-3">{t("Why Shop With Us?")}</h3>
             <p className="text-muted-foreground leading-relaxed">
-              Every product is carefully tested and approved by professional chefs and cooking enthusiasts.
+              {t("Every product is carefully tested and approved by professional chefs and cooking enthusiasts.")}
             </p>
           </div>
         </div>

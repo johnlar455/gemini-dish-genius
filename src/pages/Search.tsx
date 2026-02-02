@@ -8,28 +8,14 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { Search as SearchIcon } from "lucide-react";
 import { toast } from "sonner";
-import { useStaticTranslation } from "@/hooks/useStaticTranslation";
-import { useLanguage } from "@/contexts/LanguageContext";
-
-const PAGE_TEXTS = [
-  "Search Recipes",
-  "Search by name, cuisine, or ingredients...",
-  "Searching recipes...",
-  "Found",
-  "recipe",
-  "recipes",
-  "No recipes found for",
-  "Try a different search term.",
-  "Failed to search recipes",
-];
+import { useTranslate } from "@/hooks/useStaticTranslation";
 
 export default function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get("q") || "");
   const [recipes, setRecipes] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
-  const { t } = useStaticTranslation(PAGE_TEXTS);
-  const { isRTL } = useLanguage();
+  const { t, isRTL } = useTranslate();
 
   useEffect(() => {
     const q = searchParams.get("q");

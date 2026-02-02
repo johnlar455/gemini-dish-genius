@@ -9,22 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import * as Icons from "lucide-react";
 import { Search, Loader2 } from "lucide-react";
-import { useStaticTranslation } from "@/hooks/useStaticTranslation";
-import { useLanguage } from "@/contexts/LanguageContext";
-
-const PAGE_TEXTS = [
-  "Browse Recipe Categories",
-  "Explore our curated collection of recipes organized by category. Find the perfect dish for any occasion.",
-  "Search categories...",
-  "Loading categories...",
-  "No categories found matching",
-  "Recipes",
-  "Loading recipes...",
-  "No recipes in this category yet.",
-  "Be the first to create one!",
-  "Failed to load categories",
-  "Failed to load recipes",
-];
+import { useTranslate } from "@/hooks/useStaticTranslation";
 
 export default function Categories() {
   const navigate = useNavigate();
@@ -38,8 +23,7 @@ export default function Categories() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
   const [recipesLoading, setRecipesLoading] = useState(false);
-  const { t } = useStaticTranslation(PAGE_TEXTS);
-  const { isRTL } = useLanguage();
+  const { t, isRTL } = useTranslate();
 
   useEffect(() => {
     loadCategories();
@@ -111,7 +95,6 @@ export default function Categories() {
       <Navbar />
 
       <main className="container mx-auto py-8 md:py-12 px-4 flex-1">
-        {/* Page Header */}
         <header className="mb-8 md:mb-12">
           <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center text-foreground">
             {t("Browse Recipe Categories")}
@@ -120,7 +103,6 @@ export default function Categories() {
             {t("Explore our curated collection of recipes organized by category. Find the perfect dish for any occasion.")}
           </p>
 
-          {/* Search Bar */}
           <div className="max-w-md mx-auto relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" aria-hidden="true" />
             <Input
@@ -134,7 +116,6 @@ export default function Categories() {
           </div>
         </header>
 
-        {/* Categories Grid */}
         <section aria-label="Recipe categories">
           {loading ? (
             <div className="flex flex-col items-center justify-center py-16" role="status">
@@ -148,7 +129,7 @@ export default function Categories() {
                   key={category.id}
                   role="button"
                   tabIndex={0}
-                  aria-label={`View ${category.name} recipes${category.description ? `: ${category.description}` : ''}`}
+                  aria-label={`${t("View")} ${category.name} ${t("recipes")}`}
                   className={`cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
                     selectedCategory === category.id 
                       ? "ring-2 ring-primary shadow-card scale-105" 
@@ -163,10 +144,7 @@ export default function Categories() {
                   }}
                 >
                   <CardContent className="flex flex-col items-center justify-center p-4 md:p-6 text-center min-h-[140px] md:min-h-[160px]">
-                    <div 
-                      className="text-primary mb-3 transition-transform duration-300 hover:scale-110" 
-                      aria-hidden="true"
-                    >
+                    <div className="text-primary mb-3 transition-transform duration-300 hover:scale-110" aria-hidden="true">
                       {getIcon(category.icon_name)}
                     </div>
                     <h3 className="font-semibold text-sm md:text-base text-foreground mb-1 leading-tight">
@@ -191,7 +169,6 @@ export default function Categories() {
           )}
         </section>
 
-        {/* Selected Category Recipes */}
         {selectedCategory && (
           <section aria-label={`${categories.find((c) => c.id === selectedCategory)?.name} recipes`}>
             <header className="mb-6 md:mb-8">

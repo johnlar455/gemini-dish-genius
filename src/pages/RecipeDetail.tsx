@@ -61,7 +61,7 @@ export default function RecipeDetail() {
       setRecipe(data);
     } catch (error) {
       console.error("Error loading recipe:", error);
-      toast.error("Failed to load recipe");
+      toast.error(t("Failed to load recipe"));
       navigate("/");
     } finally {
       setLoading(false);
@@ -124,7 +124,7 @@ export default function RecipeDetail() {
   const addToShoppingList = async () => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
-      toast.error("Please sign in to use shopping lists");
+      toast.error(t("Please sign in to use shopping lists"));
       navigate("/auth");
       return;
     }
@@ -143,22 +143,22 @@ export default function RecipeDetail() {
       });
 
       if (error) throw error;
-      toast.success("Added to shopping list!");
+      toast.success(t("Added to shopping list!"));
     } catch (error) {
       console.error("Error adding to shopping list:", error);
-      toast.error("Failed to add to shopping list");
+      toast.error(t("Failed to add to shopping list"));
     }
   };
 
   const handleTranslate = async () => {
     if (!selectedTargetLang || selectedTargetLang === recipeLanguage) {
-      toast.error("Please select a different target language");
+      toast.error(t("Please select a different target language"));
       return;
     }
 
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) {
-      toast.error("Please sign in to translate recipes");
+      toast.error(t("Please sign in to translate recipes"));
       navigate("/auth");
       return;
     }
@@ -233,7 +233,7 @@ export default function RecipeDetail() {
         <div className={`flex items-center justify-between mb-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
           <Button variant="ghost" onClick={() => navigate(-1)}>
             <ArrowLeft className={`w-4 h-4 ${isRTL ? 'ml-2 rotate-180' : 'mr-2'}`} />
-            Back
+            {t("Back")}
           </Button>
           
           <div className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
@@ -245,20 +245,20 @@ export default function RecipeDetail() {
               <DialogTrigger asChild>
                 <Button variant="outline" size="sm">
                   <Languages className={`w-4 h-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
-                  Translate
+                  {t("Translate")}
                 </Button>
               </DialogTrigger>
               <DialogContent>
                 <DialogHeader>
-                  <DialogTitle>Translate Recipe</DialogTitle>
+                  <DialogTitle>{t("Translate Recipe")}</DialogTitle>
                 </DialogHeader>
                 <div className="space-y-4 pt-4">
                   <p className="text-sm text-muted-foreground">
-                    Translate this recipe to another language. A new copy will be saved.
+                    {t("Translate this recipe to another language. A new copy will be saved.")}
                   </p>
                   <Select value={selectedTargetLang} onValueChange={setSelectedTargetLang}>
                     <SelectTrigger>
-                      <SelectValue placeholder="Select target language" />
+                      <SelectValue placeholder={t("Select target language")} />
                     </SelectTrigger>
                     <SelectContent>
                       {Object.entries(SUPPORTED_LANGUAGES)
@@ -278,12 +278,12 @@ export default function RecipeDetail() {
                     {isTranslating ? (
                       <>
                         <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        Translating...
+                        {t("Translating...")}
                       </>
                     ) : (
                       <>
                         <Languages className="w-4 h-4 mr-2" />
-                        Translate & Save
+                        {t("Translate & Save")}
                       </>
                     )}
                   </Button>
@@ -315,7 +315,7 @@ export default function RecipeDetail() {
               {recipe.difficulty && (
                 <Badge variant="secondary" className="capitalize">
                   <ChefHat className={`w-3 h-3 ${isRecipeRTL ? 'ml-1' : 'mr-1'}`} />
-                  {recipe.difficulty}
+                  {t(recipe.difficulty.charAt(0).toUpperCase() + recipe.difficulty.slice(1))}
                 </Badge>
               )}
               {recipe.cuisine_type && <Badge variant="outline">{recipe.cuisine_type}</Badge>}
@@ -342,11 +342,11 @@ export default function RecipeDetail() {
             <div className={`flex gap-3 ${isRecipeRTL ? 'flex-row-reverse' : ''}`}>
               <Button variant="hero" className="flex-1" onClick={toggleFavorite}>
                 <Heart className={`w-5 h-5 ${isRecipeRTL ? 'ml-2' : 'mr-2'} ${isFavorite ? "fill-current" : ""}`} />
-                {isFavorite ? "Saved" : t("Save")}
+                {isFavorite ? t("Saved") : t("Save")}
               </Button>
               <Button variant="secondary" onClick={addToShoppingList}>
                 <ShoppingCart className={`w-5 h-5 ${isRecipeRTL ? 'ml-2' : 'mr-2'}`} />
-                Add to List
+                {t("Add to List")}
               </Button>
             </div>
           </div>
@@ -355,7 +355,7 @@ export default function RecipeDetail() {
         <div className="grid lg:grid-cols-2 gap-8 mt-12">
           <Card className="shadow-card">
             <CardContent className="pt-6" dir={isRecipeRTL ? 'rtl' : 'ltr'}>
-              <h2 className={`text-2xl font-bold mb-4 ${isRecipeRTL ? 'text-right' : ''}`}>Ingredients</h2>
+              <h2 className={`text-2xl font-bold mb-4 ${isRecipeRTL ? 'text-right' : ''}`}>{t("Ingredients")}</h2>
               <ul className="space-y-3">
                 {recipe.ingredients.map((ingredient: any, index: number) => (
                   <li key={index} className={`flex items-start gap-3 ${isRecipeRTL ? 'flex-row-reverse text-right' : ''}`}>
@@ -371,7 +371,7 @@ export default function RecipeDetail() {
 
           <Card className="shadow-card">
             <CardContent className="pt-6" dir={isRecipeRTL ? 'rtl' : 'ltr'}>
-              <h2 className={`text-2xl font-bold mb-4 ${isRecipeRTL ? 'text-right' : ''}`}>Instructions</h2>
+              <h2 className={`text-2xl font-bold mb-4 ${isRecipeRTL ? 'text-right' : ''}`}>{t("Instructions")}</h2>
               <ol className="space-y-4">
                 {recipe.instructions.map((instruction: any) => (
                   <li key={instruction.step} className={`flex gap-4 ${isRecipeRTL ? 'flex-row-reverse text-right' : ''}`}>
@@ -388,7 +388,7 @@ export default function RecipeDetail() {
 
         {otherRecipes.length > 0 && (
           <section className="mt-16">
-            <h2 className="text-3xl font-bold mb-8">More {t("Recipes")}</h2>
+            <h2 className="text-3xl font-bold mb-8">{t("More Recipes")}</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {otherRecipes.map((otherRecipe) => (
                 <RecipeCard
