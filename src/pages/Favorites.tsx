@@ -6,23 +6,13 @@ import { RecipeCard } from "@/components/RecipeCard";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Heart } from "lucide-react";
-import { useStaticTranslation } from "@/hooks/useStaticTranslation";
-import { useLanguage } from "@/contexts/LanguageContext";
-
-const PAGE_TEXTS = [
-  "My Favorite Recipes",
-  "Loading your favorites...",
-  "No favorite recipes yet",
-  "Start exploring recipes and save your favorites!",
-  "Please sign in to view favorites",
-];
+import { useTranslate } from "@/hooks/useStaticTranslation";
 
 export default function Favorites() {
   const navigate = useNavigate();
   const [recipes, setRecipes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  const { t } = useStaticTranslation(PAGE_TEXTS);
-  const { isRTL } = useLanguage();
+  const { t, isRTL } = useTranslate();
 
   useEffect(() => {
     checkAuthAndLoadFavorites();
@@ -55,7 +45,7 @@ export default function Favorites() {
       setRecipes(favoriteRecipes);
     } catch (error: any) {
       console.error("Error loading favorites:", error);
-      toast.error("Failed to load favorites");
+      toast.error(t("Failed to load recipes"));
     } finally {
       setLoading(false);
     }
