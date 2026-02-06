@@ -8,7 +8,6 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Mail, MessageSquare, Send } from "lucide-react";
-import { useTranslate } from "@/hooks/useStaticTranslation";
 
 export default function Contact() {
   const [name, setName] = useState("");
@@ -16,7 +15,6 @@ export default function Contact() {
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
-  const { t, isRTL } = useTranslate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -33,13 +31,13 @@ export default function Contact() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-warm flex flex-col" dir={isRTL ? "rtl" : "ltr"}>
+    <div className="min-h-screen bg-gradient-warm flex flex-col">
       <Navbar />
 
       <div className="container mx-auto py-12 px-4 flex-1">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold mb-4">{t("Contact")}</h1>
+            <h1 className="text-5xl font-bold mb-4">Contact Us</h1>
             <p className="text-xl text-muted-foreground">
               Have questions or feedback? We'd love to hear from you!
             </p>
@@ -53,7 +51,7 @@ export default function Contact() {
                     <Mail className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-lg mb-2">{t("Email")} Us</h3>
+                    <h3 className="font-semibold text-lg mb-2">Email Us</h3>
                     <p className="text-muted-foreground text-sm mb-2">For general inquiries and support</p>
                     <a href="mailto:support@flavorai.com" className="text-primary hover:underline text-sm">
                       support@flavorai.com
@@ -99,7 +97,7 @@ export default function Contact() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email">{t("Email")}</Label>
+                    <Label htmlFor="email">Email</Label>
                     <Input
                       id="email"
                       type="email"

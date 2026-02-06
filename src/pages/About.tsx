@@ -2,11 +2,8 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Sparkles, Brain, Zap, Shield } from "lucide-react";
-import { useTranslate } from "@/hooks/useStaticTranslation";
 
 export default function About() {
-  const { t, isRTL } = useTranslate();
-
   const features = [
     {
       icon: Brain,
@@ -31,12 +28,12 @@ export default function About() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-warm flex flex-col" dir={isRTL ? "rtl" : "ltr"}>
+    <div className="min-h-screen bg-gradient-warm flex flex-col">
       <Navbar />
 
       <div className="container mx-auto py-12 px-4 flex-1">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-5xl font-bold mb-6 text-center">{t("About")} FlavorAI</h1>
+          <h1 className="text-5xl font-bold mb-6 text-center">About FlavorAI</h1>
           <p className="text-xl text-muted-foreground text-center mb-12">
             Revolutionizing home cooking with AI-powered recipe generation
           </p>

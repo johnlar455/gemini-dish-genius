@@ -9,7 +9,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import * as Icons from "lucide-react";
 import { Search, Loader2 } from "lucide-react";
-import { useTranslate } from "@/hooks/useStaticTranslation";
 
 export default function Categories() {
   const navigate = useNavigate();
@@ -23,7 +22,6 @@ export default function Categories() {
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
   const [recipesLoading, setRecipesLoading] = useState(false);
-  const { t, isRTL } = useTranslate();
 
   useEffect(() => {
     loadCategories();
@@ -55,7 +53,7 @@ export default function Categories() {
       setFilteredCategories(data || []);
     } catch (error: any) {
       console.error("Error loading categories:", error);
-      toast.error(t("Failed to load categories"));
+      toast.error("Failed to load categories");
     } finally {
       setLoading(false);
     }
@@ -74,7 +72,7 @@ export default function Categories() {
       setRecipes(data || []);
     } catch (error: any) {
       console.error("Error loading recipes:", error);
-      toast.error(t("Failed to load recipes"));
+      toast.error("Failed to load recipes");
     } finally {
       setRecipesLoading(false);
     }
@@ -91,27 +89,27 @@ export default function Categories() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-warm flex flex-col" dir={isRTL ? "rtl" : "ltr"}>
+    <div className="min-h-screen bg-gradient-warm flex flex-col">
       <Navbar />
 
       <main className="container mx-auto py-8 md:py-12 px-4 flex-1">
         <header className="mb-8 md:mb-12">
           <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center text-foreground">
-            {t("Browse Recipe Categories")}
+            Browse Recipe Categories
           </h1>
           <p className="text-center text-muted-foreground max-w-2xl mx-auto mb-6">
-            {t("Explore our curated collection of recipes organized by category. Find the perfect dish for any occasion.")}
+            Explore our curated collection of recipes organized by category. Find the perfect dish for any occasion.
           </p>
 
           <div className="max-w-md mx-auto relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" aria-hidden="true" />
             <Input
               type="search"
-              placeholder={t("Search categories...")}
+              placeholder="Search categories..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10 h-12 bg-card border-border focus-visible:ring-primary"
-              aria-label={t("Search categories...")}
+              aria-label="Search categories"
             />
           </div>
         </header>
@@ -120,7 +118,7 @@ export default function Categories() {
           {loading ? (
             <div className="flex flex-col items-center justify-center py-16" role="status">
               <Loader2 className="w-12 h-12 animate-spin text-primary mb-4" />
-              <p className="text-muted-foreground">{t("Loading categories...")}</p>
+              <p className="text-muted-foreground">Loading categories...</p>
             </div>
           ) : filteredCategories.length > 0 ? (
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6 mb-12">
@@ -129,7 +127,7 @@ export default function Categories() {
                   key={category.id}
                   role="button"
                   tabIndex={0}
-                  aria-label={`${t("View")} ${category.name} ${t("recipes")}`}
+                  aria-label={`View ${category.name} recipes`}
                   className={`cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-card focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 ${
                     selectedCategory === category.id 
                       ? "ring-2 ring-primary shadow-card scale-105" 
@@ -163,7 +161,7 @@ export default function Categories() {
             <div className="text-center py-16 bg-muted/50 rounded-lg" role="status">
               <Search className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
               <p className="text-muted-foreground text-lg">
-                {t("No categories found matching")} "{searchQuery}"
+                No categories found matching "{searchQuery}"
               </p>
             </div>
           )}
@@ -176,14 +174,14 @@ export default function Categories() {
                 <span className="text-primary">
                   {getIcon(categories.find((c) => c.id === selectedCategory)?.icon_name || "")}
                 </span>
-                {categories.find((c) => c.id === selectedCategory)?.name} {t("Recipes")}
+                {categories.find((c) => c.id === selectedCategory)?.name} Recipes
               </h2>
             </header>
 
             {recipesLoading ? (
               <div className="flex flex-col items-center justify-center py-16" role="status">
                 <Loader2 className="w-12 h-12 animate-spin text-primary mb-4" />
-                <p className="text-muted-foreground">{t("Loading recipes...")}</p>
+                <p className="text-muted-foreground">Loading recipes...</p>
               </div>
             ) : recipes.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
@@ -194,10 +192,10 @@ export default function Categories() {
             ) : (
               <div className="text-center py-16 bg-muted/50 rounded-lg" role="status">
                 <p className="text-muted-foreground text-lg mb-4">
-                  {t("No recipes in this category yet.")}
+                  No recipes in this category yet.
                 </p>
                 <p className="text-muted-foreground">
-                  {t("Be the first to create one!")}
+                  Be the first to create one!
                 </p>
               </div>
             )}
