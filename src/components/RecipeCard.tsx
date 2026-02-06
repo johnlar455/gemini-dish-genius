@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { useState, memo } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import { useTranslate } from "@/hooks/useStaticTranslation";
 
 interface RecipeCardProps {
   id: string;
@@ -19,22 +18,9 @@ interface RecipeCardProps {
   servings?: number;
   difficulty?: string;
   cuisine_type?: string;
-  language?: string;
   isFavorite?: boolean;
   onFavoriteChange?: () => void;
 }
-
-const LANGUAGE_LABELS: Record<string, string> = {
-  en: 'English',
-  ar: 'العربية',
-  zh: '中文',
-  ja: '日本語',
-  de: 'Deutsch',
-  nl: 'Nederlands',
-  es: 'Español',
-  it: 'Italiano',
-  ru: 'Русский',
-};
 
 export const RecipeCard = memo(function RecipeCard({
   id,
@@ -47,13 +33,11 @@ export const RecipeCard = memo(function RecipeCard({
   servings,
   difficulty,
   cuisine_type,
-  language,
   isFavorite = false,
   onFavoriteChange,
 }: RecipeCardProps) {
   const [isTogglingFavorite, setIsTogglingFavorite] = useState(false);
   const [localIsFavorite, setLocalIsFavorite] = useState(isFavorite);
-  const { t, isRTL } = useTranslate();
 
   const handleFavoriteToggle = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -63,7 +47,7 @@ export const RecipeCard = memo(function RecipeCard({
     const { data: { user } } = await supabase.auth.getUser();
 
     if (!user) {
-      toast.error(t("Please sign in to save favorites"));
+      toast.error("Please sign in to save favorites");
       setIsTogglingFavorite(false);
       return;
     }
@@ -78,7 +62,7 @@ export const RecipeCard = memo(function RecipeCard({
 
         if (error) throw error;
         setLocalIsFavorite(false);
-        toast.success(t("Removed from favorites"));
+        toast.success("Removed from favorites");
       } else {
         const { error } = await supabase
           .from("favorites")
@@ -86,12 +70,12 @@ export const RecipeCard = memo(function RecipeCard({
 
         if (error) throw error;
         setLocalIsFavorite(true);
-        toast.success(t("Added to favorites"));
+        toast.success("Added to favorites");
       }
       onFavoriteChange?.();
     } catch (error) {
       console.error("Error toggling favorite:", error);
-      toast.error(t("Failed to update favorites"));
+      toast.error("Failed to update favorites");
     } finally {
       setIsTogglingFavorite(false);
     }
@@ -99,12 +83,6 @@ export const RecipeCard = memo(function RecipeCard({
 
   const totalTime = (prep_time || 0) + (cook_time || 0);
   const displayImage = image_data || image_url || "/placeholder.svg";
-
-  const getTranslatedDifficulty = () => {
-    if (!difficulty) return null;
-    const capitalized = difficulty.charAt(0).toUpperCase() + difficulty.slice(1).toLowerCase();
-    return t(capitalized);
-  };
 
   return (
     <Link to={`/recipe/${id}`}>
@@ -120,7 +98,7 @@ export const RecipeCard = memo(function RecipeCard({
           <Button
             variant="ghost"
             size="icon"
-            className={`absolute top-2 ${isRTL ? 'left-2' : 'right-2'} bg-background/80 backdrop-blur-sm hover:bg-background`}
+            className="absolute top-2 right-2 bg-background/80 backdrop-blur-sm hover:bg-background"
             onClick={handleFavoriteToggle}
             disabled={isTogglingFavorite}
           >
@@ -128,32 +106,27 @@ export const RecipeCard = memo(function RecipeCard({
               className={`w-5 h-5 ${localIsFavorite ? "fill-primary text-primary" : "text-foreground"}`}
             />
           </Button>
-          {language && language !== 'en' && LANGUAGE_LABELS[language] && (
-            <Badge variant="secondary" className={`absolute top-2 ${isRTL ? 'right-2' : 'left-2'} text-xs`}>
-              {LANGUAGE_LABELS[language]}
-            </Badge>
-          )}
         </div>
 
-        <CardHeader dir={isRTL ? 'rtl' : 'ltr'}>
+        <CardHeader>
           <div className="flex items-start justify-between gap-2">
-            <h3 className={`font-semibold text-lg line-clamp-2 group-hover:text-primary transition-colors ${isRTL ? 'text-right' : ''}`}>
+            <h3 className="font-semibold text-lg line-clamp-2 group-hover:text-primary transition-colors">
               {title}
             </h3>
           </div>
           {description && (
-            <p className={`text-sm text-muted-foreground line-clamp-2 mt-2 ${isRTL ? 'text-right' : ''}`}>
+            <p className="text-sm text-muted-foreground line-clamp-2 mt-2">
               {description}
             </p>
           )}
         </CardHeader>
 
-        <CardContent dir={isRTL ? 'rtl' : 'ltr'}>
-          <div className={`flex flex-wrap gap-2 mb-3 ${isRTL ? 'justify-end' : ''}`}>
+        <CardContent>
+          <div className="flex flex-wrap gap-2 mb-3">
             {difficulty && (
-              <Badge variant="secondary" className={`capitalize ${isRTL ? 'flex-row-reverse' : ''}`}>
-                <ChefHat className={`w-3 h-3 ${isRTL ? 'ml-1' : 'mr-1'}`} />
-                {getTranslatedDifficulty()}
+              <Badge variant="secondary" className="capitalize">
+                <ChefHat className="w-3 h-3 mr-1" />
+                {difficulty}
               </Badge>
             )}
             {cuisine_type && (
@@ -161,17 +134,17 @@ export const RecipeCard = memo(function RecipeCard({
             )}
           </div>
 
-          <div className={`flex items-center gap-4 text-sm text-muted-foreground ${isRTL ? 'flex-row-reverse justify-end' : ''}`}>
+          <div className="flex items-center gap-4 text-sm text-muted-foreground">
             {totalTime > 0 && (
-              <div className={`flex items-center gap-1 ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <div className="flex items-center gap-1">
                 <Clock className="w-4 h-4" />
-                <span>{totalTime} {t("min")}</span>
+                <span>{totalTime} min</span>
               </div>
             )}
             {servings && (
-              <div className={`flex items-center gap-1 ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <div className="flex items-center gap-1">
                 <Users className="w-4 h-4" />
-                <span>{servings} {t("servings")}</span>
+                <span>{servings} servings</span>
               </div>
             )}
           </div>

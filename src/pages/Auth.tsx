@@ -8,7 +8,6 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { ChefHat, Github } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
-import { useTranslate } from "@/hooks/useStaticTranslation";
 
 export default function Auth() {
   const [isLogin, setIsLogin] = useState(true);
@@ -18,7 +17,6 @@ export default function Auth() {
   const [displayName, setDisplayName] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { t, isRTL } = useTranslate();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -39,7 +37,7 @@ export default function Auth() {
         });
 
         if (error) throw error;
-        toast.success(t("Password reset email sent! Check your inbox."));
+        toast.success("Password reset email sent! Check your inbox.");
         setIsForgotPassword(false);
       } else if (isLogin) {
         const { error } = await supabase.auth.signInWithPassword({
@@ -48,7 +46,7 @@ export default function Auth() {
         });
 
         if (error) throw error;
-        toast.success(t("Welcome back!"));
+        toast.success("Welcome back!");
         navigate("/");
       } else {
         const { error } = await supabase.auth.signUp({
@@ -63,12 +61,12 @@ export default function Auth() {
         });
 
         if (error) throw error;
-        toast.success(t("Account created! Welcome to FlavorAI!"));
+        toast.success("Account created! Welcome to FlavorAI!");
         navigate("/");
       }
     } catch (error: any) {
       console.error("Auth error:", error);
-      toast.error(error.message || t("Authentication failed"));
+      toast.error(error.message || "Authentication failed");
     } finally {
       setLoading(false);
     }
@@ -86,12 +84,12 @@ export default function Auth() {
       if (error) throw error;
     } catch (error: any) {
       console.error("OAuth error:", error);
-      toast.error(error.message || t("Authentication failed"));
+      toast.error(error.message || "Authentication failed");
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-muted/30 to-background p-4" dir={isRTL ? "rtl" : "ltr"}>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-background via-muted/30 to-background p-4">
       <Card className="w-full max-w-md shadow-card">
         <CardHeader className="text-center">
           <div className="flex justify-center mb-4">
@@ -100,24 +98,24 @@ export default function Auth() {
             </div>
           </div>
           <CardTitle className="text-2xl">
-            {isForgotPassword ? t("Reset Password") : isLogin ? t("Welcome Back") : t("Create Account")}
+            {isForgotPassword ? "Reset Password" : isLogin ? "Welcome Back" : "Create Account"}
           </CardTitle>
           <CardDescription>
             {isForgotPassword
-              ? t("Enter your email to receive a password reset link")
+              ? "Enter your email to receive a password reset link"
               : isLogin
-              ? t("Sign in to access your saved recipes")
-              : t("Join FlavorAI and start discovering amazing recipes")}
+              ? "Sign in to access your saved recipes"
+              : "Join FlavorAI and start discovering amazing recipes"}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleAuth} className="space-y-4">
             {!isLogin && !isForgotPassword && (
               <div className="space-y-2">
-                <Label htmlFor="displayName">{t("Display Name")}</Label>
+                <Label htmlFor="displayName">Display Name</Label>
                 <Input
                   id="displayName"
-                  placeholder={t("Your name")}
+                  placeholder="Your name"
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
                   required={!isLogin}
@@ -126,7 +124,7 @@ export default function Auth() {
             )}
 
             <div className="space-y-2">
-              <Label htmlFor="email">{t("Email")}</Label>
+              <Label htmlFor="email">Email</Label>
               <Input
                 id="email"
                 type="email"
@@ -139,8 +137,8 @@ export default function Auth() {
 
             {!isForgotPassword && (
               <div className="space-y-2">
-                <div className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
-                  <Label htmlFor="password">{t("Password")}</Label>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="password">Password</Label>
                   {isLogin && (
                     <Button
                       type="button"
@@ -148,7 +146,7 @@ export default function Auth() {
                       className="h-auto p-0 text-sm"
                       onClick={() => setIsForgotPassword(true)}
                     >
-                      {t("Forgot password?")}
+                      Forgot password?
                     </Button>
                   )}
                 </div>
@@ -172,12 +170,12 @@ export default function Auth() {
               disabled={loading}
             >
               {loading 
-                ? t("Loading...") 
+                ? "Loading..." 
                 : isForgotPassword 
-                ? t("Send Reset Link") 
+                ? "Send Reset Link" 
                 : isLogin 
-                ? t("Sign In") 
-                : t("Create Account")}
+                ? "Sign In" 
+                : "Create Account"}
             </Button>
 
             {!isForgotPassword && (
@@ -188,7 +186,7 @@ export default function Auth() {
                   </div>
                   <div className="relative flex justify-center text-xs uppercase">
                     <span className="bg-card px-2 text-muted-foreground">
-                      {t("Or continue with")}
+                      Or continue with
                     </span>
                   </div>
                 </div>
@@ -200,7 +198,7 @@ export default function Auth() {
                     onClick={() => handleOAuthSignIn('google')}
                     className="w-full"
                   >
-                    <svg className={`h-4 w-4 ${isRTL ? 'ml-2' : 'mr-2'}`} viewBox="0 0 24 24">
+                    <svg className="h-4 w-4 mr-2" viewBox="0 0 24 24">
                       <path
                         d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
                         fill="#4285F4"
@@ -218,7 +216,7 @@ export default function Auth() {
                         fill="#EA4335"
                       />
                     </svg>
-                    {t("Google")}
+                    Google
                   </Button>
 
                   <Button
@@ -227,8 +225,8 @@ export default function Auth() {
                     onClick={() => handleOAuthSignIn('github')}
                     className="w-full"
                   >
-                    <Github className={`h-4 w-4 ${isRTL ? 'ml-2' : 'mr-2'}`} />
-                    {t("GitHub")}
+                    <Github className="h-4 w-4 mr-2" />
+                    GitHub
                   </Button>
                 </div>
               </>
@@ -244,10 +242,10 @@ export default function Auth() {
               }}
             >
               {isForgotPassword
-                ? t("Back to sign in")
+                ? "Back to sign in"
                 : isLogin
-                ? t("Don't have an account? Sign up")
-                : t("Already have an account? Sign in")}
+                ? "Don't have an account? Sign up"
+                : "Already have an account? Sign in"}
             </Button>
           </form>
         </CardContent>

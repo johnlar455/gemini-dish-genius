@@ -8,14 +8,12 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { Search as SearchIcon } from "lucide-react";
 import { toast } from "sonner";
-import { useTranslate } from "@/hooks/useStaticTranslation";
 
 export default function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState(searchParams.get("q") || "");
   const [recipes, setRecipes] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
-  const { t, isRTL } = useTranslate();
 
   useEffect(() => {
     const q = searchParams.get("q");
@@ -38,7 +36,7 @@ export default function Search() {
       setRecipes(data || []);
     } catch (error: any) {
       console.error("Error searching recipes:", error);
-      toast.error(t("Failed to search recipes"));
+      toast.error("Failed to search recipes");
     } finally {
       setLoading(false);
     }
@@ -51,15 +49,15 @@ export default function Search() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-warm flex flex-col" dir={isRTL ? "rtl" : "ltr"}>
+    <div className="min-h-screen bg-gradient-warm flex flex-col">
       <Navbar />
 
       <div className="container mx-auto py-12 px-4 flex-1">
         <div className="max-w-3xl mx-auto mb-12">
-          <h1 className="text-4xl font-bold mb-6 text-center">{t("Search Recipes")}</h1>
+          <h1 className="text-4xl font-bold mb-6 text-center">Search Recipes</h1>
           <div className="flex gap-3">
             <Input
-              placeholder={t("Search by name, cuisine, or ingredients...")}
+              placeholder="Search by name, cuisine, or ingredients..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyPress={(e) => e.key === "Enter" && handleSearch()}
@@ -73,12 +71,12 @@ export default function Search() {
 
         {loading ? (
           <div className="text-center py-12">
-            <p className="text-muted-foreground">{t("Searching recipes...")}</p>
+            <p className="text-muted-foreground">Searching recipes...</p>
           </div>
         ) : recipes.length > 0 ? (
           <>
             <p className="text-muted-foreground mb-6">
-              {t("Found")} {recipes.length} {recipes.length !== 1 ? t("recipes") : t("recipe")}
+              Found {recipes.length} {recipes.length !== 1 ? "recipes" : "recipe"}
             </p>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {recipes.map((recipe) => (
@@ -89,7 +87,7 @@ export default function Search() {
         ) : query ? (
           <div className="text-center py-12 bg-muted rounded-lg">
             <p className="text-muted-foreground">
-              {t("No recipes found for")} "{query}". {t("Try a different search term.")}
+              No recipes found for "{query}". Try a different search term.
             </p>
           </div>
         ) : null}

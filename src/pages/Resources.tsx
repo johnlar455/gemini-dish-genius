@@ -3,7 +3,6 @@ import { Footer } from "@/components/Footer";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { BookOpen, Utensils, ChefHat, Thermometer } from "lucide-react";
-import { useTranslate } from "@/hooks/useStaticTranslation";
 
 const cookingTips = [
   {
@@ -60,15 +59,13 @@ const conversionGuide = [
 ];
 
 export default function Resources() {
-  const { t, isRTL } = useTranslate();
-
   return (
-    <div className="min-h-screen bg-gradient-warm flex flex-col" dir={isRTL ? "rtl" : "ltr"}>
+    <div className="min-h-screen bg-gradient-warm flex flex-col">
       <Navbar />
 
       <div className="container mx-auto py-12 px-4 flex-1">
         <div className="max-w-4xl mx-auto">
-          <h1 className="text-5xl font-bold mb-6 text-center">{t("Resources")}</h1>
+          <h1 className="text-5xl font-bold mb-6 text-center">Cooking Resources</h1>
           <p className="text-xl text-muted-foreground text-center mb-12">
             Essential guides and tips to elevate your culinary skills
           </p>
@@ -76,7 +73,7 @@ export default function Resources() {
           {/* Cooking Tips */}
           <Card className="shadow-card mb-8">
             <CardHeader>
-              <CardTitle className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <CardTitle className="flex items-center gap-2">
                 <ChefHat className="w-6 h-6 text-primary" />
                 Essential Cooking Tips
               </CardTitle>
@@ -85,8 +82,8 @@ export default function Resources() {
               <Accordion type="single" collapsible className="w-full">
                 {cookingTips.map((tip, index) => (
                   <AccordionItem key={index} value={`tip-${index}`}>
-                    <AccordionTrigger className={isRTL ? 'text-right' : ''}>{tip.title}</AccordionTrigger>
-                    <AccordionContent className={`text-muted-foreground ${isRTL ? 'text-right' : ''}`}>
+                    <AccordionTrigger>{tip.title}</AccordionTrigger>
+                    <AccordionContent className="text-muted-foreground">
                       {tip.content}
                     </AccordionContent>
                   </AccordionItem>
@@ -98,18 +95,18 @@ export default function Resources() {
           {/* Kitchen Tools */}
           <Card className="shadow-card mb-8">
             <CardHeader>
-              <CardTitle className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <CardTitle className="flex items-center gap-2">
                 <Utensils className="w-6 h-6 text-primary" />
                 Essential Kitchen Tools
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className={`text-muted-foreground mb-4 ${isRTL ? 'text-right' : ''}`}>
+              <p className="text-muted-foreground mb-4">
                 Fundamental tools every home cook should have:
               </p>
               <ul className="space-y-2">
                 {essentialTools.map((tool, index) => (
-                  <li key={index} className={`flex items-start gap-3 ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
+                  <li key={index} className="flex items-start gap-3">
                     <span className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></span>
                     <span className="text-muted-foreground">{tool}</span>
                   </li>
@@ -121,18 +118,18 @@ export default function Resources() {
           {/* Pantry Essentials */}
           <Card className="shadow-card mb-8">
             <CardHeader>
-              <CardTitle className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <CardTitle className="flex items-center gap-2">
                 <BookOpen className="w-6 h-6 text-primary" />
                 Pantry Essentials
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className={`text-muted-foreground mb-4 ${isRTL ? 'text-right' : ''}`}>
+              <p className="text-muted-foreground mb-4">
                 Stock your pantry with these basics:
               </p>
               <div className="grid md:grid-cols-2 gap-3">
                 {pantryEssentials.map((item, index) => (
-                  <div key={index} className={`flex items-start gap-3 ${isRTL ? 'flex-row-reverse text-right' : ''}`}>
+                  <div key={index} className="flex items-start gap-3">
                     <span className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></span>
                     <span className="text-muted-foreground">{item}</span>
                   </div>
@@ -144,18 +141,18 @@ export default function Resources() {
           {/* Measurement Conversions */}
           <Card className="shadow-card">
             <CardHeader>
-              <CardTitle className={`flex items-center gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+              <CardTitle className="flex items-center gap-2">
                 <Thermometer className="w-6 h-6 text-primary" />
                 Quick Conversion Guide
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className={`text-muted-foreground mb-4 ${isRTL ? 'text-right' : ''}`}>
+              <p className="text-muted-foreground mb-4">
                 Common measurement conversions:
               </p>
               <div className="space-y-3">
                 {conversionGuide.map((conversion, index) => (
-                  <div key={index} className={`flex items-center justify-between p-3 bg-muted rounded-lg ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <div key={index} className="flex items-center justify-between p-3 bg-muted rounded-lg">
                     <span className="font-medium">{conversion.from}</span>
                     <span className="text-muted-foreground">=</span>
                     <span className="text-muted-foreground">{conversion.to}</span>

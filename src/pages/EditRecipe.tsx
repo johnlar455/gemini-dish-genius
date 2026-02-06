@@ -12,69 +12,15 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Loader2, Save, X } from "lucide-react";
-import { useTranslate } from "@/hooks/useStaticTranslation";
 
-const PAGE_TEXTS = [
-  "Edit Recipe",
-  "Recipe Title",
-  "Enter recipe title",
-  "Description",
-  "Brief description of the recipe",
-  "Recipe Category",
-  "Select a category",
-  "Cuisine Type",
-  "Select cuisine",
-  "Difficulty",
-  "Select difficulty",
-  "Easy",
-  "Medium",
-  "Hard",
-  "Prep Time (minutes)",
-  "Cook Time (minutes)",
-  "Servings",
-  "Dietary Preferences",
-  "Ingredients",
-  "Add Ingredient",
-  "Amount",
-  "Ingredient",
-  "Instructions",
-  "Add Step",
-  "Describe this step",
-  "Saving...",
-  "Save Changes",
-  "Cancel",
-  "Please enter a recipe title",
-  "Recipe updated successfully!",
-  "Failed to update recipe",
-  "Please sign in to edit recipes",
-  "You don't have permission to edit this recipe",
-  "Failed to load recipe",
-  // Cuisine options
-  "Italian",
-  "Chinese",
-  "Mexican",
-  "Indian",
-  "Japanese",
-  "Thai",
-  "Mediterranean",
-  "French",
-  // Dietary options
-  "vegetarian",
-  "vegan",
-  "gluten-free",
-  "dairy-free",
-  "keto",
-  "low-carb",
-  // Category options
-  "Breakfast",
-  "Desserts",
-  "Dinner",
-  "Gluten-Free",
-  "Lunch",
-  "Snacks",
-  "Vegan",
-  "Vegetarian",
+const cuisineOptions = ["Italian", "Chinese", "Mexican", "Indian", "Japanese", "Thai", "Mediterranean", "French"];
+const difficultyOptions = [
+  { value: "easy", label: "Easy" },
+  { value: "medium", label: "Medium" },
+  { value: "hard", label: "Hard" },
 ];
+const dietaryOptions = ["vegetarian", "vegan", "gluten-free", "dairy-free", "keto", "low-carb"];
+const categoryOptions = ["Breakfast", "Desserts", "Dinner", "Gluten-Free", "Lunch", "Snacks", "Vegan", "Vegetarian"];
 
 export default function EditRecipe() {
   const { id } = useParams();
@@ -92,19 +38,6 @@ export default function EditRecipe() {
   const [instructions, setInstructions] = useState<any[]>([]);
   const [dietaryPreferences, setDietaryPreferences] = useState<string[]>([]);
   const [category, setCategory] = useState("");
-  const { t, isRTL } = useTranslate();
-
-  const cuisineOptions = ["Italian", "Chinese", "Mexican", "Indian", "Japanese", "Thai", "Mediterranean", "French"];
-  const difficultyOptions = [
-    { value: "easy", label: t("Easy") },
-    { value: "medium", label: t("Medium") },
-    { value: "hard", label: t("Hard") },
-  ];
-  const dietaryOptions = ["vegetarian", "vegan", "gluten-free", "dairy-free", "keto", "low-carb"];
-  const categoryOptions = ["Breakfast", "Desserts", "Dinner", "Gluten-Free", "Lunch", "Snacks", "Vegan", "Vegetarian"];
-
-  // Translation helper for options
-  const translateOption = (option: string) => t(option) || option;
 
   useEffect(() => {
     loadRecipe();
@@ -114,7 +47,7 @@ export default function EditRecipe() {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        toast.error(t("Please sign in to edit recipes"));
+        toast.error("Please sign in to edit recipes");
         navigate("/auth");
         return;
       }
@@ -128,7 +61,7 @@ export default function EditRecipe() {
       if (error) throw error;
 
       if (data.user_id !== user.id) {
-        toast.error(t("You don't have permission to edit this recipe"));
+        toast.error("You don't have permission to edit this recipe");
         navigate("/recipes");
         return;
       }
@@ -149,7 +82,7 @@ export default function EditRecipe() {
       }
     } catch (error: any) {
       console.error("Error loading recipe:", error);
-      toast.error(t("Failed to load recipe"));
+      toast.error("Failed to load recipe");
       navigate("/recipes");
     } finally {
       setLoading(false);
@@ -158,7 +91,7 @@ export default function EditRecipe() {
 
   const handleSave = async () => {
     if (!title.trim()) {
-      toast.error(t("Please enter a recipe title"));
+      toast.error("Please enter a recipe title");
       return;
     }
 
@@ -196,11 +129,11 @@ export default function EditRecipe() {
 
       if (error) throw error;
 
-      toast.success(t("Recipe updated successfully!"));
+      toast.success("Recipe updated successfully!");
       navigate(`/recipe/${id}`);
     } catch (error: any) {
       console.error("Error updating recipe:", error);
-      toast.error(t("Failed to update recipe"));
+      toast.error("Failed to update recipe");
     } finally {
       setSaving(false);
     }
@@ -253,46 +186,46 @@ export default function EditRecipe() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-warm flex flex-col" dir={isRTL ? "rtl" : "ltr"}>
+    <div className="min-h-screen bg-gradient-warm flex flex-col">
       <Navbar />
       
       <div className="container mx-auto py-12 px-4 flex-1">
         <Card className="max-w-4xl mx-auto">
           <CardHeader>
-            <CardTitle className="text-3xl">{t("Edit Recipe")}</CardTitle>
+            <CardTitle className="text-3xl">Edit Recipe</CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
             <div className="space-y-2">
-              <Label htmlFor="title">{t("Recipe Title")} *</Label>
+              <Label htmlFor="title">Recipe Title *</Label>
               <Input
                 id="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder={t("Enter recipe title")}
+                placeholder="Enter recipe title"
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="description">{t("Description")}</Label>
+              <Label htmlFor="description">Description</Label>
               <Textarea
                 id="description"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                placeholder={t("Brief description of the recipe")}
+                placeholder="Brief description of the recipe"
                 rows={3}
               />
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="category">{t("Recipe Category")}</Label>
+              <Label htmlFor="category">Recipe Category</Label>
               <Select value={category} onValueChange={setCategory}>
                 <SelectTrigger>
-                  <SelectValue placeholder={t("Select a category")} />
+                  <SelectValue placeholder="Select a category" />
                 </SelectTrigger>
                 <SelectContent>
                   {categoryOptions.map((cat) => (
                     <SelectItem key={cat} value={cat}>
-                      {translateOption(cat)}
+                      {cat}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -301,15 +234,15 @@ export default function EditRecipe() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label htmlFor="cuisine">{t("Cuisine Type")}</Label>
+                <Label htmlFor="cuisine">Cuisine Type</Label>
                 <Select value={cuisineType} onValueChange={setCuisineType}>
                   <SelectTrigger>
-                    <SelectValue placeholder={t("Select cuisine")} />
+                    <SelectValue placeholder="Select cuisine" />
                   </SelectTrigger>
                   <SelectContent>
                     {cuisineOptions.map((cuisine) => (
                       <SelectItem key={cuisine} value={cuisine}>
-                        {translateOption(cuisine)}
+                        {cuisine}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -317,15 +250,15 @@ export default function EditRecipe() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="difficulty">{t("Difficulty")}</Label>
+                <Label htmlFor="difficulty">Difficulty</Label>
                 <Select value={difficulty} onValueChange={setDifficulty}>
                   <SelectTrigger>
-                    <SelectValue placeholder={t("Select difficulty")} />
+                    <SelectValue placeholder="Select difficulty" />
                   </SelectTrigger>
                   <SelectContent>
                     {difficultyOptions.map((diff) => (
                       <SelectItem key={diff.value} value={diff.value}>
-                        {t(diff.label)}
+                        {diff.label}
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -333,7 +266,7 @@ export default function EditRecipe() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="prepTime">{t("Prep Time (minutes)")}</Label>
+                <Label htmlFor="prepTime">Prep Time (minutes)</Label>
                 <Input
                   id="prepTime"
                   type="number"
@@ -344,7 +277,7 @@ export default function EditRecipe() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="cookTime">{t("Cook Time (minutes)")}</Label>
+                <Label htmlFor="cookTime">Cook Time (minutes)</Label>
                 <Input
                   id="cookTime"
                   type="number"
@@ -355,7 +288,7 @@ export default function EditRecipe() {
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="servings">{t("Servings")}</Label>
+                <Label htmlFor="servings">Servings</Label>
                 <Input
                   id="servings"
                   type="number"
@@ -367,8 +300,8 @@ export default function EditRecipe() {
             </div>
 
             <div className="space-y-2">
-              <Label>{t("Dietary Preferences")}</Label>
-              <div className={`flex flex-wrap gap-2 ${isRTL ? 'justify-end' : ''}`}>
+              <Label>Dietary Preferences</Label>
+              <div className="flex flex-wrap gap-2">
                 {dietaryOptions.map((option) => (
                   <Badge
                     key={option}
@@ -376,30 +309,30 @@ export default function EditRecipe() {
                     className="cursor-pointer capitalize"
                     onClick={() => toggleDietary(option)}
                   >
-                    {translateOption(option)}
+                    {option}
                   </Badge>
                 ))}
               </div>
             </div>
 
             <div className="space-y-2">
-              <div className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
-                <Label>{t("Ingredients")}</Label>
+              <div className="flex items-center justify-between">
+                <Label>Ingredients</Label>
                 <Button type="button" variant="outline" size="sm" onClick={addIngredient}>
-                  {t("Add Ingredient")}
+                  Add Ingredient
                 </Button>
               </div>
               <div className="space-y-2">
                 {ingredients.map((ingredient, index) => (
-                  <div key={index} className={`flex gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <div key={index} className="flex gap-2">
                     <Input
-                      placeholder={t("Amount")}
+                      placeholder="Amount"
                       value={ingredient.amount || ""}
                       onChange={(e) => updateIngredient(index, "amount", e.target.value)}
                       className="w-32"
                     />
                     <Input
-                      placeholder={t("Ingredient")}
+                      placeholder="Ingredient"
                       value={ingredient.item || ""}
                       onChange={(e) => updateIngredient(index, "item", e.target.value)}
                       className="flex-1"
@@ -418,20 +351,20 @@ export default function EditRecipe() {
             </div>
 
             <div className="space-y-2">
-              <div className={`flex items-center justify-between ${isRTL ? 'flex-row-reverse' : ''}`}>
-                <Label>{t("Instructions")}</Label>
+              <div className="flex items-center justify-between">
+                <Label>Instructions</Label>
                 <Button type="button" variant="outline" size="sm" onClick={addInstruction}>
-                  {t("Add Step")}
+                  Add Step
                 </Button>
               </div>
               <div className="space-y-2">
                 {instructions.map((instruction, index) => (
-                  <div key={index} className={`flex gap-2 ${isRTL ? 'flex-row-reverse' : ''}`}>
+                  <div key={index} className="flex gap-2">
                     <div className="flex items-center justify-center w-8 h-10 bg-secondary rounded text-sm font-semibold">
                       {index + 1}
                     </div>
                     <Textarea
-                      placeholder={t("Describe this step")}
+                      placeholder="Describe this step"
                       value={instruction.text || ""}
                       onChange={(e) => updateInstruction(index, e.target.value)}
                       rows={2}
@@ -450,7 +383,7 @@ export default function EditRecipe() {
               </div>
             </div>
 
-            <div className={`flex gap-3 pt-4 ${isRTL ? 'flex-row-reverse' : ''}`}>
+            <div className="flex gap-3 pt-4">
               <Button
                 onClick={handleSave}
                 disabled={saving || !title.trim()}
@@ -459,13 +392,13 @@ export default function EditRecipe() {
               >
                 {saving ? (
                   <>
-                    <Loader2 className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'} animate-spin`} />
-                    {t("Saving...")}
+                    <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                    Saving...
                   </>
                 ) : (
                   <>
-                    <Save className={`w-5 h-5 ${isRTL ? 'ml-2' : 'mr-2'}`} />
-                    {t("Save Changes")}
+                    <Save className="w-5 h-5 mr-2" />
+                    Save Changes
                   </>
                 )}
               </Button>
@@ -475,7 +408,7 @@ export default function EditRecipe() {
                 disabled={saving}
                 size="lg"
               >
-                {t("Cancel")}
+                Cancel
               </Button>
             </div>
           </CardContent>
