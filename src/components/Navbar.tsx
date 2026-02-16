@@ -5,11 +5,14 @@ import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { User as SupabaseUser } from "@supabase/supabase-js";
 import { Sheet, SheetContent, SheetTrigger } from "./ui/sheet";
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 export const Navbar = () => {
   const location = useLocation();
   const [user, setUser] = useState<SupabaseUser | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const { t } = useLanguage();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -24,14 +27,14 @@ export const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { path: "/", label: "Home", icon: ChefHat },
-    { path: "/search", label: "Search", icon: Search },
-    { path: "/categories", label: "Categories", icon: BookOpen },
-    { path: "/generate", label: "Generate", icon: Sparkles },
-    { path: "/shop", label: "Shop", icon: ShoppingCart },
+    { path: "/", label: t("nav_home"), icon: ChefHat },
+    { path: "/search", label: t("nav_search"), icon: Search },
+    { path: "/categories", label: t("nav_categories"), icon: BookOpen },
+    { path: "/generate", label: t("nav_generate"), icon: Sparkles },
+    { path: "/shop", label: t("nav_shop"), icon: ShoppingCart },
     ...(user ? [
-      { path: "/recipes", label: "Recipes", icon: Notebook },
-      { path: "/favorites", label: "Favorites", icon: Heart }
+      { path: "/recipes", label: t("nav_recipes"), icon: Notebook },
+      { path: "/favorites", label: t("nav_favorites"), icon: Heart }
     ] : [])
   ];
 
@@ -65,11 +68,12 @@ export const Navbar = () => {
         </div>
 
         <div className="flex items-center gap-2">
+          <LanguageSwitcher />
           {user && (
             <Button variant="hero" size="sm" asChild className="hidden md:flex">
               <Link to="/generate">
                 <Sparkles className="w-4 h-4 mr-2" />
-                Add Recipe
+                {t("nav_add_recipe")}
               </Link>
             </Button>
           )}
@@ -77,12 +81,12 @@ export const Navbar = () => {
             <Button variant="ghost" size="sm" asChild className="hidden md:flex">
               <Link to="/profile">
                 <User className="w-4 h-4 mr-2" />
-                Profile
+                {t("nav_profile")}
               </Link>
             </Button>
           ) : (
             <Button variant="default" size="sm" asChild className="hidden md:flex">
-              <Link to="/auth">Sign In</Link>
+              <Link to="/auth">{t("nav_sign_in")}</Link>
             </Button>
           )}
 
@@ -118,7 +122,7 @@ export const Navbar = () => {
                     <Button variant="hero" size="sm" asChild className="w-full">
                       <Link to="/generate" onClick={() => setIsOpen(false)} className="flex items-center justify-center">
                         <Sparkles className="w-4 h-4 mr-2" />
-                        Add Recipe
+                        {t("nav_add_recipe")}
                       </Link>
                     </Button>
                   )}
@@ -126,12 +130,12 @@ export const Navbar = () => {
                     <Button variant="ghost" size="sm" asChild className="w-full justify-start">
                       <Link to="/profile" onClick={() => setIsOpen(false)} className="flex items-center">
                         <User className="w-4 h-4 mr-2" />
-                        Profile
+                        {t("nav_profile")}
                       </Link>
                     </Button>
                   ) : (
                     <Button variant="default" size="sm" asChild className="w-full">
-                      <Link to="/auth" onClick={() => setIsOpen(false)}>Sign In</Link>
+                      <Link to="/auth" onClick={() => setIsOpen(false)}>{t("nav_sign_in")}</Link>
                     </Button>
                   )}
                 </div>
