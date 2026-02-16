@@ -88,7 +88,7 @@ export default function GenerateRecipe() {
 
     try {
       const { data, error } = await supabase.functions.invoke("generate-recipe", {
-        body: validationResult.data,
+        body: { ...validationResult.data, language: "auto" },
       });
 
       if (error) throw error;
