@@ -96,6 +96,20 @@ export default function GenerateRecipe() {
 
       const { recipe, imageData } = data;
 
+      // Normalize difficulty to English for DB constraint
+      const difficultyMap: Record<string, string> = {
+        easy: 'easy', medium: 'medium', hard: 'hard',
+        'سهل': 'easy', 'متوسط': 'medium', 'صعب': 'hard',
+        'fácil': 'easy', 'medio': 'medium', 'difícil': 'hard',
+        'facile': 'easy', 'moyen': 'medium', 'difficile': 'hard',
+        'leicht': 'easy', 'mittel': 'medium', 'schwer': 'hard',
+        '簡単': 'easy', '普通': 'medium', '難しい': 'hard',
+        '简单': 'easy', '中等': 'medium', '困难': 'hard',
+        'лёгкий': 'easy', 'средний': 'medium', 'сложный': 'hard',
+        'makkelijk': 'easy', 'gemiddeld': 'medium', 'moeilijk': 'hard',
+      };
+      const normalizedDifficulty = difficultyMap[recipe.difficulty?.toLowerCase()] || 'medium';
+
       let categoryId = null;
       if (category) {
         const { data: categoryData } = await supabase
@@ -117,7 +131,7 @@ export default function GenerateRecipe() {
           prep_time: recipe.prepTime,
           cook_time: recipe.cookTime,
           servings: recipe.servings,
-          difficulty: recipe.difficulty,
+          difficulty: normalizedDifficulty,
           ingredients: recipe.ingredients,
           instructions: recipe.instructions,
           image_data: imageData,
