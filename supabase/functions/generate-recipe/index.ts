@@ -251,13 +251,57 @@ Format the response as JSON with this structure:
     let recipeData;
     try {
       recipeData = JSON.parse(recipeText);
-      // Ensure language info is in the response
-      recipeData.language = targetLanguage;
-      recipeData.languageName = langInfo.name;
     } catch (e) {
-      console.error('Failed to parse recipe JSON:', e);
-      throw new Error('Failed to parse recipe data');
+      console.warn('Direct JSON parse failed, attempting cleanup:', e);
+      try {
+        let cleaned = recipeText
+          .replace(/```json\s*/gi, '')
+          .replace(/```\s*/g, '')
+          .trim();
+
+        const jsonStart = cleaned.search(/\{/);
+        const jsonEnd = cleaned.lastIndexOf('}');
+        if (jsonStart === -1 || jsonEnd === -1) throw new Error('No JSON found');
+        cleaned = cleaned.substring(jsonStart, jsonEnd + 1);
+
+        // Remove control chars and trailing commas
+        cleaned = cleaned
+          .replace(/,\s*}/g, '}')
+          .replace(/,\s*]/g, ']')
+          .replace(/[\x00-\x1F\x7F]/g, ' ');
+
+        // Fix common LLM issue: '}' used instead of ']' for arrays, or random text injected
+        // Remove lines that aren't valid JSON content
+        const lines = cleaned.split('\n');
+        const validLines = lines.filter(line => {
+          const trimmed = line.trim();
+          // Keep empty lines and lines that look like JSON
+          if (trimmed === '') return true;
+          // Remove lines that don't start with JSON-valid characters
+          return /^[\s\{\}\[\]"',:\-\d\w]/.test(trimmed);
+        });
+        cleaned = validLines.join('\n');
+
+        // Balance braces/brackets
+        let braces = 0, brackets = 0;
+        for (const char of cleaned) {
+          if (char === '{') braces++;
+          if (char === '}') braces--;
+          if (char === '[') brackets++;
+          if (char === ']') brackets--;
+        }
+        while (brackets > 0) { cleaned += ']'; brackets--; }
+        while (braces > 0) { cleaned += '}'; braces--; }
+
+        recipeData = JSON.parse(cleaned);
+      } catch (e2) {
+        console.error('Failed to parse recipe JSON after cleanup:', e2);
+        throw new Error('Failed to parse recipe data');
+      }
     }
+    // Ensure language info is in the response
+    recipeData.language = targetLanguage;
+    recipeData.languageName = langInfo.name;
 
     // Generate image prompt for the dish
     const imagePrompt = `A beautifully plated dish of ${recipeData.title}, ${cuisineType || 'gourmet'} style, professional food photography, appetizing presentation, restaurant quality, high resolution`;
