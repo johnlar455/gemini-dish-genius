@@ -43,10 +43,10 @@ export default function About() {
             <h2 className="text-2xl font-bold mb-4">{t("about_tech")}</h2>
             <p className="text-muted-foreground leading-relaxed mb-4">{t("about_tech_desc")}</p>
             <ul className="space-y-2 text-muted-foreground">
-              <li className="flex items-start gap-2"><span className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></span><span><strong>Google Gemini AI:</strong> Powers recipe and image generation</span></li>
-              <li className="flex items-start gap-2"><span className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></span><span><strong>Lovable Cloud:</strong> Secure backend infrastructure</span></li>
-              <li className="flex items-start gap-2"><span className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></span><span><strong>React & TypeScript:</strong> Fast, responsive user experience</span></li>
-              <li className="flex items-start gap-2"><span className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></span><span><strong>Tailwind CSS:</strong> Beautiful, consistent designs</span></li>
+              <li className="flex items-start gap-2"><span className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></span><span><strong>Google Gemini AI:</strong> {t("about_tech_gemini")}</span></li>
+              <li className="flex items-start gap-2"><span className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></span><span><strong>Lovable Cloud:</strong> {t("about_tech_cloud")}</span></li>
+              <li className="flex items-start gap-2"><span className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></span><span><strong>React & TypeScript:</strong> {t("about_tech_react")}</span></li>
+              <li className="flex items-start gap-2"><span className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></span><span><strong>Tailwind CSS:</strong> {t("about_tech_tailwind")}</span></li>
             </ul>
           </CardContent></Card>
         </div>
