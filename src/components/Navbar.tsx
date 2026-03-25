@@ -31,7 +31,6 @@ export const Navbar = () => {
     { path: "/search", label: t("nav_search"), icon: Search },
     { path: "/categories", label: t("nav_categories"), icon: BookOpen },
     { path: "/generate", label: t("nav_generate"), icon: Sparkles },
-    { path: "/shop", label: t("nav_shop"), icon: ShoppingCart },
     ...(user ? [
       { path: "/recipes", label: t("nav_recipes"), icon: Notebook },
       { path: "/favorites", label: t("nav_favorites"), icon: Heart }
