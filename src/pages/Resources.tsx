@@ -5,19 +5,26 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { BookOpen, Utensils, ChefHat, Thermometer } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 
-const cookingTips = [
-  { title: "Mise en Place", content: "Always prepare and organize all your ingredients before cooking. This French phrase means 'everything in its place' and is key to stress-free cooking." },
-  { title: "Taste as You Go", content: "The most important skill in cooking is tasting your food throughout the process. This helps you adjust seasonings before serving." },
-  { title: "Sharp Knives", content: "A sharp knife is safer and more efficient than a dull one. Invest in a good quality knife and maintain its edge." },
-  { title: "Room Temperature Ingredients", content: "For baking and cooking, bringing ingredients to room temperature ensures even cooking and better results." },
-];
-
-const essentialTools = ["Chef's knife and paring knife", "Cutting board (wooden or bamboo)", "Cast iron skillet", "Non-stick pan", "Large pot for pasta and soups", "Mixing bowls in various sizes", "Measuring cups and spoons", "Wooden spoons and silicone spatulas", "Meat thermometer", "Kitchen timer"];
-const pantryEssentials = ["Olive oil and vegetable oil", "Salt (kosher and sea salt) and black pepper", "Garlic and onions", "All-purpose flour", "Sugar (white and brown)", "Rice and pasta", "Canned tomatoes", "Stock or broth", "Soy sauce and vinegar", "Basic spices: paprika, cumin, oregano, basil"];
-const conversionGuide = [{ from: "1 cup", to: "16 tablespoons or 240ml" }, { from: "1 tablespoon", to: "3 teaspoons or 15ml" }, { from: "1 pound", to: "16 ounces or 453g" }, { from: "1 ounce", to: "28g" }, { from: "350°F", to: "175°C" }, { from: "400°F", to: "200°C" }];
-
 export default function Resources() {
   const { t } = useLanguage();
+
+  const cookingTips = [
+    { title: t("res_tip1_title"), content: t("res_tip1_content") },
+    { title: t("res_tip2_title"), content: t("res_tip2_content") },
+    { title: t("res_tip3_title"), content: t("res_tip3_content") },
+    { title: t("res_tip4_title"), content: t("res_tip4_content") },
+  ];
+
+  const essentialTools = [t("res_tool_1"), t("res_tool_2"), t("res_tool_3"), t("res_tool_4"), t("res_tool_5"), t("res_tool_6"), t("res_tool_7"), t("res_tool_8"), t("res_tool_9"), t("res_tool_10")];
+  const pantryEssentials = [t("res_pantry_1"), t("res_pantry_2"), t("res_pantry_3"), t("res_pantry_4"), t("res_pantry_5"), t("res_pantry_6"), t("res_pantry_7"), t("res_pantry_8"), t("res_pantry_9"), t("res_pantry_10")];
+  const conversionGuide = [
+    { from: t("res_conv_1_from"), to: t("res_conv_1_to") },
+    { from: t("res_conv_2_from"), to: t("res_conv_2_to") },
+    { from: t("res_conv_3_from"), to: t("res_conv_3_to") },
+    { from: t("res_conv_4_from"), to: t("res_conv_4_to") },
+    { from: t("res_conv_5_from"), to: t("res_conv_5_to") },
+    { from: t("res_conv_6_from"), to: t("res_conv_6_to") },
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-warm flex flex-col">

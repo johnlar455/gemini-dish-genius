@@ -20,7 +20,7 @@ const Favorites = lazy(() => import("./pages/Favorites"));
 const Profile = lazy(() => import("./pages/Profile"));
 const Recipes = lazy(() => import("./pages/Recipes"));
 const EditRecipe = lazy(() => import("./pages/EditRecipe"));
-const Shop = lazy(() => import("./pages/Shop"));
+
 const About = lazy(() => import("./pages/About"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Resources = lazy(() => import("./pages/Resources"));
@@ -66,7 +66,7 @@ const App = () => (
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/resources" element={<Resources />} />
-              <Route path="/shop" element={<Shop />} />
+              
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

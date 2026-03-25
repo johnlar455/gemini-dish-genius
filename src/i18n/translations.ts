@@ -1,691 +1,372 @@
 export type Language = "en" | "ar" | "es" | "fr" | "de" | "tr" | "zh" | "ja" | "ru" | "hi" | "ko" | "pt" | "it" | "nl";
 
 export const languageNames: Record<Language, string> = {
-  en: "English",
-  ar: "العربية",
-  es: "Español",
-  fr: "Français",
-  de: "Deutsch",
-  tr: "Türkçe",
-  zh: "中文",
-  ja: "日本語",
-  ru: "Русский",
-  hi: "हिन्दी",
-  ko: "한국어",
-  pt: "Português",
-  it: "Italiano",
-  nl: "Nederlands",
+  en: "English", ar: "العربية", es: "Español", fr: "Français", de: "Deutsch", tr: "Türkçe",
+  zh: "中文", ja: "日本語", ru: "Русский", hi: "हिन्दी", ko: "한국어", pt: "Português", it: "Italiano", nl: "Nederlands",
 };
 
 export const rtlLanguages: Language[] = ["ar"];
 
 type TranslationKeys = {
-  // Navbar
-  nav_home: string;
-  nav_search: string;
-  nav_categories: string;
-  nav_generate: string;
-  nav_shop: string;
-  nav_recipes: string;
-  nav_favorites: string;
-  nav_add_recipe: string;
-  nav_profile: string;
-  nav_sign_in: string;
-
-  // Home
-  home_hero_title: string;
-  home_hero_title_accent: string;
-  home_hero_desc: string;
-  home_search_placeholder: string;
-  home_generate_ai: string;
-  home_featured: string;
-  home_featured_desc: string;
-  home_loading: string;
-  home_no_recipes: string;
-  home_first_recipe: string;
-
-  // Footer
-  footer_desc: string;
-  footer_explore: string;
-  footer_search_recipes: string;
-  footer_resources: string;
-  footer_cooking_guides: string;
-  footer_about: string;
-  footer_contact: string;
-  footer_account: string;
-  footer_my_favorites: string;
-  footer_shopping_lists: string;
-  footer_profile: string;
-  footer_copyright: string;
-
-  // Generate Recipe
-  gen_title: string;
-  gen_desc: string;
-  gen_what_cook: string;
-  gen_what_cook_placeholder: string;
-  gen_cuisine: string;
-  gen_ingredients: string;
-  gen_add_ingredient_placeholder: string;
-  gen_add: string;
-  gen_dietary: string;
-  gen_category: string;
-  gen_generating: string;
-  gen_generate: string;
-
-  // Search
-  search_title: string;
-  search_placeholder: string;
-  search_searching: string;
-  search_found: string;
-  search_recipe: string;
-  search_recipes: string;
-  search_no_results: string;
-
-  // Favorites
-  fav_title: string;
-  fav_loading: string;
-  fav_empty: string;
-  fav_empty_desc: string;
-
-  // Categories
-  cat_title: string;
-  cat_desc: string;
-  cat_search_placeholder: string;
-  cat_loading: string;
-  cat_no_results: string;
-  cat_recipes: string;
-  cat_loading_recipes: string;
-  cat_no_recipes: string;
-  cat_be_first: string;
-
-  // Recipe Detail
-  detail_back: string;
-  detail_save: string;
-  detail_saved: string;
-  detail_add_to_list: string;
-  detail_ingredients: string;
-  detail_instructions: string;
-  detail_more_recipes: string;
-  detail_loading: string;
-  detail_servings: string;
-  detail_min: string;
-
-  // My Recipes
-  recipes_title: string;
-  recipes_desc: string;
-  recipes_search: string;
-  recipes_no_found: string;
-  recipes_no_yet: string;
-  recipes_adjust_search: string;
-  recipes_start_creating: string;
-  recipes_create_first: string;
-  recipes_edit: string;
-  recipes_delete: string;
-  recipes_delete_title: string;
-  recipes_delete_desc: string;
-  recipes_cancel: string;
-
-  // Edit Recipe
-  edit_title: string;
-  edit_recipe_title: string;
-  edit_description: string;
-  edit_category: string;
-  edit_cuisine: string;
-  edit_difficulty: string;
-  edit_prep_time: string;
-  edit_cook_time: string;
-  edit_servings: string;
-  edit_dietary: string;
-  edit_ingredients: string;
-  edit_add_ingredient: string;
-  edit_instructions: string;
-  edit_add_step: string;
-  edit_saving: string;
-  edit_save: string;
-  edit_cancel: string;
-  edit_amount: string;
-  edit_ingredient: string;
-  edit_step_placeholder: string;
-
-  // Profile
-  profile_title: string;
-  profile_account_info: string;
-  profile_email: string;
-  profile_display_name: string;
-  profile_name_placeholder: string;
-  profile_updating: string;
-  profile_update: string;
-  profile_actions: string;
-  profile_sign_out: string;
-  profile_loading: string;
-
-  // Auth
-  auth_reset_password: string;
-  auth_welcome_back: string;
-  auth_create_account: string;
-  auth_reset_desc: string;
-  auth_sign_in_desc: string;
-  auth_sign_up_desc: string;
-  auth_display_name: string;
-  auth_email: string;
-  auth_password: string;
-  auth_forgot: string;
-  auth_loading: string;
-  auth_send_reset: string;
-  auth_sign_in: string;
-  auth_or_continue: string;
-  auth_back_sign_in: string;
-  auth_no_account: string;
-  auth_has_account: string;
-
-  // About
-  about_title: string;
-  about_subtitle: string;
-  about_mission: string;
-  about_mission_p1: string;
-  about_mission_p2: string;
-  about_features: string;
-  about_tech: string;
-  about_tech_desc: string;
-  about_f1_title: string;
-  about_f1_desc: string;
-  about_f2_title: string;
-  about_f2_desc: string;
-  about_f3_title: string;
-  about_f3_desc: string;
-  about_f4_title: string;
-  about_f4_desc: string;
-
-  // Contact
-  contact_title: string;
-  contact_subtitle: string;
-  contact_email_title: string;
-  contact_email_desc: string;
-  contact_feedback_title: string;
-  contact_feedback_desc: string;
-  contact_send_message: string;
-  contact_name: string;
-  contact_name_placeholder: string;
-  contact_email: string;
-  contact_subject: string;
-  contact_subject_placeholder: string;
-  contact_message: string;
-  contact_message_placeholder: string;
-  contact_sending: string;
-  contact_send: string;
-
-  // Shop
-  shop_badge: string;
-  shop_title1: string;
-  shop_title2: string;
-  shop_desc: string;
-  shop_quality: string;
-  shop_top_rated: string;
-  shop_fast_delivery: string;
-  shop_collection: string;
-  shop_collection_desc: string;
-  shop_now: string;
-  shop_trending: string;
-  shop_why: string;
-  shop_why_desc: string;
-
-  // Resources
-  res_title: string;
-  res_subtitle: string;
-  res_cooking_tips: string;
-  res_kitchen_tools: string;
-  res_tools_desc: string;
-  res_pantry: string;
-  res_pantry_desc: string;
-  res_conversions: string;
-  res_conversions_desc: string;
-
-  // NotFound
-  notfound_title: string;
-  notfound_desc: string;
-  notfound_home: string;
-
-  // Common
+  nav_home: string; nav_search: string; nav_categories: string; nav_generate: string; nav_recipes: string; nav_favorites: string; nav_add_recipe: string; nav_profile: string; nav_sign_in: string;
+  home_hero_title: string; home_hero_title_accent: string; home_hero_desc: string; home_search_placeholder: string; home_generate_ai: string; home_featured: string; home_featured_desc: string; home_loading: string; home_no_recipes: string; home_first_recipe: string;
+  footer_desc: string; footer_explore: string; footer_search_recipes: string; footer_resources: string; footer_cooking_guides: string; footer_about: string; footer_contact: string; footer_account: string; footer_my_favorites: string; footer_shopping_lists: string; footer_profile: string; footer_copyright: string;
+  gen_title: string; gen_desc: string; gen_what_cook: string; gen_what_cook_placeholder: string; gen_cuisine: string; gen_ingredients: string; gen_add_ingredient_placeholder: string; gen_add: string; gen_dietary: string; gen_category: string; gen_generating: string; gen_generate: string;
+  search_title: string; search_placeholder: string; search_searching: string; search_found: string; search_recipe: string; search_recipes: string; search_no_results: string;
+  fav_title: string; fav_loading: string; fav_empty: string; fav_empty_desc: string;
+  cat_title: string; cat_desc: string; cat_search_placeholder: string; cat_loading: string; cat_no_results: string; cat_recipes: string; cat_loading_recipes: string; cat_no_recipes: string; cat_be_first: string;
+  detail_back: string; detail_save: string; detail_saved: string; detail_add_to_list: string; detail_ingredients: string; detail_instructions: string; detail_more_recipes: string; detail_loading: string; detail_servings: string; detail_min: string;
+  recipes_title: string; recipes_desc: string; recipes_search: string; recipes_no_found: string; recipes_no_yet: string; recipes_adjust_search: string; recipes_start_creating: string; recipes_create_first: string; recipes_edit: string; recipes_delete: string; recipes_delete_title: string; recipes_delete_desc: string; recipes_cancel: string;
+  edit_title: string; edit_recipe_title: string; edit_description: string; edit_category: string; edit_cuisine: string; edit_difficulty: string; edit_prep_time: string; edit_cook_time: string; edit_servings: string; edit_dietary: string; edit_ingredients: string; edit_add_ingredient: string; edit_instructions: string; edit_add_step: string; edit_saving: string; edit_save: string; edit_cancel: string; edit_amount: string; edit_ingredient: string; edit_step_placeholder: string;
+  profile_title: string; profile_account_info: string; profile_email: string; profile_display_name: string; profile_name_placeholder: string; profile_updating: string; profile_update: string; profile_actions: string; profile_sign_out: string; profile_loading: string;
+  auth_reset_password: string; auth_welcome_back: string; auth_create_account: string; auth_reset_desc: string; auth_sign_in_desc: string; auth_sign_up_desc: string; auth_display_name: string; auth_email: string; auth_password: string; auth_forgot: string; auth_loading: string; auth_send_reset: string; auth_sign_in: string; auth_or_continue: string; auth_back_sign_in: string; auth_no_account: string; auth_has_account: string;
+  about_title: string; about_subtitle: string; about_mission: string; about_mission_p1: string; about_mission_p2: string; about_features: string; about_tech: string; about_tech_desc: string; about_f1_title: string; about_f1_desc: string; about_f2_title: string; about_f2_desc: string; about_f3_title: string; about_f3_desc: string; about_f4_title: string; about_f4_desc: string; about_tech_gemini: string; about_tech_cloud: string; about_tech_react: string; about_tech_tailwind: string;
+  contact_title: string; contact_subtitle: string; contact_email_title: string; contact_email_desc: string; contact_feedback_title: string; contact_feedback_desc: string; contact_send_message: string; contact_name: string; contact_name_placeholder: string; contact_email: string; contact_subject: string; contact_subject_placeholder: string; contact_message: string; contact_message_placeholder: string; contact_sending: string; contact_send: string;
+  res_title: string; res_subtitle: string; res_cooking_tips: string; res_kitchen_tools: string; res_tools_desc: string; res_pantry: string; res_pantry_desc: string; res_conversions: string; res_conversions_desc: string;
+  res_tip1_title: string; res_tip1_content: string; res_tip2_title: string; res_tip2_content: string; res_tip3_title: string; res_tip3_content: string; res_tip4_title: string; res_tip4_content: string;
+  res_tool_1: string; res_tool_2: string; res_tool_3: string; res_tool_4: string; res_tool_5: string; res_tool_6: string; res_tool_7: string; res_tool_8: string; res_tool_9: string; res_tool_10: string;
+  res_pantry_1: string; res_pantry_2: string; res_pantry_3: string; res_pantry_4: string; res_pantry_5: string; res_pantry_6: string; res_pantry_7: string; res_pantry_8: string; res_pantry_9: string; res_pantry_10: string;
+  res_conv_1_from: string; res_conv_1_to: string; res_conv_2_from: string; res_conv_2_to: string; res_conv_3_from: string; res_conv_3_to: string; res_conv_4_from: string; res_conv_4_to: string; res_conv_5_from: string; res_conv_5_to: string; res_conv_6_from: string; res_conv_6_to: string;
+  notfound_title: string; notfound_desc: string; notfound_home: string;
   common_servings: string;
 };
 
 const en: TranslationKeys = {
-  nav_home: "Home",
-  nav_search: "Search",
-  nav_categories: "Categories",
-  nav_generate: "Generate",
-  nav_shop: "Shop",
-  nav_recipes: "Recipes",
-  nav_favorites: "Favorites",
-  nav_add_recipe: "Add Recipe",
-  nav_profile: "Profile",
-  nav_sign_in: "Sign In",
-
-  home_hero_title: "Discover Your Next",
-  home_hero_title_accent: "Culinary Adventure",
-  home_hero_desc: "AI-powered recipe generation tailored to your taste, dietary preferences, and available ingredients",
-  home_search_placeholder: "Search recipes or describe what you want to cook...",
-  home_generate_ai: "Generate AI Recipe",
-  home_featured: "Featured Recipes",
-  home_featured_desc: "Explore our collection of AI-generated culinary delights",
-  home_loading: "Loading delicious recipes...",
-  home_no_recipes: "No recipes yet. Be the first to create one!",
-  home_first_recipe: "Generate Your First Recipe",
-
-  footer_desc: "AI-powered recipe discovery and generation for home cooks everywhere.",
-  footer_explore: "Explore",
-  footer_search_recipes: "Search Recipes",
-  footer_resources: "Resources",
-  footer_cooking_guides: "Cooking Guides",
-  footer_about: "About Us",
-  footer_contact: "Contact",
-  footer_account: "Account",
-  footer_my_favorites: "My Favorites",
-  footer_shopping_lists: "Shopping Lists",
-  footer_profile: "Profile",
-  footer_copyright: "FlavorAI. All rights reserved. Powered by AI.",
-
-  gen_title: "Generate AI Recipe",
-  gen_desc: "Describe what you want to cook and let AI create a custom recipe",
-  gen_what_cook: "What would you like to cook?",
-  gen_what_cook_placeholder: "E.g., A spicy pasta dish, Healthy breakfast bowl, Chocolate dessert...",
-  gen_cuisine: "Cuisine Type (Optional)",
-  gen_ingredients: "Available Ingredients (Optional)",
-  gen_add_ingredient_placeholder: "Add an ingredient...",
-  gen_add: "Add",
-  gen_dietary: "Dietary Preferences (Optional)",
-  gen_category: "Recipe Category *",
-  gen_generating: "Generating Recipe...",
-  gen_generate: "Generate Recipe",
-
-  search_title: "Search Recipes",
-  search_placeholder: "Search by name, cuisine, or ingredients...",
-  search_searching: "Searching recipes...",
-  search_found: "Found",
-  search_recipe: "recipe",
-  search_recipes: "recipes",
-  search_no_results: "No recipes found for",
-
-  fav_title: "My Favorite Recipes",
-  fav_loading: "Loading your favorites...",
-  fav_empty: "No favorite recipes yet",
-  fav_empty_desc: "Start exploring recipes and save your favorites!",
-
-  cat_title: "Browse Recipe Categories",
-  cat_desc: "Explore our curated collection of recipes organized by category. Find the perfect dish for any occasion.",
-  cat_search_placeholder: "Search categories...",
-  cat_loading: "Loading categories...",
-  cat_no_results: "No categories found matching",
-  cat_recipes: "Recipes",
-  cat_loading_recipes: "Loading recipes...",
-  cat_no_recipes: "No recipes in this category yet.",
-  cat_be_first: "Be the first to create one!",
-
-  detail_back: "Back",
-  detail_save: "Save",
-  detail_saved: "Saved",
-  detail_add_to_list: "Add to List",
-  detail_ingredients: "Ingredients",
-  detail_instructions: "Instructions",
-  detail_more_recipes: "More Recipes",
-  detail_loading: "Loading...",
-  detail_servings: "servings",
-  detail_min: "min",
-
-  recipes_title: "My Recipes",
-  recipes_desc: "Manage all your saved recipes in one place",
-  recipes_search: "Search recipes...",
-  recipes_no_found: "No recipes found",
-  recipes_no_yet: "No recipes yet",
-  recipes_adjust_search: "Try adjusting your search",
-  recipes_start_creating: "Start creating delicious recipes!",
-  recipes_create_first: "Create Your First Recipe",
-  recipes_edit: "Edit",
-  recipes_delete: "Delete",
-  recipes_delete_title: "Delete Recipe",
-  recipes_delete_desc: "Are you sure you want to delete this recipe? This action cannot be undone.",
-  recipes_cancel: "Cancel",
-
-  edit_title: "Edit Recipe",
-  edit_recipe_title: "Recipe Title *",
-  edit_description: "Description",
-  edit_category: "Recipe Category",
-  edit_cuisine: "Cuisine Type",
-  edit_difficulty: "Difficulty",
-  edit_prep_time: "Prep Time (minutes)",
-  edit_cook_time: "Cook Time (minutes)",
-  edit_servings: "Servings",
-  edit_dietary: "Dietary Preferences",
-  edit_ingredients: "Ingredients",
-  edit_add_ingredient: "Add Ingredient",
-  edit_instructions: "Instructions",
-  edit_add_step: "Add Step",
-  edit_saving: "Saving...",
-  edit_save: "Save Changes",
-  edit_cancel: "Cancel",
-  edit_amount: "Amount",
-  edit_ingredient: "Ingredient",
-  edit_step_placeholder: "Describe this step",
-
-  profile_title: "Profile",
-  profile_account_info: "Account Information",
-  profile_email: "Email",
-  profile_display_name: "Display Name",
-  profile_name_placeholder: "Your name",
-  profile_updating: "Updating...",
-  profile_update: "Update Profile",
-  profile_actions: "Account Actions",
-  profile_sign_out: "Sign Out",
-  profile_loading: "Loading...",
-
-  auth_reset_password: "Reset Password",
-  auth_welcome_back: "Welcome Back",
-  auth_create_account: "Create Account",
-  auth_reset_desc: "Enter your email to receive a password reset link",
-  auth_sign_in_desc: "Sign in to access your saved recipes",
-  auth_sign_up_desc: "Join FlavorAI and start discovering amazing recipes",
-  auth_display_name: "Display Name",
-  auth_email: "Email",
-  auth_password: "Password",
-  auth_forgot: "Forgot password?",
-  auth_loading: "Loading...",
-  auth_send_reset: "Send Reset Link",
-  auth_sign_in: "Sign In",
-  auth_or_continue: "Or continue with",
-  auth_back_sign_in: "Back to sign in",
-  auth_no_account: "Don't have an account? Sign up",
-  auth_has_account: "Already have an account? Sign in",
-
-  about_title: "About FlavorAI",
-  about_subtitle: "Revolutionizing home cooking with AI-powered recipe generation",
-  about_mission: "Our Mission",
-  about_mission_p1: "FlavorAI was created to make cooking more accessible, creative, and enjoyable for everyone. Whether you're a seasoned chef or just starting your culinary journey, our AI-powered platform helps you discover new recipes tailored to your unique preferences.",
-  about_mission_p2: "We believe that great cooking should be accessible to everyone, regardless of experience level or available ingredients. That's why we've built a platform that combines the power of artificial intelligence with the art of cooking.",
-  about_features: "Key Features",
-  about_tech: "Technology Stack",
-  about_tech_desc: "FlavorAI is built with cutting-edge technology to provide the best experience:",
-  about_f1_title: "AI-Powered Recipe Generation",
-  about_f1_desc: "Leveraging advanced AI to create unique, personalized recipes based on your preferences.",
-  about_f2_title: "Beautiful Visual Generation",
-  about_f2_desc: "Each recipe comes with an AI-generated image giving you a visual preview.",
-  about_f3_title: "Instant Results",
-  about_f3_desc: "Get complete recipes with ingredients and instructions in seconds.",
-  about_f4_title: "Secure & Private",
-  about_f4_desc: "Your data is protected ensuring your recipes and preferences stay safe.",
-
-  contact_title: "Contact Us",
-  contact_subtitle: "Have questions or feedback? We'd love to hear from you!",
-  contact_email_title: "Email Us",
-  contact_email_desc: "For general inquiries and support",
-  contact_feedback_title: "Feedback",
-  contact_feedback_desc: "Share your ideas and suggestions",
-  contact_send_message: "Send us a Message",
-  contact_name: "Name",
-  contact_name_placeholder: "Your name",
-  contact_email: "Email",
-  contact_subject: "Subject",
-  contact_subject_placeholder: "What's this about?",
-  contact_message: "Message",
-  contact_message_placeholder: "Tell us more...",
-  contact_sending: "Sending...",
-  contact_send: "Send Message",
-
-  shop_badge: "Curated Kitchen Essentials",
-  shop_title1: "Premium Kitchen Tools",
-  shop_title2: "For Modern Cooking",
-  shop_desc: "Discover the finest selection of kitchen essentials that transform your cooking experience",
-  shop_quality: "Premium Quality",
-  shop_top_rated: "Top Rated",
-  shop_fast_delivery: "Fast Delivery",
-  shop_collection: "Shop The Collection",
-  shop_collection_desc: "Each product is carefully selected to meet the highest standards",
-  shop_now: "Shop Now",
-  shop_trending: "Trending",
-  shop_why: "Why Shop With Us?",
-  shop_why_desc: "Every product is carefully tested and approved by professional chefs and cooking enthusiasts.",
-
-  res_title: "Cooking Resources",
-  res_subtitle: "Essential guides and tips to elevate your culinary skills",
-  res_cooking_tips: "Essential Cooking Tips",
-  res_kitchen_tools: "Essential Kitchen Tools",
-  res_tools_desc: "Fundamental tools every home cook should have:",
-  res_pantry: "Pantry Essentials",
-  res_pantry_desc: "Stock your pantry with these basics:",
-  res_conversions: "Quick Conversion Guide",
-  res_conversions_desc: "Common measurement conversions:",
-
-  notfound_title: "Oops! Page not found",
-  notfound_desc: "The page you're looking for doesn't exist or has been moved.",
-  notfound_home: "Home",
-
+  nav_home: "Home", nav_search: "Search", nav_categories: "Categories", nav_generate: "Generate", nav_recipes: "Recipes", nav_favorites: "Favorites", nav_add_recipe: "Add Recipe", nav_profile: "Profile", nav_sign_in: "Sign In",
+  home_hero_title: "Discover Your Next", home_hero_title_accent: "Culinary Adventure", home_hero_desc: "AI-powered recipe generation tailored to your taste, dietary preferences, and available ingredients", home_search_placeholder: "Search recipes or describe what you want to cook...", home_generate_ai: "Generate AI Recipe", home_featured: "Featured Recipes", home_featured_desc: "Explore our collection of AI-generated culinary delights", home_loading: "Loading delicious recipes...", home_no_recipes: "No recipes yet. Be the first to create one!", home_first_recipe: "Generate Your First Recipe",
+  footer_desc: "AI-powered recipe discovery and generation for home cooks everywhere.", footer_explore: "Explore", footer_search_recipes: "Search Recipes", footer_resources: "Resources", footer_cooking_guides: "Cooking Guides", footer_about: "About Us", footer_contact: "Contact", footer_account: "Account", footer_my_favorites: "My Favorites", footer_shopping_lists: "Shopping Lists", footer_profile: "Profile", footer_copyright: "FlavorAI. All rights reserved. Powered by AI.",
+  gen_title: "Generate AI Recipe", gen_desc: "Describe what you want to cook and let AI create a custom recipe", gen_what_cook: "What would you like to cook?", gen_what_cook_placeholder: "E.g., A spicy pasta dish, Healthy breakfast bowl, Chocolate dessert...", gen_cuisine: "Cuisine Type (Optional)", gen_ingredients: "Available Ingredients (Optional)", gen_add_ingredient_placeholder: "Add an ingredient...", gen_add: "Add", gen_dietary: "Dietary Preferences (Optional)", gen_category: "Recipe Category *", gen_generating: "Generating Recipe...", gen_generate: "Generate Recipe",
+  search_title: "Search Recipes", search_placeholder: "Search by name, cuisine, or ingredients...", search_searching: "Searching recipes...", search_found: "Found", search_recipe: "recipe", search_recipes: "recipes", search_no_results: "No recipes found for",
+  fav_title: "My Favorite Recipes", fav_loading: "Loading your favorites...", fav_empty: "No favorite recipes yet", fav_empty_desc: "Start exploring recipes and save your favorites!",
+  cat_title: "Browse Recipe Categories", cat_desc: "Explore our curated collection of recipes organized by category. Find the perfect dish for any occasion.", cat_search_placeholder: "Search categories...", cat_loading: "Loading categories...", cat_no_results: "No categories found matching", cat_recipes: "Recipes", cat_loading_recipes: "Loading recipes...", cat_no_recipes: "No recipes in this category yet.", cat_be_first: "Be the first to create one!",
+  detail_back: "Back", detail_save: "Save", detail_saved: "Saved", detail_add_to_list: "Add to List", detail_ingredients: "Ingredients", detail_instructions: "Instructions", detail_more_recipes: "More Recipes", detail_loading: "Loading...", detail_servings: "servings", detail_min: "min",
+  recipes_title: "My Recipes", recipes_desc: "Manage all your saved recipes in one place", recipes_search: "Search recipes...", recipes_no_found: "No recipes found", recipes_no_yet: "No recipes yet", recipes_adjust_search: "Try adjusting your search", recipes_start_creating: "Start creating delicious recipes!", recipes_create_first: "Create Your First Recipe", recipes_edit: "Edit", recipes_delete: "Delete", recipes_delete_title: "Delete Recipe", recipes_delete_desc: "Are you sure you want to delete this recipe? This action cannot be undone.", recipes_cancel: "Cancel",
+  edit_title: "Edit Recipe", edit_recipe_title: "Recipe Title *", edit_description: "Description", edit_category: "Recipe Category", edit_cuisine: "Cuisine Type", edit_difficulty: "Difficulty", edit_prep_time: "Prep Time (minutes)", edit_cook_time: "Cook Time (minutes)", edit_servings: "Servings", edit_dietary: "Dietary Preferences", edit_ingredients: "Ingredients", edit_add_ingredient: "Add Ingredient", edit_instructions: "Instructions", edit_add_step: "Add Step", edit_saving: "Saving...", edit_save: "Save Changes", edit_cancel: "Cancel", edit_amount: "Amount", edit_ingredient: "Ingredient", edit_step_placeholder: "Describe this step",
+  profile_title: "Profile", profile_account_info: "Account Information", profile_email: "Email", profile_display_name: "Display Name", profile_name_placeholder: "Your name", profile_updating: "Updating...", profile_update: "Update Profile", profile_actions: "Account Actions", profile_sign_out: "Sign Out", profile_loading: "Loading...",
+  auth_reset_password: "Reset Password", auth_welcome_back: "Welcome Back", auth_create_account: "Create Account", auth_reset_desc: "Enter your email to receive a password reset link", auth_sign_in_desc: "Sign in to access your saved recipes", auth_sign_up_desc: "Join FlavorAI and start discovering amazing recipes", auth_display_name: "Display Name", auth_email: "Email", auth_password: "Password", auth_forgot: "Forgot password?", auth_loading: "Loading...", auth_send_reset: "Send Reset Link", auth_sign_in: "Sign In", auth_or_continue: "Or continue with", auth_back_sign_in: "Back to sign in", auth_no_account: "Don't have an account? Sign up", auth_has_account: "Already have an account? Sign in",
+  about_title: "About FlavorAI", about_subtitle: "Revolutionizing home cooking with AI-powered recipe generation", about_mission: "Our Mission", about_mission_p1: "FlavorAI was created to make cooking more accessible, creative, and enjoyable for everyone. Whether you're a seasoned chef or just starting your culinary journey, our AI-powered platform helps you discover new recipes tailored to your unique preferences.", about_mission_p2: "We believe that great cooking should be accessible to everyone, regardless of experience level or available ingredients. That's why we've built a platform that combines the power of artificial intelligence with the art of cooking.", about_features: "Key Features", about_tech: "Technology Stack", about_tech_desc: "FlavorAI is built with cutting-edge technology to provide the best experience:", about_f1_title: "AI-Powered Recipe Generation", about_f1_desc: "Leveraging advanced AI to create unique, personalized recipes based on your preferences.", about_f2_title: "Beautiful Visual Generation", about_f2_desc: "Each recipe comes with an AI-generated image giving you a visual preview.", about_f3_title: "Instant Results", about_f3_desc: "Get complete recipes with ingredients and instructions in seconds.", about_f4_title: "Secure & Private", about_f4_desc: "Your data is protected ensuring your recipes and preferences stay safe.", about_tech_gemini: "Powers recipe and image generation", about_tech_cloud: "Secure backend infrastructure", about_tech_react: "Fast, responsive user experience", about_tech_tailwind: "Beautiful, consistent designs",
+  contact_title: "Contact Us", contact_subtitle: "Have questions or feedback? We'd love to hear from you!", contact_email_title: "Email Us", contact_email_desc: "For general inquiries and support", contact_feedback_title: "Feedback", contact_feedback_desc: "Share your ideas and suggestions", contact_send_message: "Send us a Message", contact_name: "Name", contact_name_placeholder: "Your name", contact_email: "Email", contact_subject: "Subject", contact_subject_placeholder: "What's this about?", contact_message: "Message", contact_message_placeholder: "Tell us more...", contact_sending: "Sending...", contact_send: "Send Message",
+  res_title: "Cooking Resources", res_subtitle: "Essential guides and tips to elevate your culinary skills", res_cooking_tips: "Essential Cooking Tips", res_kitchen_tools: "Essential Kitchen Tools", res_tools_desc: "Fundamental tools every home cook should have:", res_pantry: "Pantry Essentials", res_pantry_desc: "Stock your pantry with these basics:", res_conversions: "Quick Conversion Guide", res_conversions_desc: "Common measurement conversions:",
+  res_tip1_title: "Mise en Place", res_tip1_content: "Always prepare and organize all your ingredients before cooking. This French phrase means 'everything in its place' and is key to stress-free cooking.", res_tip2_title: "Taste as You Go", res_tip2_content: "The most important skill in cooking is tasting your food throughout the process. This helps you adjust seasonings before serving.", res_tip3_title: "Sharp Knives", res_tip3_content: "A sharp knife is safer and more efficient than a dull one. Invest in a good quality knife and maintain its edge.", res_tip4_title: "Room Temperature Ingredients", res_tip4_content: "For baking and cooking, bringing ingredients to room temperature ensures even cooking and better results.",
+  res_tool_1: "Chef's knife and paring knife", res_tool_2: "Cutting board (wooden or bamboo)", res_tool_3: "Cast iron skillet", res_tool_4: "Non-stick pan", res_tool_5: "Large pot for pasta and soups", res_tool_6: "Mixing bowls in various sizes", res_tool_7: "Measuring cups and spoons", res_tool_8: "Wooden spoons and silicone spatulas", res_tool_9: "Meat thermometer", res_tool_10: "Kitchen timer",
+  res_pantry_1: "Olive oil and vegetable oil", res_pantry_2: "Salt (kosher and sea salt) and black pepper", res_pantry_3: "Garlic and onions", res_pantry_4: "All-purpose flour", res_pantry_5: "Sugar (white and brown)", res_pantry_6: "Rice and pasta", res_pantry_7: "Canned tomatoes", res_pantry_8: "Stock or broth", res_pantry_9: "Soy sauce and vinegar", res_pantry_10: "Basic spices: paprika, cumin, oregano, basil",
+  res_conv_1_from: "1 cup", res_conv_1_to: "16 tablespoons or 240ml", res_conv_2_from: "1 tablespoon", res_conv_2_to: "3 teaspoons or 15ml", res_conv_3_from: "1 pound", res_conv_3_to: "16 ounces or 453g", res_conv_4_from: "1 ounce", res_conv_4_to: "28g", res_conv_5_from: "350°F", res_conv_5_to: "175°C", res_conv_6_from: "400°F", res_conv_6_to: "200°C",
+  notfound_title: "Oops! Page not found", notfound_desc: "The page you're looking for doesn't exist or has been moved.", notfound_home: "Home",
   common_servings: "servings",
 };
 
 const ar: TranslationKeys = {
-  nav_home: "الرئيسية",
-  nav_search: "بحث",
-  nav_categories: "التصنيفات",
-  nav_generate: "إنشاء",
-  nav_shop: "المتجر",
-  nav_recipes: "الوصفات",
-  nav_favorites: "المفضلة",
-  nav_add_recipe: "إضافة وصفة",
-  nav_profile: "الملف الشخصي",
-  nav_sign_in: "تسجيل الدخول",
-
-  home_hero_title: "اكتشف مغامرتك",
-  home_hero_title_accent: "الطهي القادمة",
-  home_hero_desc: "توليد وصفات مدعومة بالذكاء الاصطناعي مصممة حسب ذوقك وتفضيلاتك الغذائية والمكونات المتاحة",
-  home_search_placeholder: "ابحث عن وصفات أو صف ما تريد طهيه...",
-  home_generate_ai: "إنشاء وصفة بالذكاء الاصطناعي",
-  home_featured: "الوصفات المميزة",
-  home_featured_desc: "استكشف مجموعتنا من الأطباق المولدة بالذكاء الاصطناعي",
-  home_loading: "جاري تحميل الوصفات اللذيذة...",
-  home_no_recipes: "لا توجد وصفات بعد. كن أول من يُنشئ واحدة!",
-  home_first_recipe: "أنشئ وصفتك الأولى",
-
-  footer_desc: "اكتشاف وإنشاء وصفات مدعومة بالذكاء الاصطناعي للطهاة المنزليين في كل مكان.",
-  footer_explore: "استكشاف",
-  footer_search_recipes: "بحث الوصفات",
-  footer_resources: "الموارد",
-  footer_cooking_guides: "دليل الطبخ",
-  footer_about: "عن الموقع",
-  footer_contact: "اتصل بنا",
-  footer_account: "الحساب",
-  footer_my_favorites: "مفضلاتي",
-  footer_shopping_lists: "قوائم التسوق",
-  footer_profile: "الملف الشخصي",
-  footer_copyright: "FlavorAI. جميع الحقوق محفوظة. مدعوم بالذكاء الاصطناعي.",
-
-  gen_title: "إنشاء وصفة بالذكاء الاصطناعي",
-  gen_desc: "صف ما تريد طهيه ودع الذكاء الاصطناعي يُنشئ وصفة مخصصة",
-  gen_what_cook: "ماذا تريد أن تطبخ؟",
-  gen_what_cook_placeholder: "مثلاً: طبق مكرونة حار، وعاء إفطار صحي، حلوى شوكولاتة...",
-  gen_cuisine: "نوع المطبخ (اختياري)",
-  gen_ingredients: "المكونات المتاحة (اختياري)",
-  gen_add_ingredient_placeholder: "أضف مكون...",
-  gen_add: "إضافة",
-  gen_dietary: "التفضيلات الغذائية (اختياري)",
-  gen_category: "تصنيف الوصفة *",
-  gen_generating: "جاري إنشاء الوصفة...",
-  gen_generate: "إنشاء الوصفة",
-
-  search_title: "بحث الوصفات",
-  search_placeholder: "ابحث بالاسم أو المطبخ أو المكونات...",
-  search_searching: "جاري البحث...",
-  search_found: "تم العثور على",
-  search_recipe: "وصفة",
-  search_recipes: "وصفات",
-  search_no_results: "لم يتم العثور على وصفات لـ",
-
-  fav_title: "وصفاتي المفضلة",
-  fav_loading: "جاري تحميل المفضلة...",
-  fav_empty: "لا توجد وصفات مفضلة بعد",
-  fav_empty_desc: "ابدأ باستكشاف الوصفات واحفظ مفضلاتك!",
-
-  cat_title: "تصفح تصنيفات الوصفات",
-  cat_desc: "استكشف مجموعتنا المنسقة من الوصفات المنظمة حسب التصنيف. اعثر على الطبق المثالي لأي مناسبة.",
-  cat_search_placeholder: "ابحث في التصنيفات...",
-  cat_loading: "جاري تحميل التصنيفات...",
-  cat_no_results: "لم يتم العثور على تصنيفات مطابقة لـ",
-  cat_recipes: "الوصفات",
-  cat_loading_recipes: "جاري تحميل الوصفات...",
-  cat_no_recipes: "لا توجد وصفات في هذا التصنيف بعد.",
-  cat_be_first: "كن أول من يُنشئ واحدة!",
-
-  detail_back: "رجوع",
-  detail_save: "حفظ",
-  detail_saved: "محفوظة",
-  detail_add_to_list: "أضف للقائمة",
-  detail_ingredients: "المكونات",
-  detail_instructions: "التعليمات",
-  detail_more_recipes: "وصفات أخرى",
-  detail_loading: "جاري التحميل...",
-  detail_servings: "حصص",
-  detail_min: "دقيقة",
-
-  recipes_title: "وصفاتي",
-  recipes_desc: "إدارة جميع وصفاتك المحفوظة في مكان واحد",
-  recipes_search: "ابحث في الوصفات...",
-  recipes_no_found: "لم يتم العثور على وصفات",
-  recipes_no_yet: "لا توجد وصفات بعد",
-  recipes_adjust_search: "حاول تعديل بحثك",
-  recipes_start_creating: "ابدأ بإنشاء وصفات لذيذة!",
-  recipes_create_first: "أنشئ وصفتك الأولى",
-  recipes_edit: "تعديل",
-  recipes_delete: "حذف",
-  recipes_delete_title: "حذف الوصفة",
-  recipes_delete_desc: "هل أنت متأكد أنك تريد حذف هذه الوصفة؟ لا يمكن التراجع عن هذا الإجراء.",
-  recipes_cancel: "إلغاء",
-
-  edit_title: "تعديل الوصفة",
-  edit_recipe_title: "عنوان الوصفة *",
-  edit_description: "الوصف",
-  edit_category: "تصنيف الوصفة",
-  edit_cuisine: "نوع المطبخ",
-  edit_difficulty: "الصعوبة",
-  edit_prep_time: "وقت التحضير (دقائق)",
-  edit_cook_time: "وقت الطبخ (دقائق)",
-  edit_servings: "الحصص",
-  edit_dietary: "التفضيلات الغذائية",
-  edit_ingredients: "المكونات",
-  edit_add_ingredient: "إضافة مكون",
-  edit_instructions: "التعليمات",
-  edit_add_step: "إضافة خطوة",
-  edit_saving: "جاري الحفظ...",
-  edit_save: "حفظ التغييرات",
-  edit_cancel: "إلغاء",
-  edit_amount: "الكمية",
-  edit_ingredient: "المكون",
-  edit_step_placeholder: "وصف هذه الخطوة",
-
-  profile_title: "الملف الشخصي",
-  profile_account_info: "معلومات الحساب",
-  profile_email: "البريد الإلكتروني",
-  profile_display_name: "الاسم المعروض",
-  profile_name_placeholder: "اسمك",
-  profile_updating: "جاري التحديث...",
-  profile_update: "تحديث الملف الشخصي",
-  profile_actions: "إجراءات الحساب",
-  profile_sign_out: "تسجيل الخروج",
-  profile_loading: "جاري التحميل...",
-
-  auth_reset_password: "إعادة تعيين كلمة المرور",
-  auth_welcome_back: "مرحباً بعودتك",
-  auth_create_account: "إنشاء حساب",
-  auth_reset_desc: "أدخل بريدك الإلكتروني لتلقي رابط إعادة التعيين",
-  auth_sign_in_desc: "سجل دخولك للوصول إلى وصفاتك المحفوظة",
-  auth_sign_up_desc: "انضم إلى FlavorAI وابدأ باكتشاف وصفات مذهلة",
-  auth_display_name: "الاسم المعروض",
-  auth_email: "البريد الإلكتروني",
-  auth_password: "كلمة المرور",
-  auth_forgot: "نسيت كلمة المرور؟",
-  auth_loading: "جاري التحميل...",
-  auth_send_reset: "إرسال رابط التعيين",
-  auth_sign_in: "تسجيل الدخول",
-  auth_or_continue: "أو تابع مع",
-  auth_back_sign_in: "العودة لتسجيل الدخول",
-  auth_no_account: "ليس لديك حساب؟ سجل الآن",
-  auth_has_account: "لديك حساب بالفعل؟ سجل الدخول",
-
-  about_title: "عن FlavorAI",
-  about_subtitle: "ثورة في الطبخ المنزلي بتوليد الوصفات المدعومة بالذكاء الاصطناعي",
-  about_mission: "مهمتنا",
-  about_mission_p1: "تم إنشاء FlavorAI لجعل الطبخ أكثر سهولة وإبداعاً ومتعة للجميع. سواء كنت طاهياً متمرساً أو بدأت للتو في رحلتك الطهوية، منصتنا المدعومة بالذكاء الاصطناعي تساعدك في اكتشاف وصفات جديدة مصممة لتفضيلاتك الفريدة.",
-  about_mission_p2: "نؤمن بأن الطبخ الرائع يجب أن يكون متاحاً للجميع، بغض النظر عن مستوى الخبرة أو المكونات المتاحة. لهذا السبب بنينا منصة تجمع بين قوة الذكاء الاصطناعي وفن الطبخ.",
-  about_features: "الميزات الرئيسية",
-  about_tech: "التقنيات المستخدمة",
-  about_tech_desc: "تم بناء FlavorAI بتقنيات متطورة لتوفير أفضل تجربة:",
-  about_f1_title: "توليد وصفات بالذكاء الاصطناعي",
-  about_f1_desc: "استخدام ذكاء اصطناعي متقدم لإنشاء وصفات فريدة ومخصصة حسب تفضيلاتك.",
-  about_f2_title: "توليد صور جميلة",
-  about_f2_desc: "كل وصفة تأتي مع صورة مولدة بالذكاء الاصطناعي تمنحك معاينة بصرية.",
-  about_f3_title: "نتائج فورية",
-  about_f3_desc: "احصل على وصفات كاملة مع المكونات والتعليمات في ثوانٍ.",
-  about_f4_title: "آمن وخاص",
-  about_f4_desc: "بياناتك محمية لضمان بقاء وصفاتك وتفضيلاتك آمنة.",
-
-  contact_title: "اتصل بنا",
-  contact_subtitle: "هل لديك أسئلة أو ملاحظات؟ نحب أن نسمع منك!",
-  contact_email_title: "راسلنا",
-  contact_email_desc: "للاستفسارات العامة والدعم",
-  contact_feedback_title: "ملاحظات",
-  contact_feedback_desc: "شاركنا أفكارك واقتراحاتك",
-  contact_send_message: "أرسل لنا رسالة",
-  contact_name: "الاسم",
-  contact_name_placeholder: "اسمك",
-  contact_email: "البريد الإلكتروني",
-  contact_subject: "الموضوع",
-  contact_subject_placeholder: "ما هو الموضوع؟",
-  contact_message: "الرسالة",
-  contact_message_placeholder: "أخبرنا المزيد...",
-  contact_sending: "جاري الإرسال...",
-  contact_send: "إرسال الرسالة",
-
-  shop_badge: "أدوات مطبخ مختارة",
-  shop_title1: "أدوات مطبخ متميزة",
-  shop_title2: "للطبخ العصري",
-  shop_desc: "اكتشف أفضل مجموعة من أدوات المطبخ الأساسية التي تحول تجربة الطبخ",
-  shop_quality: "جودة متميزة",
-  shop_top_rated: "الأعلى تقييماً",
-  shop_fast_delivery: "توصيل سريع",
-  shop_collection: "تسوق المجموعة",
-  shop_collection_desc: "كل منتج يتم اختياره بعناية ليلبي أعلى المعايير",
-  shop_now: "تسوق الآن",
-  shop_trending: "رائج",
-  shop_why: "لماذا تتسوق معنا؟",
-  shop_why_desc: "كل منتج يتم اختباره والموافقة عليه بعناية من قبل طهاة محترفين وعشاق الطبخ.",
-
-  res_title: "موارد الطبخ",
-  res_subtitle: "أدلة ونصائح أساسية لتطوير مهاراتك في الطهي",
-  res_cooking_tips: "نصائح طبخ أساسية",
-  res_kitchen_tools: "أدوات المطبخ الأساسية",
-  res_tools_desc: "أدوات أساسية يحتاجها كل طاهٍ منزلي:",
-  res_pantry: "أساسيات المخزن",
-  res_pantry_desc: "اغمر مخزنك بهذه الأساسيات:",
-  res_conversions: "دليل التحويلات السريعة",
-  res_conversions_desc: "تحويلات القياسات الشائعة:",
-
-  notfound_title: "عذراً! الصفحة غير موجودة",
-  notfound_desc: "الصفحة التي تبحث عنها غير موجودة أو تم نقلها.",
-  notfound_home: "الرئيسية",
-
+  nav_home: "الرئيسية", nav_search: "بحث", nav_categories: "التصنيفات", nav_generate: "إنشاء", nav_recipes: "الوصفات", nav_favorites: "المفضلة", nav_add_recipe: "إضافة وصفة", nav_profile: "الملف الشخصي", nav_sign_in: "تسجيل الدخول",
+  home_hero_title: "اكتشف مغامرتك", home_hero_title_accent: "الطهي القادمة", home_hero_desc: "توليد وصفات مدعومة بالذكاء الاصطناعي مصممة حسب ذوقك وتفضيلاتك الغذائية والمكونات المتاحة", home_search_placeholder: "ابحث عن وصفات أو صف ما تريد طهيه...", home_generate_ai: "إنشاء وصفة بالذكاء الاصطناعي", home_featured: "الوصفات المميزة", home_featured_desc: "استكشف مجموعتنا من الأطباق المولدة بالذكاء الاصطناعي", home_loading: "جاري تحميل الوصفات اللذيذة...", home_no_recipes: "لا توجد وصفات بعد. كن أول من يُنشئ واحدة!", home_first_recipe: "أنشئ وصفتك الأولى",
+  footer_desc: "اكتشاف وإنشاء وصفات مدعومة بالذكاء الاصطناعي للطهاة المنزليين في كل مكان.", footer_explore: "استكشاف", footer_search_recipes: "بحث الوصفات", footer_resources: "الموارد", footer_cooking_guides: "دليل الطبخ", footer_about: "عن الموقع", footer_contact: "اتصل بنا", footer_account: "الحساب", footer_my_favorites: "مفضلاتي", footer_shopping_lists: "قوائم التسوق", footer_profile: "الملف الشخصي", footer_copyright: "FlavorAI. جميع الحقوق محفوظة. مدعوم بالذكاء الاصطناعي.",
+  gen_title: "إنشاء وصفة بالذكاء الاصطناعي", gen_desc: "صف ما تريد طهيه ودع الذكاء الاصطناعي يُنشئ وصفة مخصصة", gen_what_cook: "ماذا تريد أن تطبخ؟", gen_what_cook_placeholder: "مثلاً: طبق مكرونة حار، وعاء إفطار صحي، حلوى شوكولاتة...", gen_cuisine: "نوع المطبخ (اختياري)", gen_ingredients: "المكونات المتاحة (اختياري)", gen_add_ingredient_placeholder: "أضف مكون...", gen_add: "إضافة", gen_dietary: "التفضيلات الغذائية (اختياري)", gen_category: "تصنيف الوصفة *", gen_generating: "جاري إنشاء الوصفة...", gen_generate: "إنشاء الوصفة",
+  search_title: "بحث الوصفات", search_placeholder: "ابحث بالاسم أو المطبخ أو المكونات...", search_searching: "جاري البحث...", search_found: "تم العثور على", search_recipe: "وصفة", search_recipes: "وصفات", search_no_results: "لم يتم العثور على وصفات لـ",
+  fav_title: "وصفاتي المفضلة", fav_loading: "جاري تحميل المفضلة...", fav_empty: "لا توجد وصفات مفضلة بعد", fav_empty_desc: "ابدأ باستكشاف الوصفات واحفظ مفضلاتك!",
+  cat_title: "تصفح تصنيفات الوصفات", cat_desc: "استكشف مجموعتنا المنسقة من الوصفات المنظمة حسب التصنيف. اعثر على الطبق المثالي لأي مناسبة.", cat_search_placeholder: "ابحث في التصنيفات...", cat_loading: "جاري تحميل التصنيفات...", cat_no_results: "لم يتم العثور على تصنيفات مطابقة لـ", cat_recipes: "الوصفات", cat_loading_recipes: "جاري تحميل الوصفات...", cat_no_recipes: "لا توجد وصفات في هذا التصنيف بعد.", cat_be_first: "كن أول من يُنشئ واحدة!",
+  detail_back: "رجوع", detail_save: "حفظ", detail_saved: "محفوظة", detail_add_to_list: "أضف للقائمة", detail_ingredients: "المكونات", detail_instructions: "التعليمات", detail_more_recipes: "وصفات أخرى", detail_loading: "جاري التحميل...", detail_servings: "حصص", detail_min: "دقيقة",
+  recipes_title: "وصفاتي", recipes_desc: "إدارة جميع وصفاتك المحفوظة في مكان واحد", recipes_search: "ابحث في الوصفات...", recipes_no_found: "لم يتم العثور على وصفات", recipes_no_yet: "لا توجد وصفات بعد", recipes_adjust_search: "حاول تعديل بحثك", recipes_start_creating: "ابدأ بإنشاء وصفات لذيذة!", recipes_create_first: "أنشئ وصفتك الأولى", recipes_edit: "تعديل", recipes_delete: "حذف", recipes_delete_title: "حذف الوصفة", recipes_delete_desc: "هل أنت متأكد أنك تريد حذف هذه الوصفة؟ لا يمكن التراجع عن هذا الإجراء.", recipes_cancel: "إلغاء",
+  edit_title: "تعديل الوصفة", edit_recipe_title: "عنوان الوصفة *", edit_description: "الوصف", edit_category: "تصنيف الوصفة", edit_cuisine: "نوع المطبخ", edit_difficulty: "الصعوبة", edit_prep_time: "وقت التحضير (دقائق)", edit_cook_time: "وقت الطبخ (دقائق)", edit_servings: "الحصص", edit_dietary: "التفضيلات الغذائية", edit_ingredients: "المكونات", edit_add_ingredient: "إضافة مكون", edit_instructions: "التعليمات", edit_add_step: "إضافة خطوة", edit_saving: "جاري الحفظ...", edit_save: "حفظ التغييرات", edit_cancel: "إلغاء", edit_amount: "الكمية", edit_ingredient: "المكون", edit_step_placeholder: "وصف هذه الخطوة",
+  profile_title: "الملف الشخصي", profile_account_info: "معلومات الحساب", profile_email: "البريد الإلكتروني", profile_display_name: "الاسم المعروض", profile_name_placeholder: "اسمك", profile_updating: "جاري التحديث...", profile_update: "تحديث الملف الشخصي", profile_actions: "إجراءات الحساب", profile_sign_out: "تسجيل الخروج", profile_loading: "جاري التحميل...",
+  auth_reset_password: "إعادة تعيين كلمة المرور", auth_welcome_back: "مرحباً بعودتك", auth_create_account: "إنشاء حساب", auth_reset_desc: "أدخل بريدك الإلكتروني لتلقي رابط إعادة التعيين", auth_sign_in_desc: "سجل دخولك للوصول إلى وصفاتك المحفوظة", auth_sign_up_desc: "انضم إلى FlavorAI وابدأ باكتشاف وصفات مذهلة", auth_display_name: "الاسم المعروض", auth_email: "البريد الإلكتروني", auth_password: "كلمة المرور", auth_forgot: "نسيت كلمة المرور؟", auth_loading: "جاري التحميل...", auth_send_reset: "إرسال رابط التعيين", auth_sign_in: "تسجيل الدخول", auth_or_continue: "أو تابع مع", auth_back_sign_in: "العودة لتسجيل الدخول", auth_no_account: "ليس لديك حساب؟ سجل الآن", auth_has_account: "لديك حساب بالفعل؟ سجل الدخول",
+  about_title: "عن FlavorAI", about_subtitle: "ثورة في الطبخ المنزلي بتوليد الوصفات المدعومة بالذكاء الاصطناعي", about_mission: "مهمتنا", about_mission_p1: "تم إنشاء FlavorAI لجعل الطبخ أكثر سهولة وإبداعاً ومتعة للجميع. سواء كنت طاهياً متمرساً أو بدأت للتو في رحلتك الطهوية، منصتنا المدعومة بالذكاء الاصطناعي تساعدك في اكتشاف وصفات جديدة مصممة لتفضيلاتك الفريدة.", about_mission_p2: "نؤمن بأن الطبخ الرائع يجب أن يكون متاحاً للجميع، بغض النظر عن مستوى الخبرة أو المكونات المتاحة. لهذا السبب بنينا منصة تجمع بين قوة الذكاء الاصطناعي وفن الطبخ.", about_features: "الميزات الرئيسية", about_tech: "التقنيات المستخدمة", about_tech_desc: "تم بناء FlavorAI بتقنيات متطورة لتوفير أفضل تجربة:", about_f1_title: "توليد وصفات بالذكاء الاصطناعي", about_f1_desc: "استخدام ذكاء اصطناعي متقدم لإنشاء وصفات فريدة ومخصصة حسب تفضيلاتك.", about_f2_title: "توليد صور جميلة", about_f2_desc: "كل وصفة تأتي مع صورة مولدة بالذكاء الاصطناعي تمنحك معاينة بصرية.", about_f3_title: "نتائج فورية", about_f3_desc: "احصل على وصفات كاملة مع المكونات والتعليمات في ثوانٍ.", about_f4_title: "آمن وخاص", about_f4_desc: "بياناتك محمية لضمان بقاء وصفاتك وتفضيلاتك آمنة.", about_tech_gemini: "يدعم توليد الوصفات والصور", about_tech_cloud: "بنية تحتية خلفية آمنة", about_tech_react: "تجربة مستخدم سريعة ومتجاوبة", about_tech_tailwind: "تصاميم جميلة ومتسقة",
+  contact_title: "اتصل بنا", contact_subtitle: "هل لديك أسئلة أو ملاحظات؟ نحب أن نسمع منك!", contact_email_title: "راسلنا", contact_email_desc: "للاستفسارات العامة والدعم", contact_feedback_title: "ملاحظات", contact_feedback_desc: "شاركنا أفكارك واقتراحاتك", contact_send_message: "أرسل لنا رسالة", contact_name: "الاسم", contact_name_placeholder: "اسمك", contact_email: "البريد الإلكتروني", contact_subject: "الموضوع", contact_subject_placeholder: "ما هو الموضوع؟", contact_message: "الرسالة", contact_message_placeholder: "أخبرنا المزيد...", contact_sending: "جاري الإرسال...", contact_send: "إرسال الرسالة",
+  res_title: "موارد الطبخ", res_subtitle: "أدلة ونصائح أساسية لتطوير مهاراتك في الطهي", res_cooking_tips: "نصائح طبخ أساسية", res_kitchen_tools: "أدوات المطبخ الأساسية", res_tools_desc: "أدوات أساسية يحتاجها كل طاهٍ منزلي:", res_pantry: "أساسيات المخزن", res_pantry_desc: "اغمر مخزنك بهذه الأساسيات:", res_conversions: "دليل التحويلات السريعة", res_conversions_desc: "تحويلات القياسات الشائعة:",
+  res_tip1_title: "التحضير المسبق", res_tip1_content: "قم دائماً بتحضير وتنظيم جميع مكوناتك قبل الطبخ. هذه العبارة الفرنسية تعني 'كل شيء في مكانه' وهي مفتاح الطبخ بدون توتر.", res_tip2_title: "تذوق أثناء الطبخ", res_tip2_content: "أهم مهارة في الطبخ هي تذوق طعامك طوال العملية. هذا يساعدك على ضبط التوابل قبل التقديم.", res_tip3_title: "السكاكين الحادة", res_tip3_content: "السكين الحادة أكثر أماناً وكفاءة من السكين الباهتة. استثمر في سكين ذات جودة عالية وحافظ على حدتها.", res_tip4_title: "مكونات بدرجة حرارة الغرفة", res_tip4_content: "للخبز والطبخ، إحضار المكونات إلى درجة حرارة الغرفة يضمن طبخاً متساوياً ونتائج أفضل.",
+  res_tool_1: "سكين الشيف وسكين التقشير", res_tool_2: "لوح تقطيع (خشب أو خيزران)", res_tool_3: "مقلاة حديد الزهر", res_tool_4: "مقلاة غير لاصقة", res_tool_5: "قدر كبير للمعكرونة والشوربات", res_tool_6: "أوعية خلط بأحجام مختلفة", res_tool_7: "أكواب وملاعق قياس", res_tool_8: "ملاعق خشبية وملاعق سيليكون", res_tool_9: "ميزان حرارة اللحوم", res_tool_10: "مؤقت المطبخ",
+  res_pantry_1: "زيت الزيتون وزيت نباتي", res_pantry_2: "ملح (خشن وبحري) وفلفل أسود", res_pantry_3: "ثوم وبصل", res_pantry_4: "طحين متعدد الاستخدامات", res_pantry_5: "سكر (أبيض وبني)", res_pantry_6: "أرز ومعكرونة", res_pantry_7: "طماطم معلبة", res_pantry_8: "مرق أو حساء", res_pantry_9: "صلصة الصويا والخل", res_pantry_10: "توابل أساسية: بابريكا، كمون، أوريغانو، ريحان",
+  res_conv_1_from: "١ كوب", res_conv_1_to: "١٦ ملعقة كبيرة أو ٢٤٠مل", res_conv_2_from: "١ ملعقة كبيرة", res_conv_2_to: "٣ ملاعق صغيرة أو ١٥مل", res_conv_3_from: "١ رطل", res_conv_3_to: "١٦ أونصة أو ٤٥٣غ", res_conv_4_from: "١ أونصة", res_conv_4_to: "٢٨غ", res_conv_5_from: "٣٥٠°ف", res_conv_5_to: "١٧٥°م", res_conv_6_from: "٤٠٠°ف", res_conv_6_to: "٢٠٠°م",
+  notfound_title: "عذراً! الصفحة غير موجودة", notfound_desc: "الصفحة التي تبحث عنها غير موجودة أو تم نقلها.", notfound_home: "الرئيسية",
   common_servings: "حصص",
 };
 
+const es: TranslationKeys = {
+  nav_home: "Inicio", nav_search: "Buscar", nav_categories: "Categorías", nav_generate: "Generar", nav_recipes: "Recetas", nav_favorites: "Favoritos", nav_add_recipe: "Agregar Receta", nav_profile: "Perfil", nav_sign_in: "Iniciar Sesión",
+  home_hero_title: "Descubre Tu Próxima", home_hero_title_accent: "Aventura Culinaria", home_hero_desc: "Generación de recetas con IA adaptada a tu gusto, preferencias dietéticas e ingredientes disponibles", home_search_placeholder: "Busca recetas o describe lo que quieres cocinar...", home_generate_ai: "Generar Receta con IA", home_featured: "Recetas Destacadas", home_featured_desc: "Explora nuestra colección de delicias culinarias generadas por IA", home_loading: "Cargando recetas deliciosas...", home_no_recipes: "No hay recetas aún. ¡Sé el primero en crear una!", home_first_recipe: "Genera Tu Primera Receta",
+  footer_desc: "Descubrimiento y generación de recetas con IA para cocineros caseros en todas partes.", footer_explore: "Explorar", footer_search_recipes: "Buscar Recetas", footer_resources: "Recursos", footer_cooking_guides: "Guías de Cocina", footer_about: "Sobre Nosotros", footer_contact: "Contacto", footer_account: "Cuenta", footer_my_favorites: "Mis Favoritos", footer_shopping_lists: "Listas de Compras", footer_profile: "Perfil", footer_copyright: "FlavorAI. Todos los derechos reservados. Impulsado por IA.",
+  gen_title: "Generar Receta con IA", gen_desc: "Describe lo que quieres cocinar y deja que la IA cree una receta personalizada", gen_what_cook: "¿Qué te gustaría cocinar?", gen_what_cook_placeholder: "Ej: Un plato de pasta picante, Bowl de desayuno saludable...", gen_cuisine: "Tipo de Cocina (Opcional)", gen_ingredients: "Ingredientes Disponibles (Opcional)", gen_add_ingredient_placeholder: "Agregar un ingrediente...", gen_add: "Agregar", gen_dietary: "Preferencias Dietéticas (Opcional)", gen_category: "Categoría de Receta *", gen_generating: "Generando Receta...", gen_generate: "Generar Receta",
+  search_title: "Buscar Recetas", search_placeholder: "Buscar por nombre, cocina o ingredientes...", search_searching: "Buscando recetas...", search_found: "Encontradas", search_recipe: "receta", search_recipes: "recetas", search_no_results: "No se encontraron recetas para",
+  fav_title: "Mis Recetas Favoritas", fav_loading: "Cargando tus favoritos...", fav_empty: "Sin recetas favoritas aún", fav_empty_desc: "¡Explora recetas y guarda tus favoritas!",
+  cat_title: "Explorar Categorías de Recetas", cat_desc: "Explora nuestra colección curada de recetas organizadas por categoría. Encuentra el plato perfecto para cualquier ocasión.", cat_search_placeholder: "Buscar categorías...", cat_loading: "Cargando categorías...", cat_no_results: "No se encontraron categorías para", cat_recipes: "Recetas", cat_loading_recipes: "Cargando recetas...", cat_no_recipes: "No hay recetas en esta categoría aún.", cat_be_first: "¡Sé el primero en crear una!",
+  detail_back: "Volver", detail_save: "Guardar", detail_saved: "Guardada", detail_add_to_list: "Agregar a Lista", detail_ingredients: "Ingredientes", detail_instructions: "Instrucciones", detail_more_recipes: "Más Recetas", detail_loading: "Cargando...", detail_servings: "porciones", detail_min: "min",
+  recipes_title: "Mis Recetas", recipes_desc: "Administra todas tus recetas guardadas en un solo lugar", recipes_search: "Buscar recetas...", recipes_no_found: "No se encontraron recetas", recipes_no_yet: "Sin recetas aún", recipes_adjust_search: "Intenta ajustar tu búsqueda", recipes_start_creating: "¡Empieza a crear recetas deliciosas!", recipes_create_first: "Crea Tu Primera Receta", recipes_edit: "Editar", recipes_delete: "Eliminar", recipes_delete_title: "Eliminar Receta", recipes_delete_desc: "¿Estás seguro de que quieres eliminar esta receta? Esta acción no se puede deshacer.", recipes_cancel: "Cancelar",
+  edit_title: "Editar Receta", edit_recipe_title: "Título de la Receta *", edit_description: "Descripción", edit_category: "Categoría", edit_cuisine: "Tipo de Cocina", edit_difficulty: "Dificultad", edit_prep_time: "Tiempo de Preparación (min)", edit_cook_time: "Tiempo de Cocción (min)", edit_servings: "Porciones", edit_dietary: "Preferencias Dietéticas", edit_ingredients: "Ingredientes", edit_add_ingredient: "Agregar Ingrediente", edit_instructions: "Instrucciones", edit_add_step: "Agregar Paso", edit_saving: "Guardando...", edit_save: "Guardar Cambios", edit_cancel: "Cancelar", edit_amount: "Cantidad", edit_ingredient: "Ingrediente", edit_step_placeholder: "Describe este paso",
+  profile_title: "Perfil", profile_account_info: "Información de la Cuenta", profile_email: "Correo", profile_display_name: "Nombre para Mostrar", profile_name_placeholder: "Tu nombre", profile_updating: "Actualizando...", profile_update: "Actualizar Perfil", profile_actions: "Acciones de Cuenta", profile_sign_out: "Cerrar Sesión", profile_loading: "Cargando...",
+  auth_reset_password: "Restablecer Contraseña", auth_welcome_back: "Bienvenido de Nuevo", auth_create_account: "Crear Cuenta", auth_reset_desc: "Ingresa tu correo para recibir un enlace de restablecimiento", auth_sign_in_desc: "Inicia sesión para acceder a tus recetas guardadas", auth_sign_up_desc: "Únete a FlavorAI y descubre recetas increíbles", auth_display_name: "Nombre para Mostrar", auth_email: "Correo", auth_password: "Contraseña", auth_forgot: "¿Olvidaste tu contraseña?", auth_loading: "Cargando...", auth_send_reset: "Enviar Enlace", auth_sign_in: "Iniciar Sesión", auth_or_continue: "O continúa con", auth_back_sign_in: "Volver a iniciar sesión", auth_no_account: "¿No tienes cuenta? Regístrate", auth_has_account: "¿Ya tienes cuenta? Inicia sesión",
+  about_title: "Sobre FlavorAI", about_subtitle: "Revolucionando la cocina casera con generación de recetas con IA", about_mission: "Nuestra Misión", about_mission_p1: "FlavorAI fue creado para hacer la cocina más accesible, creativa y divertida para todos. Ya seas un chef experimentado o estés comenzando tu viaje culinario, nuestra plataforma con IA te ayuda a descubrir nuevas recetas adaptadas a tus preferencias.", about_mission_p2: "Creemos que la gran cocina debe ser accesible para todos, independientemente del nivel de experiencia o los ingredientes disponibles.", about_features: "Características Clave", about_tech: "Tecnología", about_tech_desc: "FlavorAI está construido con tecnología de vanguardia:", about_f1_title: "Generación de Recetas con IA", about_f1_desc: "IA avanzada para crear recetas únicas y personalizadas.", about_f2_title: "Generación Visual", about_f2_desc: "Cada receta incluye una imagen generada por IA.", about_f3_title: "Resultados Instantáneos", about_f3_desc: "Recetas completas con ingredientes e instrucciones en segundos.", about_f4_title: "Seguro y Privado", about_f4_desc: "Tus datos están protegidos para mantener tus recetas seguras.", about_tech_gemini: "Impulsa la generación de recetas e imágenes", about_tech_cloud: "Infraestructura backend segura", about_tech_react: "Experiencia de usuario rápida y responsiva", about_tech_tailwind: "Diseños hermosos y consistentes",
+  contact_title: "Contáctanos", contact_subtitle: "¿Preguntas o comentarios? ¡Nos encantaría saber de ti!", contact_email_title: "Envíanos un Correo", contact_email_desc: "Para consultas generales y soporte", contact_feedback_title: "Comentarios", contact_feedback_desc: "Comparte tus ideas y sugerencias", contact_send_message: "Envíanos un Mensaje", contact_name: "Nombre", contact_name_placeholder: "Tu nombre", contact_email: "Correo", contact_subject: "Asunto", contact_subject_placeholder: "¿De qué se trata?", contact_message: "Mensaje", contact_message_placeholder: "Cuéntanos más...", contact_sending: "Enviando...", contact_send: "Enviar Mensaje",
+  res_title: "Recursos de Cocina", res_subtitle: "Guías y consejos esenciales para mejorar tus habilidades culinarias", res_cooking_tips: "Consejos de Cocina Esenciales", res_kitchen_tools: "Herramientas de Cocina Esenciales", res_tools_desc: "Herramientas fundamentales para todo cocinero:", res_pantry: "Esenciales de la Despensa", res_pantry_desc: "Abastece tu despensa con estos básicos:", res_conversions: "Guía Rápida de Conversiones", res_conversions_desc: "Conversiones de medidas comunes:",
+  res_tip1_title: "Mise en Place", res_tip1_content: "Siempre prepara y organiza todos tus ingredientes antes de cocinar. Esta frase francesa significa 'todo en su lugar' y es clave para cocinar sin estrés.", res_tip2_title: "Prueba Mientras Cocinas", res_tip2_content: "La habilidad más importante en la cocina es probar tu comida durante todo el proceso. Esto te ayuda a ajustar los condimentos antes de servir.", res_tip3_title: "Cuchillos Afilados", res_tip3_content: "Un cuchillo afilado es más seguro y eficiente que uno sin filo. Invierte en un cuchillo de buena calidad y mantén su filo.", res_tip4_title: "Ingredientes a Temperatura Ambiente", res_tip4_content: "Para hornear y cocinar, llevar los ingredientes a temperatura ambiente asegura una cocción uniforme y mejores resultados.",
+  res_tool_1: "Cuchillo de chef y cuchillo pelador", res_tool_2: "Tabla de cortar (madera o bambú)", res_tool_3: "Sartén de hierro fundido", res_tool_4: "Sartén antiadherente", res_tool_5: "Olla grande para pasta y sopas", res_tool_6: "Boles de mezcla de varios tamaños", res_tool_7: "Tazas y cucharas medidoras", res_tool_8: "Cucharas de madera y espátulas de silicona", res_tool_9: "Termómetro para carne", res_tool_10: "Temporizador de cocina",
+  res_pantry_1: "Aceite de oliva y aceite vegetal", res_pantry_2: "Sal (kosher y marina) y pimienta negra", res_pantry_3: "Ajo y cebollas", res_pantry_4: "Harina multiusos", res_pantry_5: "Azúcar (blanca y morena)", res_pantry_6: "Arroz y pasta", res_pantry_7: "Tomates enlatados", res_pantry_8: "Caldo o consomé", res_pantry_9: "Salsa de soya y vinagre", res_pantry_10: "Especias básicas: pimentón, comino, orégano, albahaca",
+  res_conv_1_from: "1 taza", res_conv_1_to: "16 cucharadas o 240ml", res_conv_2_from: "1 cucharada", res_conv_2_to: "3 cucharaditas o 15ml", res_conv_3_from: "1 libra", res_conv_3_to: "16 onzas o 453g", res_conv_4_from: "1 onza", res_conv_4_to: "28g", res_conv_5_from: "350°F", res_conv_5_to: "175°C", res_conv_6_from: "400°F", res_conv_6_to: "200°C",
+  notfound_title: "¡Ups! Página no encontrada", notfound_desc: "La página que buscas no existe o fue movida.", notfound_home: "Inicio",
+  common_servings: "porciones",
+};
+
+const fr: TranslationKeys = {
+  nav_home: "Accueil", nav_search: "Rechercher", nav_categories: "Catégories", nav_generate: "Générer", nav_recipes: "Recettes", nav_favorites: "Favoris", nav_add_recipe: "Ajouter Recette", nav_profile: "Profil", nav_sign_in: "Connexion",
+  home_hero_title: "Découvrez Votre Prochaine", home_hero_title_accent: "Aventure Culinaire", home_hero_desc: "Génération de recettes par IA adaptée à vos goûts, préférences alimentaires et ingrédients disponibles", home_search_placeholder: "Rechercher des recettes ou décrire ce que vous voulez cuisiner...", home_generate_ai: "Générer une Recette IA", home_featured: "Recettes en Vedette", home_featured_desc: "Explorez notre collection de délices culinaires générés par IA", home_loading: "Chargement des recettes délicieuses...", home_no_recipes: "Pas encore de recettes. Soyez le premier à en créer une !", home_first_recipe: "Générer Votre Première Recette",
+  footer_desc: "Découverte et génération de recettes par IA pour les cuisiniers amateurs partout.", footer_explore: "Explorer", footer_search_recipes: "Rechercher Recettes", footer_resources: "Ressources", footer_cooking_guides: "Guides de Cuisine", footer_about: "À Propos", footer_contact: "Contact", footer_account: "Compte", footer_my_favorites: "Mes Favoris", footer_shopping_lists: "Listes de Courses", footer_profile: "Profil", footer_copyright: "FlavorAI. Tous droits réservés. Propulsé par IA.",
+  gen_title: "Générer une Recette IA", gen_desc: "Décrivez ce que vous voulez cuisiner et laissez l'IA créer une recette personnalisée", gen_what_cook: "Que souhaitez-vous cuisiner ?", gen_what_cook_placeholder: "Ex: Un plat de pâtes épicé, Bol petit-déjeuner sain, Dessert au chocolat...", gen_cuisine: "Type de Cuisine (Optionnel)", gen_ingredients: "Ingrédients Disponibles (Optionnel)", gen_add_ingredient_placeholder: "Ajouter un ingrédient...", gen_add: "Ajouter", gen_dietary: "Préférences Alimentaires (Optionnel)", gen_category: "Catégorie de Recette *", gen_generating: "Génération en cours...", gen_generate: "Générer la Recette",
+  search_title: "Rechercher des Recettes", search_placeholder: "Rechercher par nom, cuisine ou ingrédients...", search_searching: "Recherche en cours...", search_found: "Trouvées", search_recipe: "recette", search_recipes: "recettes", search_no_results: "Aucune recette trouvée pour",
+  fav_title: "Mes Recettes Favorites", fav_loading: "Chargement de vos favoris...", fav_empty: "Pas encore de recettes favorites", fav_empty_desc: "Explorez les recettes et sauvegardez vos favorites !",
+  cat_title: "Parcourir les Catégories", cat_desc: "Explorez notre collection de recettes organisées par catégorie. Trouvez le plat parfait pour toute occasion.", cat_search_placeholder: "Rechercher des catégories...", cat_loading: "Chargement des catégories...", cat_no_results: "Aucune catégorie trouvée pour", cat_recipes: "Recettes", cat_loading_recipes: "Chargement des recettes...", cat_no_recipes: "Pas encore de recettes dans cette catégorie.", cat_be_first: "Soyez le premier à en créer une !",
+  detail_back: "Retour", detail_save: "Sauvegarder", detail_saved: "Sauvegardée", detail_add_to_list: "Ajouter à la Liste", detail_ingredients: "Ingrédients", detail_instructions: "Instructions", detail_more_recipes: "Plus de Recettes", detail_loading: "Chargement...", detail_servings: "portions", detail_min: "min",
+  recipes_title: "Mes Recettes", recipes_desc: "Gérez toutes vos recettes sauvegardées en un seul endroit", recipes_search: "Rechercher des recettes...", recipes_no_found: "Aucune recette trouvée", recipes_no_yet: "Pas encore de recettes", recipes_adjust_search: "Essayez d'ajuster votre recherche", recipes_start_creating: "Commencez à créer de délicieuses recettes !", recipes_create_first: "Créer Votre Première Recette", recipes_edit: "Modifier", recipes_delete: "Supprimer", recipes_delete_title: "Supprimer la Recette", recipes_delete_desc: "Êtes-vous sûr de vouloir supprimer cette recette ? Cette action est irréversible.", recipes_cancel: "Annuler",
+  edit_title: "Modifier la Recette", edit_recipe_title: "Titre de la Recette *", edit_description: "Description", edit_category: "Catégorie", edit_cuisine: "Type de Cuisine", edit_difficulty: "Difficulté", edit_prep_time: "Temps de Préparation (min)", edit_cook_time: "Temps de Cuisson (min)", edit_servings: "Portions", edit_dietary: "Préférences Alimentaires", edit_ingredients: "Ingrédients", edit_add_ingredient: "Ajouter Ingrédient", edit_instructions: "Instructions", edit_add_step: "Ajouter Étape", edit_saving: "Sauvegarde...", edit_save: "Enregistrer", edit_cancel: "Annuler", edit_amount: "Quantité", edit_ingredient: "Ingrédient", edit_step_placeholder: "Décrivez cette étape",
+  profile_title: "Profil", profile_account_info: "Informations du Compte", profile_email: "Email", profile_display_name: "Nom d'Affichage", profile_name_placeholder: "Votre nom", profile_updating: "Mise à jour...", profile_update: "Mettre à Jour le Profil", profile_actions: "Actions du Compte", profile_sign_out: "Déconnexion", profile_loading: "Chargement...",
+  auth_reset_password: "Réinitialiser le Mot de Passe", auth_welcome_back: "Bienvenue", auth_create_account: "Créer un Compte", auth_reset_desc: "Entrez votre email pour recevoir un lien de réinitialisation", auth_sign_in_desc: "Connectez-vous pour accéder à vos recettes", auth_sign_up_desc: "Rejoignez FlavorAI et découvrez des recettes incroyables", auth_display_name: "Nom d'Affichage", auth_email: "Email", auth_password: "Mot de Passe", auth_forgot: "Mot de passe oublié ?", auth_loading: "Chargement...", auth_send_reset: "Envoyer le Lien", auth_sign_in: "Connexion", auth_or_continue: "Ou continuez avec", auth_back_sign_in: "Retour à la connexion", auth_no_account: "Pas de compte ? Inscrivez-vous", auth_has_account: "Déjà un compte ? Connectez-vous",
+  about_title: "À Propos de FlavorAI", about_subtitle: "Révolutionner la cuisine à domicile avec la génération de recettes par IA", about_mission: "Notre Mission", about_mission_p1: "FlavorAI a été créé pour rendre la cuisine plus accessible, créative et agréable pour tous. Que vous soyez un chef chevronné ou que vous commenciez votre voyage culinaire, notre plateforme IA vous aide à découvrir de nouvelles recettes adaptées à vos préférences.", about_mission_p2: "Nous croyons que la grande cuisine doit être accessible à tous, quel que soit le niveau d'expérience ou les ingrédients disponibles.", about_features: "Fonctionnalités Clés", about_tech: "Technologies", about_tech_desc: "FlavorAI est construit avec une technologie de pointe :", about_f1_title: "Génération de Recettes par IA", about_f1_desc: "IA avancée pour créer des recettes uniques et personnalisées.", about_f2_title: "Génération Visuelle", about_f2_desc: "Chaque recette est accompagnée d'une image générée par IA.", about_f3_title: "Résultats Instantanés", about_f3_desc: "Recettes complètes avec ingrédients et instructions en secondes.", about_f4_title: "Sécurisé et Privé", about_f4_desc: "Vos données sont protégées pour garder vos recettes en sécurité.", about_tech_gemini: "Génération de recettes et d'images", about_tech_cloud: "Infrastructure backend sécurisée", about_tech_react: "Expérience utilisateur rapide et réactive", about_tech_tailwind: "Designs beaux et cohérents",
+  contact_title: "Contactez-nous", contact_subtitle: "Des questions ou des commentaires ? Nous serions ravis de vous entendre !", contact_email_title: "Envoyez-nous un Email", contact_email_desc: "Pour les demandes générales et le support", contact_feedback_title: "Commentaires", contact_feedback_desc: "Partagez vos idées et suggestions", contact_send_message: "Envoyez-nous un Message", contact_name: "Nom", contact_name_placeholder: "Votre nom", contact_email: "Email", contact_subject: "Sujet", contact_subject_placeholder: "De quoi s'agit-il ?", contact_message: "Message", contact_message_placeholder: "Dites-nous en plus...", contact_sending: "Envoi...", contact_send: "Envoyer le Message",
+  res_title: "Ressources Culinaires", res_subtitle: "Guides et conseils essentiels pour améliorer vos compétences culinaires", res_cooking_tips: "Conseils de Cuisine Essentiels", res_kitchen_tools: "Outils de Cuisine Essentiels", res_tools_desc: "Outils fondamentaux pour tout cuisinier :", res_pantry: "Essentiels du Garde-manger", res_pantry_desc: "Garnissez votre garde-manger avec ces basiques :", res_conversions: "Guide de Conversions Rapide", res_conversions_desc: "Conversions de mesures courantes :",
+  res_tip1_title: "Mise en Place", res_tip1_content: "Préparez et organisez toujours tous vos ingrédients avant de cuisiner. Cette expression signifie 'tout à sa place' et est la clé d'une cuisine sans stress.", res_tip2_title: "Goûtez en Cuisinant", res_tip2_content: "La compétence la plus importante en cuisine est de goûter votre nourriture tout au long du processus. Cela vous aide à ajuster l'assaisonnement avant de servir.", res_tip3_title: "Couteaux Aiguisés", res_tip3_content: "Un couteau aiguisé est plus sûr et plus efficace qu'un couteau émoussé. Investissez dans un couteau de qualité et maintenez son tranchant.", res_tip4_title: "Ingrédients à Température Ambiante", res_tip4_content: "Pour la pâtisserie et la cuisine, amener les ingrédients à température ambiante assure une cuisson uniforme et de meilleurs résultats.",
+  res_tool_1: "Couteau de chef et couteau d'office", res_tool_2: "Planche à découper (bois ou bambou)", res_tool_3: "Poêle en fonte", res_tool_4: "Poêle antiadhésive", res_tool_5: "Grande marmite pour pâtes et soupes", res_tool_6: "Bols à mélanger de différentes tailles", res_tool_7: "Tasses et cuillères à mesurer", res_tool_8: "Cuillères en bois et spatules en silicone", res_tool_9: "Thermomètre à viande", res_tool_10: "Minuterie de cuisine",
+  res_pantry_1: "Huile d'olive et huile végétale", res_pantry_2: "Sel (gros et marin) et poivre noir", res_pantry_3: "Ail et oignons", res_pantry_4: "Farine tout usage", res_pantry_5: "Sucre (blanc et brun)", res_pantry_6: "Riz et pâtes", res_pantry_7: "Tomates en conserve", res_pantry_8: "Bouillon", res_pantry_9: "Sauce soja et vinaigre", res_pantry_10: "Épices de base : paprika, cumin, origan, basilic",
+  res_conv_1_from: "1 tasse", res_conv_1_to: "16 cuillères à soupe ou 240ml", res_conv_2_from: "1 cuillère à soupe", res_conv_2_to: "3 cuillères à café ou 15ml", res_conv_3_from: "1 livre", res_conv_3_to: "16 onces ou 453g", res_conv_4_from: "1 once", res_conv_4_to: "28g", res_conv_5_from: "350°F", res_conv_5_to: "175°C", res_conv_6_from: "400°F", res_conv_6_to: "200°C",
+  notfound_title: "Oups ! Page non trouvée", notfound_desc: "La page que vous recherchez n'existe pas ou a été déplacée.", notfound_home: "Accueil",
+  common_servings: "portions",
+};
+
+const de: TranslationKeys = {
+  nav_home: "Startseite", nav_search: "Suchen", nav_categories: "Kategorien", nav_generate: "Erstellen", nav_recipes: "Rezepte", nav_favorites: "Favoriten", nav_add_recipe: "Rezept Hinzufügen", nav_profile: "Profil", nav_sign_in: "Anmelden",
+  home_hero_title: "Entdecke Dein Nächstes", home_hero_title_accent: "Kulinarisches Abenteuer", home_hero_desc: "KI-gestützte Rezeptgenerierung, angepasst an Ihren Geschmack, Ernährungspräferenzen und verfügbare Zutaten", home_search_placeholder: "Rezepte suchen oder beschreiben, was Sie kochen möchten...", home_generate_ai: "KI-Rezept Erstellen", home_featured: "Empfohlene Rezepte", home_featured_desc: "Entdecken Sie unsere Sammlung KI-generierter kulinarischer Köstlichkeiten", home_loading: "Leckere Rezepte werden geladen...", home_no_recipes: "Noch keine Rezepte. Seien Sie der Erste!", home_first_recipe: "Erstes Rezept Erstellen",
+  footer_desc: "KI-gestützte Rezeptentdeckung und -generierung für Hobbyköche überall.", footer_explore: "Entdecken", footer_search_recipes: "Rezepte Suchen", footer_resources: "Ressourcen", footer_cooking_guides: "Kochanleitungen", footer_about: "Über Uns", footer_contact: "Kontakt", footer_account: "Konto", footer_my_favorites: "Meine Favoriten", footer_shopping_lists: "Einkaufslisten", footer_profile: "Profil", footer_copyright: "FlavorAI. Alle Rechte vorbehalten. Powered by KI.",
+  gen_title: "KI-Rezept Erstellen", gen_desc: "Beschreiben Sie, was Sie kochen möchten und lassen Sie die KI ein individuelles Rezept erstellen", gen_what_cook: "Was möchten Sie kochen?", gen_what_cook_placeholder: "Z.B.: Ein würziges Nudelgericht, Gesundes Frühstück, Schokoladendessert...", gen_cuisine: "Küche (Optional)", gen_ingredients: "Verfügbare Zutaten (Optional)", gen_add_ingredient_placeholder: "Zutat hinzufügen...", gen_add: "Hinzufügen", gen_dietary: "Ernährungspräferenzen (Optional)", gen_category: "Rezeptkategorie *", gen_generating: "Rezept wird erstellt...", gen_generate: "Rezept Erstellen",
+  search_title: "Rezepte Suchen", search_placeholder: "Nach Name, Küche oder Zutaten suchen...", search_searching: "Rezepte werden gesucht...", search_found: "Gefunden", search_recipe: "Rezept", search_recipes: "Rezepte", search_no_results: "Keine Rezepte gefunden für",
+  fav_title: "Meine Lieblingsrezepte", fav_loading: "Favoriten werden geladen...", fav_empty: "Noch keine Lieblingsrezepte", fav_empty_desc: "Entdecken Sie Rezepte und speichern Sie Ihre Favoriten!",
+  cat_title: "Rezeptkategorien Durchsuchen", cat_desc: "Entdecken Sie unsere kuratierte Sammlung von Rezepten nach Kategorie. Finden Sie das perfekte Gericht für jeden Anlass.", cat_search_placeholder: "Kategorien suchen...", cat_loading: "Kategorien werden geladen...", cat_no_results: "Keine Kategorien gefunden für", cat_recipes: "Rezepte", cat_loading_recipes: "Rezepte werden geladen...", cat_no_recipes: "Noch keine Rezepte in dieser Kategorie.", cat_be_first: "Seien Sie der Erste!",
+  detail_back: "Zurück", detail_save: "Speichern", detail_saved: "Gespeichert", detail_add_to_list: "Zur Liste Hinzufügen", detail_ingredients: "Zutaten", detail_instructions: "Anweisungen", detail_more_recipes: "Mehr Rezepte", detail_loading: "Laden...", detail_servings: "Portionen", detail_min: "Min",
+  recipes_title: "Meine Rezepte", recipes_desc: "Verwalten Sie alle Ihre gespeicherten Rezepte an einem Ort", recipes_search: "Rezepte suchen...", recipes_no_found: "Keine Rezepte gefunden", recipes_no_yet: "Noch keine Rezepte", recipes_adjust_search: "Passen Sie Ihre Suche an", recipes_start_creating: "Beginnen Sie, leckere Rezepte zu erstellen!", recipes_create_first: "Erstes Rezept Erstellen", recipes_edit: "Bearbeiten", recipes_delete: "Löschen", recipes_delete_title: "Rezept Löschen", recipes_delete_desc: "Sind Sie sicher, dass Sie dieses Rezept löschen möchten? Diese Aktion kann nicht rückgängig gemacht werden.", recipes_cancel: "Abbrechen",
+  edit_title: "Rezept Bearbeiten", edit_recipe_title: "Rezepttitel *", edit_description: "Beschreibung", edit_category: "Kategorie", edit_cuisine: "Küche", edit_difficulty: "Schwierigkeit", edit_prep_time: "Vorbereitungszeit (Min)", edit_cook_time: "Kochzeit (Min)", edit_servings: "Portionen", edit_dietary: "Ernährungspräferenzen", edit_ingredients: "Zutaten", edit_add_ingredient: "Zutat Hinzufügen", edit_instructions: "Anweisungen", edit_add_step: "Schritt Hinzufügen", edit_saving: "Speichern...", edit_save: "Änderungen Speichern", edit_cancel: "Abbrechen", edit_amount: "Menge", edit_ingredient: "Zutat", edit_step_placeholder: "Beschreiben Sie diesen Schritt",
+  profile_title: "Profil", profile_account_info: "Kontoinformationen", profile_email: "E-Mail", profile_display_name: "Anzeigename", profile_name_placeholder: "Ihr Name", profile_updating: "Aktualisierung...", profile_update: "Profil Aktualisieren", profile_actions: "Kontoaktionen", profile_sign_out: "Abmelden", profile_loading: "Laden...",
+  auth_reset_password: "Passwort Zurücksetzen", auth_welcome_back: "Willkommen Zurück", auth_create_account: "Konto Erstellen", auth_reset_desc: "Geben Sie Ihre E-Mail ein, um einen Link zum Zurücksetzen zu erhalten", auth_sign_in_desc: "Melden Sie sich an, um auf Ihre Rezepte zuzugreifen", auth_sign_up_desc: "Treten Sie FlavorAI bei und entdecken Sie tolle Rezepte", auth_display_name: "Anzeigename", auth_email: "E-Mail", auth_password: "Passwort", auth_forgot: "Passwort vergessen?", auth_loading: "Laden...", auth_send_reset: "Link Senden", auth_sign_in: "Anmelden", auth_or_continue: "Oder fortfahren mit", auth_back_sign_in: "Zurück zur Anmeldung", auth_no_account: "Kein Konto? Registrieren", auth_has_account: "Bereits ein Konto? Anmelden",
+  about_title: "Über FlavorAI", about_subtitle: "Revolution der Hausmannskost mit KI-gesteuerter Rezeptgenerierung", about_mission: "Unsere Mission", about_mission_p1: "FlavorAI wurde geschaffen, um das Kochen für alle zugänglicher, kreativer und angenehmer zu machen. Ob erfahrener Koch oder Anfänger – unsere KI-Plattform hilft Ihnen, neue Rezepte zu entdecken.", about_mission_p2: "Wir glauben, dass großartiges Kochen für alle zugänglich sein sollte, unabhängig von Erfahrungsstufe oder verfügbaren Zutaten.", about_features: "Hauptfunktionen", about_tech: "Technologie", about_tech_desc: "FlavorAI basiert auf modernster Technologie:", about_f1_title: "KI-gestützte Rezeptgenerierung", about_f1_desc: "Fortschrittliche KI zur Erstellung einzigartiger, personalisierter Rezepte.", about_f2_title: "Visuelle Generierung", about_f2_desc: "Jedes Rezept enthält ein KI-generiertes Bild.", about_f3_title: "Sofortige Ergebnisse", about_f3_desc: "Komplette Rezepte mit Zutaten und Anweisungen in Sekunden.", about_f4_title: "Sicher & Privat", about_f4_desc: "Ihre Daten sind geschützt.", about_tech_gemini: "Betreibt Rezept- und Bildgenerierung", about_tech_cloud: "Sichere Backend-Infrastruktur", about_tech_react: "Schnelle, reaktionsfähige Benutzererfahrung", about_tech_tailwind: "Schöne, konsistente Designs",
+  contact_title: "Kontaktieren Sie Uns", contact_subtitle: "Fragen oder Feedback? Wir freuen uns, von Ihnen zu hören!", contact_email_title: "E-Mail an Uns", contact_email_desc: "Für allgemeine Anfragen und Support", contact_feedback_title: "Feedback", contact_feedback_desc: "Teilen Sie Ihre Ideen und Vorschläge", contact_send_message: "Nachricht Senden", contact_name: "Name", contact_name_placeholder: "Ihr Name", contact_email: "E-Mail", contact_subject: "Betreff", contact_subject_placeholder: "Worum geht es?", contact_message: "Nachricht", contact_message_placeholder: "Erzählen Sie uns mehr...", contact_sending: "Senden...", contact_send: "Nachricht Senden",
+  res_title: "Kochressourcen", res_subtitle: "Wichtige Anleitungen und Tipps zur Verbesserung Ihrer Kochkünste", res_cooking_tips: "Wichtige Kochtipps", res_kitchen_tools: "Wichtige Küchenutensilien", res_tools_desc: "Grundlegende Werkzeuge für jeden Hobbykoch:", res_pantry: "Vorratsschrank-Grundlagen", res_pantry_desc: "Füllen Sie Ihren Vorratsschrank mit diesen Basics:", res_conversions: "Schnelle Umrechnungstabelle", res_conversions_desc: "Häufige Maßumrechnungen:",
+  res_tip1_title: "Mise en Place", res_tip1_content: "Bereiten Sie immer alle Zutaten vor dem Kochen vor und organisieren Sie sie. Dieser französische Ausdruck bedeutet 'alles an seinem Platz' und ist der Schlüssel zum stressfreien Kochen.", res_tip2_title: "Während des Kochens Probieren", res_tip2_content: "Die wichtigste Fähigkeit beim Kochen ist es, Ihr Essen während des gesamten Prozesses zu probieren. So können Sie die Würze vor dem Servieren anpassen.", res_tip3_title: "Scharfe Messer", res_tip3_content: "Ein scharfes Messer ist sicherer und effizienter als ein stumpfes. Investieren Sie in ein gutes Messer und pflegen Sie die Klinge.", res_tip4_title: "Zutaten auf Raumtemperatur", res_tip4_content: "Beim Backen und Kochen sorgt das Bringen der Zutaten auf Raumtemperatur für gleichmäßiges Garen und bessere Ergebnisse.",
+  res_tool_1: "Kochmesser und Schälmesser", res_tool_2: "Schneidebrett (Holz oder Bambus)", res_tool_3: "Gusseisenpfanne", res_tool_4: "Antihaftpfanne", res_tool_5: "Großer Topf für Pasta und Suppen", res_tool_6: "Rührschüsseln in verschiedenen Größen", res_tool_7: "Messbecher und Messlöffel", res_tool_8: "Holzlöffel und Silikonspatel", res_tool_9: "Fleischthermometer", res_tool_10: "Küchentimer",
+  res_pantry_1: "Olivenöl und Pflanzenöl", res_pantry_2: "Salz (grob und Meersalz) und schwarzer Pfeffer", res_pantry_3: "Knoblauch und Zwiebeln", res_pantry_4: "Allzweckmehl", res_pantry_5: "Zucker (weiß und braun)", res_pantry_6: "Reis und Nudeln", res_pantry_7: "Dosentomaten", res_pantry_8: "Brühe oder Bouillon", res_pantry_9: "Sojasauce und Essig", res_pantry_10: "Grundgewürze: Paprika, Kreuzkümmel, Oregano, Basilikum",
+  res_conv_1_from: "1 Tasse", res_conv_1_to: "16 Esslöffel oder 240ml", res_conv_2_from: "1 Esslöffel", res_conv_2_to: "3 Teelöffel oder 15ml", res_conv_3_from: "1 Pfund", res_conv_3_to: "16 Unzen oder 453g", res_conv_4_from: "1 Unze", res_conv_4_to: "28g", res_conv_5_from: "350°F", res_conv_5_to: "175°C", res_conv_6_from: "400°F", res_conv_6_to: "200°C",
+  notfound_title: "Hoppla! Seite nicht gefunden", notfound_desc: "Die gesuchte Seite existiert nicht oder wurde verschoben.", notfound_home: "Startseite",
+  common_servings: "Portionen",
+};
+
+const tr: TranslationKeys = {
+  nav_home: "Ana Sayfa", nav_search: "Ara", nav_categories: "Kategoriler", nav_generate: "Oluştur", nav_recipes: "Tarifler", nav_favorites: "Favoriler", nav_add_recipe: "Tarif Ekle", nav_profile: "Profil", nav_sign_in: "Giriş Yap",
+  home_hero_title: "Bir Sonraki", home_hero_title_accent: "Mutfak Maceranızı Keşfedin", home_hero_desc: "Zevkinize, diyet tercihlerinize ve mevcut malzemelerinize göre uyarlanmış yapay zeka destekli tarif oluşturma", home_search_placeholder: "Tarif arayın veya ne pişirmek istediğinizi anlatın...", home_generate_ai: "Yapay Zeka Tarifi Oluştur", home_featured: "Öne Çıkan Tarifler", home_featured_desc: "Yapay zeka ile oluşturulmuş lezzetli tarifleri keşfedin", home_loading: "Lezzetli tarifler yükleniyor...", home_no_recipes: "Henüz tarif yok. İlk tarifi siz oluşturun!", home_first_recipe: "İlk Tarifinizi Oluşturun",
+  footer_desc: "Her yerdeki ev aşçıları için yapay zeka destekli tarif keşfi ve oluşturma.", footer_explore: "Keşfet", footer_search_recipes: "Tarif Ara", footer_resources: "Kaynaklar", footer_cooking_guides: "Yemek Rehberleri", footer_about: "Hakkımızda", footer_contact: "İletişim", footer_account: "Hesap", footer_my_favorites: "Favorilerim", footer_shopping_lists: "Alışveriş Listeleri", footer_profile: "Profil", footer_copyright: "FlavorAI. Tüm hakları saklıdır. Yapay zeka ile desteklenmektedir.",
+  gen_title: "Yapay Zeka Tarifi Oluştur", gen_desc: "Ne pişirmek istediğinizi anlatın ve yapay zekanın özel bir tarif oluşturmasını sağlayın", gen_what_cook: "Ne pişirmek istersiniz?", gen_what_cook_placeholder: "Örn: Baharatlı makarna, Sağlıklı kahvaltı tabağı, Çikolatalı tatlı...", gen_cuisine: "Mutfak Türü (İsteğe bağlı)", gen_ingredients: "Mevcut Malzemeler (İsteğe bağlı)", gen_add_ingredient_placeholder: "Malzeme ekleyin...", gen_add: "Ekle", gen_dietary: "Diyet Tercihleri (İsteğe bağlı)", gen_category: "Tarif Kategorisi *", gen_generating: "Tarif Oluşturuluyor...", gen_generate: "Tarif Oluştur",
+  search_title: "Tarif Ara", search_placeholder: "İsim, mutfak veya malzemeye göre ara...", search_searching: "Tarifler aranıyor...", search_found: "Bulundu", search_recipe: "tarif", search_recipes: "tarif", search_no_results: "Şu arama için tarif bulunamadı:",
+  fav_title: "Favori Tariflerim", fav_loading: "Favoriler yükleniyor...", fav_empty: "Henüz favori tarif yok", fav_empty_desc: "Tarifleri keşfedin ve favorilerinizi kaydedin!",
+  cat_title: "Tarif Kategorilerine Göz Atın", cat_desc: "Kategoriye göre düzenlenmiş tariflerimizi keşfedin. Her durum için mükemmel yemeği bulun.", cat_search_placeholder: "Kategori ara...", cat_loading: "Kategoriler yükleniyor...", cat_no_results: "Eşleşen kategori bulunamadı:", cat_recipes: "Tarifler", cat_loading_recipes: "Tarifler yükleniyor...", cat_no_recipes: "Bu kategoride henüz tarif yok.", cat_be_first: "İlk tarifi siz oluşturun!",
+  detail_back: "Geri", detail_save: "Kaydet", detail_saved: "Kaydedildi", detail_add_to_list: "Listeye Ekle", detail_ingredients: "Malzemeler", detail_instructions: "Talimatlar", detail_more_recipes: "Daha Fazla Tarif", detail_loading: "Yükleniyor...", detail_servings: "porsiyon", detail_min: "dk",
+  recipes_title: "Tariflerim", recipes_desc: "Tüm kayıtlı tariflerinizi tek bir yerden yönetin", recipes_search: "Tarif ara...", recipes_no_found: "Tarif bulunamadı", recipes_no_yet: "Henüz tarif yok", recipes_adjust_search: "Aramanızı ayarlamayı deneyin", recipes_start_creating: "Lezzetli tarifler oluşturmaya başlayın!", recipes_create_first: "İlk Tarifinizi Oluşturun", recipes_edit: "Düzenle", recipes_delete: "Sil", recipes_delete_title: "Tarifi Sil", recipes_delete_desc: "Bu tarifi silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.", recipes_cancel: "İptal",
+  edit_title: "Tarifi Düzenle", edit_recipe_title: "Tarif Başlığı *", edit_description: "Açıklama", edit_category: "Kategori", edit_cuisine: "Mutfak Türü", edit_difficulty: "Zorluk", edit_prep_time: "Hazırlık Süresi (dk)", edit_cook_time: "Pişirme Süresi (dk)", edit_servings: "Porsiyon", edit_dietary: "Diyet Tercihleri", edit_ingredients: "Malzemeler", edit_add_ingredient: "Malzeme Ekle", edit_instructions: "Talimatlar", edit_add_step: "Adım Ekle", edit_saving: "Kaydediliyor...", edit_save: "Değişiklikleri Kaydet", edit_cancel: "İptal", edit_amount: "Miktar", edit_ingredient: "Malzeme", edit_step_placeholder: "Bu adımı açıklayın",
+  profile_title: "Profil", profile_account_info: "Hesap Bilgileri", profile_email: "E-posta", profile_display_name: "Görünen Ad", profile_name_placeholder: "Adınız", profile_updating: "Güncelleniyor...", profile_update: "Profili Güncelle", profile_actions: "Hesap İşlemleri", profile_sign_out: "Çıkış Yap", profile_loading: "Yükleniyor...",
+  auth_reset_password: "Şifre Sıfırla", auth_welcome_back: "Tekrar Hoş Geldiniz", auth_create_account: "Hesap Oluştur", auth_reset_desc: "Sıfırlama bağlantısı almak için e-postanızı girin", auth_sign_in_desc: "Kayıtlı tariflerinize erişmek için giriş yapın", auth_sign_up_desc: "FlavorAI'ya katılın ve harika tarifleri keşfedin", auth_display_name: "Görünen Ad", auth_email: "E-posta", auth_password: "Şifre", auth_forgot: "Şifrenizi mi unuttunuz?", auth_loading: "Yükleniyor...", auth_send_reset: "Bağlantı Gönder", auth_sign_in: "Giriş Yap", auth_or_continue: "Veya şununla devam edin", auth_back_sign_in: "Girişe dön", auth_no_account: "Hesabınız yok mu? Kaydolun", auth_has_account: "Zaten hesabınız var mı? Giriş yapın",
+  about_title: "FlavorAI Hakkında", about_subtitle: "Yapay zeka destekli tarif oluşturma ile ev yemekçiliğinde devrim", about_mission: "Misyonumuz", about_mission_p1: "FlavorAI, yemek yapmayı herkes için daha erişilebilir, yaratıcı ve keyifli hale getirmek için oluşturuldu. İster deneyimli bir şef olun ister mutfak yolculuğunuza yeni başlıyor olun, yapay zeka platformumuz size özel tarifler keşfetmenize yardımcı olur.", about_mission_p2: "Harika yemeklerin deneyim düzeyine veya mevcut malzemelere bakılmaksızın herkes için erişilebilir olması gerektiğine inanıyoruz.", about_features: "Temel Özellikler", about_tech: "Teknoloji", about_tech_desc: "FlavorAI en son teknolojiyle oluşturulmuştur:", about_f1_title: "Yapay Zeka ile Tarif Oluşturma", about_f1_desc: "Tercihlerinize göre benzersiz, kişiselleştirilmiş tarifler oluşturmak için gelişmiş yapay zeka.", about_f2_title: "Görsel Oluşturma", about_f2_desc: "Her tarif, görsel bir önizleme sunan yapay zeka tarafından oluşturulmuş bir resimle birlikte gelir.", about_f3_title: "Anında Sonuçlar", about_f3_desc: "Malzemeler ve talimatlarla eksiksiz tarifler saniyeler içinde.", about_f4_title: "Güvenli ve Gizli", about_f4_desc: "Verileriniz korunarak tarifleriniz güvende tutulur.", about_tech_gemini: "Tarif ve görsel oluşturmayı güçlendirir", about_tech_cloud: "Güvenli backend altyapısı", about_tech_react: "Hızlı, duyarlı kullanıcı deneyimi", about_tech_tailwind: "Güzel, tutarlı tasarımlar",
+  contact_title: "Bize Ulaşın", contact_subtitle: "Sorularınız veya geri bildirimleriniz mi var? Sizden duymaktan memnuniyet duyarız!", contact_email_title: "E-posta Gönderin", contact_email_desc: "Genel sorular ve destek için", contact_feedback_title: "Geri Bildirim", contact_feedback_desc: "Fikirlerinizi ve önerilerinizi paylaşın", contact_send_message: "Bize Mesaj Gönderin", contact_name: "Ad", contact_name_placeholder: "Adınız", contact_email: "E-posta", contact_subject: "Konu", contact_subject_placeholder: "Konu nedir?", contact_message: "Mesaj", contact_message_placeholder: "Bize daha fazla anlatın...", contact_sending: "Gönderiliyor...", contact_send: "Mesaj Gönder",
+  res_title: "Yemek Kaynakları", res_subtitle: "Mutfak becerilerinizi geliştirmek için temel rehberler ve ipuçları", res_cooking_tips: "Temel Yemek İpuçları", res_kitchen_tools: "Temel Mutfak Araçları", res_tools_desc: "Her ev aşçısının sahip olması gereken temel araçlar:", res_pantry: "Kiler Temelleri", res_pantry_desc: "Kilerinizi bu temel ürünlerle doldurun:", res_conversions: "Hızlı Dönüşüm Rehberi", res_conversions_desc: "Yaygın ölçü dönüşümleri:",
+  res_tip1_title: "Mise en Place", res_tip1_content: "Yemek yapmadan önce her zaman tüm malzemelerinizi hazırlayın ve düzenleyin. Bu Fransızca ifade 'her şey yerinde' anlamına gelir ve stressiz pişirmenin anahtarıdır.", res_tip2_title: "Pişirirken Tadın", res_tip2_content: "Yemek pişirmede en önemli beceri, yemeğinizi süreç boyunca tatmaktır. Bu, servis etmeden önce baharatları ayarlamanıza yardımcı olur.", res_tip3_title: "Keskin Bıçaklar", res_tip3_content: "Keskin bir bıçak, kör bir bıçaktan daha güvenli ve verimlidir. İyi kaliteli bir bıçağa yatırım yapın ve keskinliğini koruyun.", res_tip4_title: "Oda Sıcaklığında Malzemeler", res_tip4_content: "Fırınlama ve pişirme için malzemeleri oda sıcaklığına getirmek eşit pişirme ve daha iyi sonuçlar sağlar.",
+  res_tool_1: "Şef bıçağı ve soyma bıçağı", res_tool_2: "Kesme tahtası (ahşap veya bambu)", res_tool_3: "Dökme demir tava", res_tool_4: "Yapışmaz tava", res_tool_5: "Makarna ve çorbalar için büyük tencere", res_tool_6: "Çeşitli boyutlarda karıştırma kapları", res_tool_7: "Ölçü kapları ve kaşıkları", res_tool_8: "Tahta kaşıklar ve silikon spatulalar", res_tool_9: "Et termometresi", res_tool_10: "Mutfak zamanlayıcısı",
+  res_pantry_1: "Zeytinyağı ve bitkisel yağ", res_pantry_2: "Tuz (kaya ve deniz tuzu) ve karabiber", res_pantry_3: "Sarımsak ve soğan", res_pantry_4: "Çok amaçlı un", res_pantry_5: "Şeker (beyaz ve esmer)", res_pantry_6: "Pirinç ve makarna", res_pantry_7: "Konserve domates", res_pantry_8: "Et suyu veya bulyon", res_pantry_9: "Soya sosu ve sirke", res_pantry_10: "Temel baharatlar: kırmızı biber, kimyon, kekik, fesleğen",
+  res_conv_1_from: "1 su bardağı", res_conv_1_to: "16 yemek kaşığı veya 240ml", res_conv_2_from: "1 yemek kaşığı", res_conv_2_to: "3 çay kaşığı veya 15ml", res_conv_3_from: "1 pound", res_conv_3_to: "16 ons veya 453g", res_conv_4_from: "1 ons", res_conv_4_to: "28g", res_conv_5_from: "350°F", res_conv_5_to: "175°C", res_conv_6_from: "400°F", res_conv_6_to: "200°C",
+  notfound_title: "Hay aksi! Sayfa bulunamadı", notfound_desc: "Aradığınız sayfa mevcut değil veya taşınmış.", notfound_home: "Ana Sayfa",
+  common_servings: "porsiyon",
+};
+
+const zh: TranslationKeys = {
+  nav_home: "首页", nav_search: "搜索", nav_categories: "分类", nav_generate: "生成", nav_recipes: "食谱", nav_favorites: "收藏", nav_add_recipe: "添加食谱", nav_profile: "个人资料", nav_sign_in: "登录",
+  home_hero_title: "发现您的下一个", home_hero_title_accent: "美食冒险", home_hero_desc: "根据您的口味、饮食偏好和可用食材量身定制的AI食谱生成", home_search_placeholder: "搜索食谱或描述您想做的菜...", home_generate_ai: "AI生成食谱", home_featured: "精选食谱", home_featured_desc: "探索我们AI生成的美食佳肴系列", home_loading: "正在加载美味食谱...", home_no_recipes: "还没有食谱。成为第一个创建的人！", home_first_recipe: "生成您的第一个食谱",
+  footer_desc: "为各地家庭厨师提供AI驱动的食谱发现和生成。", footer_explore: "探索", footer_search_recipes: "搜索食谱", footer_resources: "资源", footer_cooking_guides: "烹饪指南", footer_about: "关于我们", footer_contact: "联系我们", footer_account: "账户", footer_my_favorites: "我的收藏", footer_shopping_lists: "购物清单", footer_profile: "个人资料", footer_copyright: "FlavorAI。保留所有权利。由AI驱动。",
+  gen_title: "AI生成食谱", gen_desc: "描述您想做的菜，让AI为您创建自定义食谱", gen_what_cook: "您想做什么菜？", gen_what_cook_placeholder: "例如：辣味意面、健康早餐碗、巧克力甜点...", gen_cuisine: "菜系（可选）", gen_ingredients: "可用食材（可选）", gen_add_ingredient_placeholder: "添加食材...", gen_add: "添加", gen_dietary: "饮食偏好（可选）", gen_category: "食谱分类 *", gen_generating: "正在生成食谱...", gen_generate: "生成食谱",
+  search_title: "搜索食谱", search_placeholder: "按名称、菜系或食材搜索...", search_searching: "正在搜索食谱...", search_found: "找到", search_recipe: "个食谱", search_recipes: "个食谱", search_no_results: "未找到相关食谱：",
+  fav_title: "我的收藏食谱", fav_loading: "正在加载收藏...", fav_empty: "还没有收藏食谱", fav_empty_desc: "开始探索食谱并收藏您喜欢的！",
+  cat_title: "浏览食谱分类", cat_desc: "探索我们按分类整理的精选食谱系列。找到适合任何场合的完美菜肴。", cat_search_placeholder: "搜索分类...", cat_loading: "正在加载分类...", cat_no_results: "未找到匹配的分类：", cat_recipes: "食谱", cat_loading_recipes: "正在加载食谱...", cat_no_recipes: "此分类还没有食谱。", cat_be_first: "成为第一个创建的人！",
+  detail_back: "返回", detail_save: "保存", detail_saved: "已保存", detail_add_to_list: "添加到清单", detail_ingredients: "食材", detail_instructions: "做法", detail_more_recipes: "更多食谱", detail_loading: "加载中...", detail_servings: "份", detail_min: "分钟",
+  recipes_title: "我的食谱", recipes_desc: "在一个地方管理所有保存的食谱", recipes_search: "搜索食谱...", recipes_no_found: "未找到食谱", recipes_no_yet: "还没有食谱", recipes_adjust_search: "尝试调整搜索条件", recipes_start_creating: "开始创建美味食谱！", recipes_create_first: "创建第一个食谱", recipes_edit: "编辑", recipes_delete: "删除", recipes_delete_title: "删除食谱", recipes_delete_desc: "确定要删除这个食谱吗？此操作无法撤消。", recipes_cancel: "取消",
+  edit_title: "编辑食谱", edit_recipe_title: "食谱标题 *", edit_description: "描述", edit_category: "分类", edit_cuisine: "菜系", edit_difficulty: "难度", edit_prep_time: "准备时间（分钟）", edit_cook_time: "烹饪时间（分钟）", edit_servings: "份数", edit_dietary: "饮食偏好", edit_ingredients: "食材", edit_add_ingredient: "添加食材", edit_instructions: "做法步骤", edit_add_step: "添加步骤", edit_saving: "保存中...", edit_save: "保存更改", edit_cancel: "取消", edit_amount: "用量", edit_ingredient: "食材", edit_step_placeholder: "描述此步骤",
+  profile_title: "个人资料", profile_account_info: "账户信息", profile_email: "邮箱", profile_display_name: "显示名称", profile_name_placeholder: "您的名字", profile_updating: "更新中...", profile_update: "更新资料", profile_actions: "账户操作", profile_sign_out: "退出登录", profile_loading: "加载中...",
+  auth_reset_password: "重置密码", auth_welcome_back: "欢迎回来", auth_create_account: "创建账户", auth_reset_desc: "输入您的邮箱以接收重置链接", auth_sign_in_desc: "登录以访问您保存的食谱", auth_sign_up_desc: "加入FlavorAI，开始发现精彩食谱", auth_display_name: "显示名称", auth_email: "邮箱", auth_password: "密码", auth_forgot: "忘记密码？", auth_loading: "加载中...", auth_send_reset: "发送重置链接", auth_sign_in: "登录", auth_or_continue: "或继续使用", auth_back_sign_in: "返回登录", auth_no_account: "没有账户？注册", auth_has_account: "已有账户？登录",
+  about_title: "关于FlavorAI", about_subtitle: "用AI驱动的食谱生成革新家庭烹饪", about_mission: "我们的使命", about_mission_p1: "FlavorAI旨在让烹饪对每个人都更加便捷、有创意和愉快。无论您是经验丰富的厨师还是刚开始烹饪之旅，我们的AI平台都能帮助您发现适合您独特偏好的新食谱。", about_mission_p2: "我们相信，无论经验水平或可用食材如何，出色的烹饪应该对每个人都是可及的。", about_features: "核心功能", about_tech: "技术架构", about_tech_desc: "FlavorAI采用尖端技术打造最佳体验：", about_f1_title: "AI食谱生成", about_f1_desc: "利用先进AI创建独特的个性化食谱。", about_f2_title: "精美图片生成", about_f2_desc: "每个食谱都配有AI生成的预览图片。", about_f3_title: "即时结果", about_f3_desc: "几秒内获得包含食材和做法的完整食谱。", about_f4_title: "安全私密", about_f4_desc: "您的数据受到保护，确保食谱和偏好安全。", about_tech_gemini: "驱动食谱和图片生成", about_tech_cloud: "安全的后端基础设施", about_tech_react: "快速响应的用户体验", about_tech_tailwind: "美观统一的设计",
+  contact_title: "联系我们", contact_subtitle: "有问题或反馈？我们很乐意听到您的声音！", contact_email_title: "发送邮件", contact_email_desc: "用于一般咨询和支持", contact_feedback_title: "反馈", contact_feedback_desc: "分享您的想法和建议", contact_send_message: "给我们发消息", contact_name: "姓名", contact_name_placeholder: "您的名字", contact_email: "邮箱", contact_subject: "主题", contact_subject_placeholder: "关于什么？", contact_message: "消息", contact_message_placeholder: "告诉我们更多...", contact_sending: "发送中...", contact_send: "发送消息",
+  res_title: "烹饪资源", res_subtitle: "提升烹饪技能的必备指南和技巧", res_cooking_tips: "必备烹饪技巧", res_kitchen_tools: "必备厨房工具", res_tools_desc: "每位家庭厨师都应拥有的基本工具：", res_pantry: "食品储藏基础", res_pantry_desc: "用这些基础食材填满您的食品储藏室：", res_conversions: "快速换算指南", res_conversions_desc: "常见计量换算：",
+  res_tip1_title: "预先准备", res_tip1_content: "烹饪前务必准备好并整理所有食材。这个法语短语意思是'一切就位'，是轻松烹饪的关键。", res_tip2_title: "边做边尝", res_tip2_content: "烹饪中最重要的技能是在整个过程中品尝食物。这有助于您在上菜前调整调味。", res_tip3_title: "锋利的刀", res_tip3_content: "锋利的刀比钝刀更安全、更高效。投资一把好刀并保持其锋利。", res_tip4_title: "室温食材", res_tip4_content: "烘焙和烹饪时，将食材恢复到室温可确保均匀烹饪和更好的效果。",
+  res_tool_1: "主厨刀和削皮刀", res_tool_2: "砧板（木质或竹质）", res_tool_3: "铸铁煎锅", res_tool_4: "不粘锅", res_tool_5: "煮面和炖汤用大锅", res_tool_6: "各种大小的搅拌碗", res_tool_7: "量杯和量勺", res_tool_8: "木勺和硅胶刮刀", res_tool_9: "肉类温度计", res_tool_10: "厨房计时器",
+  res_pantry_1: "橄榄油和植物油", res_pantry_2: "盐（粗盐和海盐）和黑胡椒", res_pantry_3: "大蒜和洋葱", res_pantry_4: "通用面粉", res_pantry_5: "糖（白糖和红糖）", res_pantry_6: "大米和意面", res_pantry_7: "罐装番茄", res_pantry_8: "高汤", res_pantry_9: "酱油和醋", res_pantry_10: "基础香料：辣椒粉、孜然、牛至、罗勒",
+  res_conv_1_from: "1杯", res_conv_1_to: "16汤匙或240毫升", res_conv_2_from: "1汤匙", res_conv_2_to: "3茶匙或15毫升", res_conv_3_from: "1磅", res_conv_3_to: "16盎司或453克", res_conv_4_from: "1盎司", res_conv_4_to: "28克", res_conv_5_from: "350°F", res_conv_5_to: "175°C", res_conv_6_from: "400°F", res_conv_6_to: "200°C",
+  notfound_title: "哎呀！页面未找到", notfound_desc: "您要找的页面不存在或已被移动。", notfound_home: "首页",
+  common_servings: "份",
+};
+
+const ja: TranslationKeys = {
+  nav_home: "ホーム", nav_search: "検索", nav_categories: "カテゴリー", nav_generate: "生成", nav_recipes: "レシピ", nav_favorites: "お気に入り", nav_add_recipe: "レシピ追加", nav_profile: "プロフィール", nav_sign_in: "ログイン",
+  home_hero_title: "次の", home_hero_title_accent: "料理アドベンチャーを発見", home_hero_desc: "あなたの好み、食事制限、利用可能な食材に合わせたAI搭載レシピ生成", home_search_placeholder: "レシピを検索または作りたい料理を説明...", home_generate_ai: "AIレシピを生成", home_featured: "おすすめレシピ", home_featured_desc: "AI生成の料理コレクションをお楽しみください", home_loading: "おいしいレシピを読み込み中...", home_no_recipes: "まだレシピがありません。最初に作成しましょう！", home_first_recipe: "最初のレシピを生成",
+  footer_desc: "世界中の家庭料理人のためのAI搭載レシピ発見・生成。", footer_explore: "探索", footer_search_recipes: "レシピ検索", footer_resources: "リソース", footer_cooking_guides: "料理ガイド", footer_about: "私たちについて", footer_contact: "お問い合わせ", footer_account: "アカウント", footer_my_favorites: "お気に入り", footer_shopping_lists: "買い物リスト", footer_profile: "プロフィール", footer_copyright: "FlavorAI。全著作権所有。AIで動作。",
+  gen_title: "AIレシピ生成", gen_desc: "作りたい料理を説明して、AIにカスタムレシピを作成してもらいましょう", gen_what_cook: "何を作りたいですか？", gen_what_cook_placeholder: "例：スパイシーなパスタ、ヘルシーな朝食ボウル、チョコレートデザート...", gen_cuisine: "料理ジャンル（任意）", gen_ingredients: "利用可能な食材（任意）", gen_add_ingredient_placeholder: "食材を追加...", gen_add: "追加", gen_dietary: "食事制限（任意）", gen_category: "レシピカテゴリー *", gen_generating: "レシピ生成中...", gen_generate: "レシピを生成",
+  search_title: "レシピ検索", search_placeholder: "名前、料理ジャンル、食材で検索...", search_searching: "レシピを検索中...", search_found: "件見つかりました", search_recipe: "レシピ", search_recipes: "レシピ", search_no_results: "該当するレシピが見つかりません：",
+  fav_title: "お気に入りレシピ", fav_loading: "お気に入りを読み込み中...", fav_empty: "お気に入りレシピはまだありません", fav_empty_desc: "レシピを探索してお気に入りを保存しましょう！",
+  cat_title: "レシピカテゴリーを閲覧", cat_desc: "カテゴリー別に整理されたレシピコレクションをご覧ください。あらゆるシーンに最適な料理を見つけましょう。", cat_search_placeholder: "カテゴリー検索...", cat_loading: "カテゴリーを読み込み中...", cat_no_results: "一致するカテゴリーが見つかりません：", cat_recipes: "レシピ", cat_loading_recipes: "レシピを読み込み中...", cat_no_recipes: "このカテゴリーにはまだレシピがありません。", cat_be_first: "最初に作成しましょう！",
+  detail_back: "戻る", detail_save: "保存", detail_saved: "保存済み", detail_add_to_list: "リストに追加", detail_ingredients: "材料", detail_instructions: "手順", detail_more_recipes: "他のレシピ", detail_loading: "読み込み中...", detail_servings: "人分", detail_min: "分",
+  recipes_title: "マイレシピ", recipes_desc: "保存したレシピを一箇所で管理", recipes_search: "レシピ検索...", recipes_no_found: "レシピが見つかりません", recipes_no_yet: "まだレシピがありません", recipes_adjust_search: "検索条件を調整してみてください", recipes_start_creating: "おいしいレシピを作り始めましょう！", recipes_create_first: "最初のレシピを作成", recipes_edit: "編集", recipes_delete: "削除", recipes_delete_title: "レシピを削除", recipes_delete_desc: "このレシピを削除してもよろしいですか？この操作は取り消せません。", recipes_cancel: "キャンセル",
+  edit_title: "レシピを編集", edit_recipe_title: "レシピタイトル *", edit_description: "説明", edit_category: "カテゴリー", edit_cuisine: "料理ジャンル", edit_difficulty: "難易度", edit_prep_time: "準備時間（分）", edit_cook_time: "調理時間（分）", edit_servings: "人数", edit_dietary: "食事制限", edit_ingredients: "材料", edit_add_ingredient: "材料を追加", edit_instructions: "手順", edit_add_step: "ステップ追加", edit_saving: "保存中...", edit_save: "変更を保存", edit_cancel: "キャンセル", edit_amount: "分量", edit_ingredient: "材料", edit_step_placeholder: "このステップを説明",
+  profile_title: "プロフィール", profile_account_info: "アカウント情報", profile_email: "メール", profile_display_name: "表示名", profile_name_placeholder: "お名前", profile_updating: "更新中...", profile_update: "プロフィール更新", profile_actions: "アカウント操作", profile_sign_out: "ログアウト", profile_loading: "読み込み中...",
+  auth_reset_password: "パスワードリセット", auth_welcome_back: "おかえりなさい", auth_create_account: "アカウント作成", auth_reset_desc: "リセットリンクを受け取るためにメールアドレスを入力", auth_sign_in_desc: "保存したレシピにアクセスするにはログインしてください", auth_sign_up_desc: "FlavorAIに参加して素晴らしいレシピを発見", auth_display_name: "表示名", auth_email: "メール", auth_password: "パスワード", auth_forgot: "パスワードをお忘れですか？", auth_loading: "読み込み中...", auth_send_reset: "リンクを送信", auth_sign_in: "ログイン", auth_or_continue: "または以下で続行", auth_back_sign_in: "ログインに戻る", auth_no_account: "アカウントがない？登録", auth_has_account: "アカウントをお持ち？ログイン",
+  about_title: "FlavorAIについて", about_subtitle: "AI搭載のレシピ生成で家庭料理に革命を", about_mission: "私たちのミッション", about_mission_p1: "FlavorAIは、料理をすべての人にとってより身近で、創造的で、楽しいものにするために作られました。ベテランシェフでも料理初心者でも、AIプラットフォームがあなたの好みに合った新しいレシピを発見するお手伝いをします。", about_mission_p2: "経験レベルや利用可能な食材に関係なく、素晴らしい料理は誰にでもアクセスできるべきだと信じています。", about_features: "主な機能", about_tech: "技術スタック", about_tech_desc: "FlavorAIは最先端技術で構築されています：", about_f1_title: "AI搭載レシピ生成", about_f1_desc: "高度なAIを活用して、好みに基づいたユニークなレシピを作成。", about_f2_title: "ビジュアル生成", about_f2_desc: "各レシピにAI生成の画像プレビューが付属。", about_f3_title: "即時結果", about_f3_desc: "材料と手順を含む完全なレシピを数秒で取得。", about_f4_title: "安全・プライベート", about_f4_desc: "データは保護され、レシピと設定は安全に保管されます。", about_tech_gemini: "レシピと画像の生成を駆動", about_tech_cloud: "安全なバックエンドインフラ", about_tech_react: "高速でレスポンシブなユーザー体験", about_tech_tailwind: "美しく一貫性のあるデザイン",
+  contact_title: "お問い合わせ", contact_subtitle: "ご質問やフィードバックがありますか？ぜひお聞かせください！", contact_email_title: "メールを送る", contact_email_desc: "一般的なお問い合わせとサポート", contact_feedback_title: "フィードバック", contact_feedback_desc: "アイデアや提案を共有してください", contact_send_message: "メッセージを送る", contact_name: "名前", contact_name_placeholder: "お名前", contact_email: "メール", contact_subject: "件名", contact_subject_placeholder: "何についてですか？", contact_message: "メッセージ", contact_message_placeholder: "詳しく教えてください...", contact_sending: "送信中...", contact_send: "メッセージを送信",
+  res_title: "料理リソース", res_subtitle: "料理スキルを向上させるための必須ガイドとヒント", res_cooking_tips: "必須料理のコツ", res_kitchen_tools: "必須キッチンツール", res_tools_desc: "すべての家庭料理人が持つべき基本ツール：", res_pantry: "パントリーの必需品", res_pantry_desc: "これらの基本アイテムでパントリーを充実させましょう：", res_conversions: "クイック換算ガイド", res_conversions_desc: "一般的な計量の換算：",
+  res_tip1_title: "ミゼンプラス", res_tip1_content: "料理を始める前に、常にすべての食材を準備して整理してください。このフランス語のフレーズは「すべてが所定の位置に」という意味で、ストレスのない料理の鍵です。", res_tip2_title: "味見しながら調理", res_tip2_content: "料理で最も重要なスキルは、プロセス全体を通じて食べ物を味見することです。これにより、盛り付ける前に調味料を調整できます。", res_tip3_title: "よく切れる包丁", res_tip3_content: "よく切れる包丁は、切れない包丁よりも安全で効率的です。良質な包丁に投資し、切れ味を維持しましょう。", res_tip4_title: "室温の食材", res_tip4_content: "ベーキングや料理では、食材を室温に戻すことで均一な加熱とより良い結果が得られます。",
+  res_tool_1: "シェフナイフとペティナイフ", res_tool_2: "まな板（木製または竹製）", res_tool_3: "鋳鉄スキレット", res_tool_4: "ノンスティックパン", res_tool_5: "パスタやスープ用の大鍋", res_tool_6: "各サイズのミキシングボウル", res_tool_7: "計量カップとスプーン", res_tool_8: "木製スプーンとシリコンスパチュラ", res_tool_9: "肉用温度計", res_tool_10: "キッチンタイマー",
+  res_pantry_1: "オリーブオイルと植物油", res_pantry_2: "塩（粗塩と海塩）と黒胡椒", res_pantry_3: "にんにくと玉ねぎ", res_pantry_4: "薄力粉", res_pantry_5: "砂糖（白砂糖とブラウンシュガー）", res_pantry_6: "米とパスタ", res_pantry_7: "缶詰トマト", res_pantry_8: "だし汁またはブイヨン", res_pantry_9: "醤油と酢", res_pantry_10: "基本スパイス：パプリカ、クミン、オレガノ、バジル",
+  res_conv_1_from: "1カップ", res_conv_1_to: "大さじ16杯または240ml", res_conv_2_from: "大さじ1", res_conv_2_to: "小さじ3杯または15ml", res_conv_3_from: "1ポンド", res_conv_3_to: "16オンスまたは453g", res_conv_4_from: "1オンス", res_conv_4_to: "28g", res_conv_5_from: "350°F", res_conv_5_to: "175°C", res_conv_6_from: "400°F", res_conv_6_to: "200°C",
+  notfound_title: "おっと！ページが見つかりません", notfound_desc: "お探しのページは存在しないか、移動されました。", notfound_home: "ホーム",
+  common_servings: "人分",
+};
+
+const ru: TranslationKeys = {
+  nav_home: "Главная", nav_search: "Поиск", nav_categories: "Категории", nav_generate: "Создать", nav_recipes: "Рецепты", nav_favorites: "Избранное", nav_add_recipe: "Добавить Рецепт", nav_profile: "Профиль", nav_sign_in: "Войти",
+  home_hero_title: "Откройте Своё Следующее", home_hero_title_accent: "Кулинарное Приключение", home_hero_desc: "Генерация рецептов с помощью ИИ, адаптированная под ваш вкус, диетические предпочтения и доступные ингредиенты", home_search_placeholder: "Поиск рецептов или опишите, что хотите приготовить...", home_generate_ai: "Создать ИИ Рецепт", home_featured: "Избранные Рецепты", home_featured_desc: "Исследуйте нашу коллекцию кулинарных шедевров, созданных ИИ", home_loading: "Загрузка вкусных рецептов...", home_no_recipes: "Пока нет рецептов. Будьте первым!", home_first_recipe: "Создать Первый Рецепт",
+  footer_desc: "Поиск и создание рецептов с помощью ИИ для домашних поваров повсюду.", footer_explore: "Исследовать", footer_search_recipes: "Поиск Рецептов", footer_resources: "Ресурсы", footer_cooking_guides: "Кулинарные Гиды", footer_about: "О Нас", footer_contact: "Контакты", footer_account: "Аккаунт", footer_my_favorites: "Моё Избранное", footer_shopping_lists: "Списки Покупок", footer_profile: "Профиль", footer_copyright: "FlavorAI. Все права защищены. Работает на ИИ.",
+  gen_title: "Создать ИИ Рецепт", gen_desc: "Опишите, что хотите приготовить, и ИИ создаст индивидуальный рецепт", gen_what_cook: "Что вы хотите приготовить?", gen_what_cook_placeholder: "Например: Острое блюдо из пасты, Здоровый завтрак, Шоколадный десерт...", gen_cuisine: "Тип Кухни (Необязательно)", gen_ingredients: "Доступные Ингредиенты (Необязательно)", gen_add_ingredient_placeholder: "Добавить ингредиент...", gen_add: "Добавить", gen_dietary: "Диетические Предпочтения (Необязательно)", gen_category: "Категория Рецепта *", gen_generating: "Создание рецепта...", gen_generate: "Создать Рецепт",
+  search_title: "Поиск Рецептов", search_placeholder: "Поиск по названию, кухне или ингредиентам...", search_searching: "Поиск рецептов...", search_found: "Найдено", search_recipe: "рецепт", search_recipes: "рецептов", search_no_results: "Рецепты не найдены для",
+  fav_title: "Мои Любимые Рецепты", fav_loading: "Загрузка избранного...", fav_empty: "Пока нет избранных рецептов", fav_empty_desc: "Начните исследовать рецепты и сохраняйте любимые!",
+  cat_title: "Обзор Категорий Рецептов", cat_desc: "Исследуйте нашу коллекцию рецептов по категориям. Найдите идеальное блюдо для любого случая.", cat_search_placeholder: "Поиск категорий...", cat_loading: "Загрузка категорий...", cat_no_results: "Категории не найдены для", cat_recipes: "Рецепты", cat_loading_recipes: "Загрузка рецептов...", cat_no_recipes: "В этой категории пока нет рецептов.", cat_be_first: "Будьте первым!",
+  detail_back: "Назад", detail_save: "Сохранить", detail_saved: "Сохранено", detail_add_to_list: "В Список", detail_ingredients: "Ингредиенты", detail_instructions: "Инструкции", detail_more_recipes: "Ещё Рецепты", detail_loading: "Загрузка...", detail_servings: "порций", detail_min: "мин",
+  recipes_title: "Мои Рецепты", recipes_desc: "Управляйте всеми сохранёнными рецептами в одном месте", recipes_search: "Поиск рецептов...", recipes_no_found: "Рецепты не найдены", recipes_no_yet: "Пока нет рецептов", recipes_adjust_search: "Попробуйте изменить поиск", recipes_start_creating: "Начните создавать вкусные рецепты!", recipes_create_first: "Создать Первый Рецепт", recipes_edit: "Редактировать", recipes_delete: "Удалить", recipes_delete_title: "Удалить Рецепт", recipes_delete_desc: "Вы уверены, что хотите удалить этот рецепт? Это действие нельзя отменить.", recipes_cancel: "Отмена",
+  edit_title: "Редактировать Рецепт", edit_recipe_title: "Название Рецепта *", edit_description: "Описание", edit_category: "Категория", edit_cuisine: "Тип Кухни", edit_difficulty: "Сложность", edit_prep_time: "Время Подготовки (мин)", edit_cook_time: "Время Приготовления (мин)", edit_servings: "Порции", edit_dietary: "Диетические Предпочтения", edit_ingredients: "Ингредиенты", edit_add_ingredient: "Добавить Ингредиент", edit_instructions: "Инструкции", edit_add_step: "Добавить Шаг", edit_saving: "Сохранение...", edit_save: "Сохранить Изменения", edit_cancel: "Отмена", edit_amount: "Количество", edit_ingredient: "Ингредиент", edit_step_placeholder: "Опишите этот шаг",
+  profile_title: "Профиль", profile_account_info: "Информация Аккаунта", profile_email: "Эл. почта", profile_display_name: "Отображаемое Имя", profile_name_placeholder: "Ваше имя", profile_updating: "Обновление...", profile_update: "Обновить Профиль", profile_actions: "Действия Аккаунта", profile_sign_out: "Выйти", profile_loading: "Загрузка...",
+  auth_reset_password: "Сбросить Пароль", auth_welcome_back: "С Возвращением", auth_create_account: "Создать Аккаунт", auth_reset_desc: "Введите email для получения ссылки сброса", auth_sign_in_desc: "Войдите для доступа к сохранённым рецептам", auth_sign_up_desc: "Присоединяйтесь к FlavorAI и открывайте удивительные рецепты", auth_display_name: "Отображаемое Имя", auth_email: "Эл. почта", auth_password: "Пароль", auth_forgot: "Забыли пароль?", auth_loading: "Загрузка...", auth_send_reset: "Отправить Ссылку", auth_sign_in: "Войти", auth_or_continue: "Или продолжить с", auth_back_sign_in: "Вернуться к входу", auth_no_account: "Нет аккаунта? Зарегистрируйтесь", auth_has_account: "Уже есть аккаунт? Войдите",
+  about_title: "О FlavorAI", about_subtitle: "Революция домашней кухни с генерацией рецептов на основе ИИ", about_mission: "Наша Миссия", about_mission_p1: "FlavorAI создан, чтобы сделать кулинарию более доступной, творческой и приятной для всех. Будь вы опытным шефом или новичком, наша ИИ-платформа поможет открыть новые рецепты.", about_mission_p2: "Мы верим, что отличная кулинария должна быть доступна всем, независимо от уровня опыта или доступных ингредиентов.", about_features: "Ключевые Функции", about_tech: "Технологии", about_tech_desc: "FlavorAI создан на передовых технологиях:", about_f1_title: "Генерация Рецептов ИИ", about_f1_desc: "Продвинутый ИИ для создания уникальных персонализированных рецептов.", about_f2_title: "Визуальная Генерация", about_f2_desc: "Каждый рецепт сопровождается изображением от ИИ.", about_f3_title: "Мгновенные Результаты", about_f3_desc: "Полные рецепты с ингредиентами и инструкциями за секунды.", about_f4_title: "Безопасно и Приватно", about_f4_desc: "Ваши данные защищены.", about_tech_gemini: "Генерация рецептов и изображений", about_tech_cloud: "Безопасная серверная инфраструктура", about_tech_react: "Быстрый, отзывчивый пользовательский опыт", about_tech_tailwind: "Красивый, согласованный дизайн",
+  contact_title: "Свяжитесь с Нами", contact_subtitle: "Вопросы или отзывы? Мы будем рады услышать вас!", contact_email_title: "Напишите Нам", contact_email_desc: "Для общих вопросов и поддержки", contact_feedback_title: "Отзывы", contact_feedback_desc: "Поделитесь идеями и предложениями", contact_send_message: "Отправить Сообщение", contact_name: "Имя", contact_name_placeholder: "Ваше имя", contact_email: "Эл. почта", contact_subject: "Тема", contact_subject_placeholder: "О чём это?", contact_message: "Сообщение", contact_message_placeholder: "Расскажите подробнее...", contact_sending: "Отправка...", contact_send: "Отправить",
+  res_title: "Кулинарные Ресурсы", res_subtitle: "Необходимые руководства и советы для улучшения кулинарных навыков", res_cooking_tips: "Основные Кулинарные Советы", res_kitchen_tools: "Необходимые Кухонные Инструменты", res_tools_desc: "Основные инструменты для каждого домашнего повара:", res_pantry: "Основы Кладовой", res_pantry_desc: "Заполните кладовую этими базовыми продуктами:", res_conversions: "Быстрый Справочник Конвертации", res_conversions_desc: "Распространённые преобразования единиц:",
+  res_tip1_title: "Мизанплас", res_tip1_content: "Всегда подготавливайте и организуйте все ингредиенты перед приготовлением. Эта французская фраза означает 'всё на своих местах' и является ключом к спокойной готовке.", res_tip2_title: "Пробуйте в Процессе", res_tip2_content: "Самый важный навык в кулинарии — пробовать еду на протяжении всего процесса. Это помогает корректировать приправы до подачи.", res_tip3_title: "Острые Ножи", res_tip3_content: "Острый нож безопаснее и эффективнее тупого. Инвестируйте в качественный нож и поддерживайте его остроту.", res_tip4_title: "Ингредиенты Комнатной Температуры", res_tip4_content: "Для выпечки и приготовления доведение ингредиентов до комнатной температуры обеспечивает равномерное приготовление и лучшие результаты.",
+  res_tool_1: "Поварской нож и нож для чистки", res_tool_2: "Разделочная доска (деревянная или бамбуковая)", res_tool_3: "Чугунная сковорода", res_tool_4: "Антипригарная сковорода", res_tool_5: "Большая кастрюля для пасты и супов", res_tool_6: "Миски для смешивания разных размеров", res_tool_7: "Мерные стаканы и ложки", res_tool_8: "Деревянные ложки и силиконовые лопатки", res_tool_9: "Термометр для мяса", res_tool_10: "Кухонный таймер",
+  res_pantry_1: "Оливковое и растительное масло", res_pantry_2: "Соль (крупная и морская) и чёрный перец", res_pantry_3: "Чеснок и лук", res_pantry_4: "Мука общего назначения", res_pantry_5: "Сахар (белый и коричневый)", res_pantry_6: "Рис и макароны", res_pantry_7: "Консервированные помидоры", res_pantry_8: "Бульон", res_pantry_9: "Соевый соус и уксус", res_pantry_10: "Базовые специи: паприка, кумин, орегано, базилик",
+  res_conv_1_from: "1 стакан", res_conv_1_to: "16 столовых ложек или 240мл", res_conv_2_from: "1 столовая ложка", res_conv_2_to: "3 чайные ложки или 15мл", res_conv_3_from: "1 фунт", res_conv_3_to: "16 унций или 453г", res_conv_4_from: "1 унция", res_conv_4_to: "28г", res_conv_5_from: "350°F", res_conv_5_to: "175°C", res_conv_6_from: "400°F", res_conv_6_to: "200°C",
+  notfound_title: "Ой! Страница не найдена", notfound_desc: "Страница, которую вы ищете, не существует или была перемещена.", notfound_home: "Главная",
+  common_servings: "порций",
+};
+
+const hi: TranslationKeys = {
+  nav_home: "होम", nav_search: "खोजें", nav_categories: "श्रेणियाँ", nav_generate: "बनाएं", nav_recipes: "रेसिपी", nav_favorites: "पसंदीदा", nav_add_recipe: "रेसिपी जोड़ें", nav_profile: "प्रोफ़ाइल", nav_sign_in: "साइन इन",
+  home_hero_title: "अपने अगले", home_hero_title_accent: "पाक साहसिक की खोज करें", home_hero_desc: "आपके स्वाद, आहार वरीयताओं और उपलब्ध सामग्रियों के अनुरूप AI-संचालित रेसिपी निर्माण", home_search_placeholder: "रेसिपी खोजें या बताएं कि आप क्या बनाना चाहते हैं...", home_generate_ai: "AI रेसिपी बनाएं", home_featured: "विशेष रेसिपी", home_featured_desc: "AI-निर्मित स्वादिष्ट व्यंजनों का हमारा संग्रह देखें", home_loading: "स्वादिष्ट रेसिपी लोड हो रही हैं...", home_no_recipes: "अभी तक कोई रेसिपी नहीं। पहले बनाने वाले बनें!", home_first_recipe: "अपनी पहली रेसिपी बनाएं",
+  footer_desc: "हर जगह के घरेलू रसोइयों के लिए AI-संचालित रेसिपी खोज और निर्माण।", footer_explore: "खोजें", footer_search_recipes: "रेसिपी खोजें", footer_resources: "संसाधन", footer_cooking_guides: "खाना पकाने की गाइड", footer_about: "हमारे बारे में", footer_contact: "संपर्क", footer_account: "खाता", footer_my_favorites: "मेरे पसंदीदा", footer_shopping_lists: "खरीदारी सूचियाँ", footer_profile: "प्रोफ़ाइल", footer_copyright: "FlavorAI। सर्वाधिकार सुरक्षित। AI द्वारा संचालित।",
+  gen_title: "AI रेसिपी बनाएं", gen_desc: "बताएं कि आप क्या बनाना चाहते हैं और AI को एक कस्टम रेसिपी बनाने दें", gen_what_cook: "आप क्या बनाना चाहेंगे?", gen_what_cook_placeholder: "उदा.: मसालेदार पास्ता, स्वस्थ नाश्ता बाउल, चॉकलेट डेसर्ट...", gen_cuisine: "व्यंजन प्रकार (वैकल्पिक)", gen_ingredients: "उपलब्ध सामग्री (वैकल्पिक)", gen_add_ingredient_placeholder: "सामग्री जोड़ें...", gen_add: "जोड़ें", gen_dietary: "आहार वरीयताएँ (वैकल्पिक)", gen_category: "रेसिपी श्रेणी *", gen_generating: "रेसिपी बन रही है...", gen_generate: "रेसिपी बनाएं",
+  search_title: "रेसिपी खोजें", search_placeholder: "नाम, व्यंजन या सामग्री से खोजें...", search_searching: "रेसिपी खोज रहे हैं...", search_found: "मिले", search_recipe: "रेसिपी", search_recipes: "रेसिपी", search_no_results: "इसके लिए कोई रेसिपी नहीं मिली:",
+  fav_title: "मेरी पसंदीदा रेसिपी", fav_loading: "पसंदीदा लोड हो रहे हैं...", fav_empty: "अभी तक कोई पसंदीदा रेसिपी नहीं", fav_empty_desc: "रेसिपी खोजें और अपने पसंदीदा सहेजें!",
+  cat_title: "रेसिपी श्रेणियाँ ब्राउज़ करें", cat_desc: "श्रेणी के अनुसार व्यवस्थित हमारे क्यूरेटेड रेसिपी संग्रह का अन्वेषण करें।", cat_search_placeholder: "श्रेणियाँ खोजें...", cat_loading: "श्रेणियाँ लोड हो रही हैं...", cat_no_results: "इसके लिए कोई श्रेणी नहीं मिली:", cat_recipes: "रेसिपी", cat_loading_recipes: "रेसिपी लोड हो रही हैं...", cat_no_recipes: "इस श्रेणी में अभी तक कोई रेसिपी नहीं।", cat_be_first: "पहले बनाने वाले बनें!",
+  detail_back: "वापस", detail_save: "सहेजें", detail_saved: "सहेजा गया", detail_add_to_list: "सूची में जोड़ें", detail_ingredients: "सामग्री", detail_instructions: "निर्देश", detail_more_recipes: "और रेसिपी", detail_loading: "लोड हो रहा है...", detail_servings: "सर्विंग", detail_min: "मिनट",
+  recipes_title: "मेरी रेसिपी", recipes_desc: "अपनी सभी सहेजी गई रेसिपी एक जगह प्रबंधित करें", recipes_search: "रेसिपी खोजें...", recipes_no_found: "कोई रेसिपी नहीं मिली", recipes_no_yet: "अभी तक कोई रेसिपी नहीं", recipes_adjust_search: "अपनी खोज समायोजित करें", recipes_start_creating: "स्वादिष्ट रेसिपी बनाना शुरू करें!", recipes_create_first: "अपनी पहली रेसिपी बनाएं", recipes_edit: "संपादित करें", recipes_delete: "हटाएं", recipes_delete_title: "रेसिपी हटाएं", recipes_delete_desc: "क्या आप वाकई इस रेसिपी को हटाना चाहते हैं? यह क्रिया पूर्ववत नहीं की जा सकती।", recipes_cancel: "रद्द करें",
+  edit_title: "रेसिपी संपादित करें", edit_recipe_title: "रेसिपी शीर्षक *", edit_description: "विवरण", edit_category: "श्रेणी", edit_cuisine: "व्यंजन प्रकार", edit_difficulty: "कठिनाई", edit_prep_time: "तैयारी का समय (मिनट)", edit_cook_time: "पकाने का समय (मिनट)", edit_servings: "सर्विंग", edit_dietary: "आहार वरीयताएँ", edit_ingredients: "सामग्री", edit_add_ingredient: "सामग्री जोड़ें", edit_instructions: "निर्देश", edit_add_step: "चरण जोड़ें", edit_saving: "सहेज रहे हैं...", edit_save: "परिवर्तन सहेजें", edit_cancel: "रद्द करें", edit_amount: "मात्रा", edit_ingredient: "सामग्री", edit_step_placeholder: "इस चरण का वर्णन करें",
+  profile_title: "प्रोफ़ाइल", profile_account_info: "खाता जानकारी", profile_email: "ईमेल", profile_display_name: "प्रदर्शन नाम", profile_name_placeholder: "आपका नाम", profile_updating: "अपडेट हो रहा है...", profile_update: "प्रोफ़ाइल अपडेट करें", profile_actions: "खाता कार्रवाई", profile_sign_out: "साइन आउट", profile_loading: "लोड हो रहा है...",
+  auth_reset_password: "पासवर्ड रीसेट", auth_welcome_back: "वापस स्वागत है", auth_create_account: "खाता बनाएं", auth_reset_desc: "रीसेट लिंक प्राप्त करने के लिए अपना ईमेल दर्ज करें", auth_sign_in_desc: "अपनी सहेजी गई रेसिपी तक पहुंचने के लिए साइन इन करें", auth_sign_up_desc: "FlavorAI से जुड़ें और अद्भुत रेसिपी खोजें", auth_display_name: "प्रदर्शन नाम", auth_email: "ईमेल", auth_password: "पासवर्ड", auth_forgot: "पासवर्ड भूल गए?", auth_loading: "लोड हो रहा है...", auth_send_reset: "लिंक भेजें", auth_sign_in: "साइन इन", auth_or_continue: "या इसके साथ जारी रखें", auth_back_sign_in: "साइन इन पर वापस", auth_no_account: "खाता नहीं है? साइन अप करें", auth_has_account: "पहले से खाता है? साइन इन करें",
+  about_title: "FlavorAI के बारे में", about_subtitle: "AI-संचालित रेसिपी निर्माण के साथ घरेलू खाना पकाने में क्रांति", about_mission: "हमारा मिशन", about_mission_p1: "FlavorAI को खाना बनाने को सभी के लिए अधिक सुलभ, रचनात्मक और आनंददायक बनाने के लिए बनाया गया था। चाहे आप अनुभवी शेफ हों या अभी शुरुआत कर रहे हों, हमारा AI प्लेटफॉर्म आपकी वरीयताओं के अनुरूप नई रेसिपी खोजने में मदद करता है।", about_mission_p2: "हम मानते हैं कि शानदार खाना बनाना सभी के लिए सुलभ होना चाहिए।", about_features: "मुख्य विशेषताएँ", about_tech: "तकनीक", about_tech_desc: "FlavorAI अत्याधुनिक तकनीक से बना है:", about_f1_title: "AI-संचालित रेसिपी निर्माण", about_f1_desc: "आपकी वरीयताओं के आधार पर अनूठी रेसिपी बनाने के लिए उन्नत AI।", about_f2_title: "विज़ुअल जनरेशन", about_f2_desc: "प्रत्येक रेसिपी AI-जनित छवि के साथ आती है।", about_f3_title: "तत्काल परिणाम", about_f3_desc: "सेकंडों में सामग्री और निर्देशों के साथ पूर्ण रेसिपी।", about_f4_title: "सुरक्षित और निजी", about_f4_desc: "आपका डेटा सुरक्षित है।", about_tech_gemini: "रेसिपी और छवि निर्माण को शक्ति देता है", about_tech_cloud: "सुरक्षित बैकएंड इंफ्रास्ट्रक्चर", about_tech_react: "तेज़, प्रतिक्रियाशील उपयोगकर्ता अनुभव", about_tech_tailwind: "सुंदर, सुसंगत डिज़ाइन",
+  contact_title: "हमसे संपर्क करें", contact_subtitle: "सवाल या प्रतिक्रिया? हमें आपसे सुनकर खुशी होगी!", contact_email_title: "हमें ईमेल करें", contact_email_desc: "सामान्य पूछताछ और सहायता के लिए", contact_feedback_title: "प्रतिक्रिया", contact_feedback_desc: "अपने विचार और सुझाव साझा करें", contact_send_message: "हमें संदेश भेजें", contact_name: "नाम", contact_name_placeholder: "आपका नाम", contact_email: "ईमेल", contact_subject: "विषय", contact_subject_placeholder: "यह किस बारे में है?", contact_message: "संदेश", contact_message_placeholder: "हमें और बताएं...", contact_sending: "भेज रहे हैं...", contact_send: "संदेश भेजें",
+  res_title: "खाना पकाने के संसाधन", res_subtitle: "अपनी पाक कला कौशल बढ़ाने के लिए आवश्यक गाइड और टिप्स", res_cooking_tips: "आवश्यक खाना पकाने के टिप्स", res_kitchen_tools: "आवश्यक रसोई उपकरण", res_tools_desc: "हर घरेलू रसोइये के पास होने चाहिए:", res_pantry: "पैंट्री की अनिवार्यताएँ", res_pantry_desc: "इन बुनियादी चीजों से अपनी पैंट्री भरें:", res_conversions: "त्वरित रूपांतरण गाइड", res_conversions_desc: "सामान्य माप रूपांतरण:",
+  res_tip1_title: "मीज़ एन प्लास", res_tip1_content: "खाना पकाने से पहले हमेशा अपनी सभी सामग्री तैयार और व्यवस्थित करें। इस फ्रेंच वाक्यांश का अर्थ है 'सब कुछ अपनी जगह पर' और यह तनाव-मुक्त खाना पकाने की कुंजी है।", res_tip2_title: "पकाते समय चखें", res_tip2_content: "खाना पकाने में सबसे महत्वपूर्ण कौशल पूरी प्रक्रिया में अपने भोजन को चखना है।", res_tip3_title: "तेज चाकू", res_tip3_content: "तेज चाकू कुंद चाकू से अधिक सुरक्षित और कुशल होता है। अच्छी गुणवत्ता वाले चाकू में निवेश करें।", res_tip4_title: "कमरे के तापमान की सामग्री", res_tip4_content: "बेकिंग और खाना पकाने के लिए, सामग्री को कमरे के तापमान पर लाना समान पकाने और बेहतर परिणाम सुनिश्चित करता है।",
+  res_tool_1: "शेफ चाकू और छीलने का चाकू", res_tool_2: "कटिंग बोर्ड (लकड़ी या बांस)", res_tool_3: "कास्ट आयरन स्किलेट", res_tool_4: "नॉन-स्टिक पैन", res_tool_5: "पास्ता और सूप के लिए बड़ा बर्तन", res_tool_6: "विभिन्न आकारों के मिक्सिंग बाउल", res_tool_7: "मापने वाले कप और चम्मच", res_tool_8: "लकड़ी के चम्मच और सिलिकॉन स्पैटुला", res_tool_9: "मीट थर्मामीटर", res_tool_10: "किचन टाइमर",
+  res_pantry_1: "जैतून का तेल और वनस्पति तेल", res_pantry_2: "नमक (खुरदरा और समुद्री) और काली मिर्च", res_pantry_3: "लहसुन और प्याज", res_pantry_4: "मैदा", res_pantry_5: "चीनी (सफेद और भूरी)", res_pantry_6: "चावल और पास्ता", res_pantry_7: "डिब्बाबंद टमाटर", res_pantry_8: "शोरबा", res_pantry_9: "सोया सॉस और सिरका", res_pantry_10: "बुनियादी मसाले: पैपरिका, जीरा, अजवायन, तुलसी",
+  res_conv_1_from: "1 कप", res_conv_1_to: "16 बड़े चम्मच या 240मिली", res_conv_2_from: "1 बड़ा चम्मच", res_conv_2_to: "3 छोटे चम्मच या 15मिली", res_conv_3_from: "1 पाउंड", res_conv_3_to: "16 औंस या 453ग्राम", res_conv_4_from: "1 औंस", res_conv_4_to: "28ग्राम", res_conv_5_from: "350°F", res_conv_5_to: "175°C", res_conv_6_from: "400°F", res_conv_6_to: "200°C",
+  notfound_title: "उफ़! पेज नहीं मिला", notfound_desc: "आप जिस पेज की तलाश कर रहे हैं वह मौजूद नहीं है या स्थानांतरित कर दिया गया है।", notfound_home: "होम",
+  common_servings: "सर्विंग",
+};
+
+const ko: TranslationKeys = {
+  nav_home: "홈", nav_search: "검색", nav_categories: "카테고리", nav_generate: "생성", nav_recipes: "레시피", nav_favorites: "즐겨찾기", nav_add_recipe: "레시피 추가", nav_profile: "프로필", nav_sign_in: "로그인",
+  home_hero_title: "다음 ", home_hero_title_accent: "요리 모험을 발견하세요", home_hero_desc: "당신의 입맛, 식이 선호도, 사용 가능한 재료에 맞춘 AI 기반 레시피 생성", home_search_placeholder: "레시피를 검색하거나 만들고 싶은 요리를 설명하세요...", home_generate_ai: "AI 레시피 생성", home_featured: "추천 레시피", home_featured_desc: "AI가 만든 요리 컬렉션을 탐색하세요", home_loading: "맛있는 레시피를 불러오는 중...", home_no_recipes: "아직 레시피가 없습니다. 첫 번째로 만들어 보세요!", home_first_recipe: "첫 레시피 만들기",
+  footer_desc: "전 세계 가정 요리사를 위한 AI 기반 레시피 발견 및 생성.", footer_explore: "탐색", footer_search_recipes: "레시피 검색", footer_resources: "자료", footer_cooking_guides: "요리 가이드", footer_about: "소개", footer_contact: "문의", footer_account: "계정", footer_my_favorites: "내 즐겨찾기", footer_shopping_lists: "장보기 목록", footer_profile: "프로필", footer_copyright: "FlavorAI. 모든 권리 보유. AI로 구동.",
+  gen_title: "AI 레시피 생성", gen_desc: "만들고 싶은 요리를 설명하면 AI가 맞춤 레시피를 만들어 드립니다", gen_what_cook: "무엇을 만들고 싶으세요?", gen_what_cook_placeholder: "예: 매운 파스타, 건강한 아침 식사 볼, 초콜릿 디저트...", gen_cuisine: "요리 종류 (선택)", gen_ingredients: "사용 가능한 재료 (선택)", gen_add_ingredient_placeholder: "재료 추가...", gen_add: "추가", gen_dietary: "식이 선호도 (선택)", gen_category: "레시피 카테고리 *", gen_generating: "레시피 생성 중...", gen_generate: "레시피 생성",
+  search_title: "레시피 검색", search_placeholder: "이름, 요리 또는 재료로 검색...", search_searching: "레시피 검색 중...", search_found: "발견", search_recipe: "레시피", search_recipes: "레시피", search_no_results: "다음에 대한 레시피를 찾을 수 없습니다:",
+  fav_title: "내 즐겨찾기 레시피", fav_loading: "즐겨찾기 불러오는 중...", fav_empty: "아직 즐겨찾기 레시피가 없습니다", fav_empty_desc: "레시피를 탐색하고 즐겨찾기를 저장하세요!",
+  cat_title: "레시피 카테고리 둘러보기", cat_desc: "카테고리별로 정리된 엄선된 레시피 컬렉션을 탐색하세요.", cat_search_placeholder: "카테고리 검색...", cat_loading: "카테고리 불러오는 중...", cat_no_results: "일치하는 카테고리를 찾을 수 없습니다:", cat_recipes: "레시피", cat_loading_recipes: "레시피 불러오는 중...", cat_no_recipes: "이 카테고리에 아직 레시피가 없습니다.", cat_be_first: "첫 번째로 만들어 보세요!",
+  detail_back: "뒤로", detail_save: "저장", detail_saved: "저장됨", detail_add_to_list: "목록에 추가", detail_ingredients: "재료", detail_instructions: "만드는 법", detail_more_recipes: "더 많은 레시피", detail_loading: "로딩 중...", detail_servings: "인분", detail_min: "분",
+  recipes_title: "내 레시피", recipes_desc: "저장된 모든 레시피를 한 곳에서 관리하세요", recipes_search: "레시피 검색...", recipes_no_found: "레시피를 찾을 수 없습니다", recipes_no_yet: "아직 레시피가 없습니다", recipes_adjust_search: "검색을 조정해 보세요", recipes_start_creating: "맛있는 레시피를 만들기 시작하세요!", recipes_create_first: "첫 레시피 만들기", recipes_edit: "편집", recipes_delete: "삭제", recipes_delete_title: "레시피 삭제", recipes_delete_desc: "이 레시피를 삭제하시겠습니까? 이 작업은 취소할 수 없습니다.", recipes_cancel: "취소",
+  edit_title: "레시피 편집", edit_recipe_title: "레시피 제목 *", edit_description: "설명", edit_category: "카테고리", edit_cuisine: "요리 종류", edit_difficulty: "난이도", edit_prep_time: "준비 시간 (분)", edit_cook_time: "조리 시간 (분)", edit_servings: "인분", edit_dietary: "식이 선호도", edit_ingredients: "재료", edit_add_ingredient: "재료 추가", edit_instructions: "만드는 법", edit_add_step: "단계 추가", edit_saving: "저장 중...", edit_save: "변경 사항 저장", edit_cancel: "취소", edit_amount: "양", edit_ingredient: "재료", edit_step_placeholder: "이 단계를 설명하세요",
+  profile_title: "프로필", profile_account_info: "계정 정보", profile_email: "이메일", profile_display_name: "표시 이름", profile_name_placeholder: "이름", profile_updating: "업데이트 중...", profile_update: "프로필 업데이트", profile_actions: "계정 작업", profile_sign_out: "로그아웃", profile_loading: "로딩 중...",
+  auth_reset_password: "비밀번호 재설정", auth_welcome_back: "다시 오신 것을 환영합니다", auth_create_account: "계정 만들기", auth_reset_desc: "재설정 링크를 받으려면 이메일을 입력하세요", auth_sign_in_desc: "저장된 레시피에 접근하려면 로그인하세요", auth_sign_up_desc: "FlavorAI에 가입하고 놀라운 레시피를 발견하세요", auth_display_name: "표시 이름", auth_email: "이메일", auth_password: "비밀번호", auth_forgot: "비밀번호를 잊으셨나요?", auth_loading: "로딩 중...", auth_send_reset: "링크 보내기", auth_sign_in: "로그인", auth_or_continue: "또는 다음으로 계속", auth_back_sign_in: "로그인으로 돌아가기", auth_no_account: "계정이 없으신가요? 가입하기", auth_has_account: "이미 계정이 있으신가요? 로그인",
+  about_title: "FlavorAI 소개", about_subtitle: "AI 기반 레시피 생성으로 가정 요리에 혁명을", about_mission: "우리의 미션", about_mission_p1: "FlavorAI는 모든 사람에게 요리를 더 접근 가능하고, 창의적이며, 즐겁게 만들기 위해 만들어졌습니다. 베테랑 셰프이든 요리 초보이든, AI 플랫폼이 당신의 취향에 맞는 새로운 레시피를 발견하도록 도와줍니다.", about_mission_p2: "경험 수준이나 사용 가능한 재료에 관계없이 훌륭한 요리는 모든 사람에게 접근 가능해야 한다고 믿습니다.", about_features: "주요 기능", about_tech: "기술 스택", about_tech_desc: "FlavorAI는 최첨단 기술로 구축되었습니다:", about_f1_title: "AI 기반 레시피 생성", about_f1_desc: "선호도에 기반한 고유한 맞춤 레시피를 만드는 고급 AI.", about_f2_title: "비주얼 생성", about_f2_desc: "각 레시피에 AI 생성 이미지 미리보기가 제공됩니다.", about_f3_title: "즉시 결과", about_f3_desc: "재료와 만드는 법이 포함된 완전한 레시피를 몇 초 만에.", about_f4_title: "안전하고 비공개", about_f4_desc: "데이터가 보호되어 레시피와 설정이 안전합니다.", about_tech_gemini: "레시피 및 이미지 생성 구동", about_tech_cloud: "안전한 백엔드 인프라", about_tech_react: "빠르고 반응형 사용자 경험", about_tech_tailwind: "아름답고 일관된 디자인",
+  contact_title: "문의하기", contact_subtitle: "질문이나 피드백이 있으신가요? 여러분의 의견을 듣고 싶습니다!", contact_email_title: "이메일 보내기", contact_email_desc: "일반 문의 및 지원", contact_feedback_title: "피드백", contact_feedback_desc: "아이디어와 제안을 공유하세요", contact_send_message: "메시지 보내기", contact_name: "이름", contact_name_placeholder: "이름", contact_email: "이메일", contact_subject: "제목", contact_subject_placeholder: "무엇에 관한 건가요?", contact_message: "메시지", contact_message_placeholder: "더 자세히 알려주세요...", contact_sending: "보내는 중...", contact_send: "메시지 보내기",
+  res_title: "요리 자료", res_subtitle: "요리 실력을 향상시키기 위한 필수 가이드와 팁", res_cooking_tips: "필수 요리 팁", res_kitchen_tools: "필수 주방 도구", res_tools_desc: "모든 가정 요리사가 갖춰야 할 기본 도구:", res_pantry: "팬트리 필수품", res_pantry_desc: "이 기본 재료로 팬트리를 채우세요:", res_conversions: "빠른 환산 가이드", res_conversions_desc: "일반적인 계량 환산:",
+  res_tip1_title: "미장플라스", res_tip1_content: "요리하기 전에 항상 모든 재료를 준비하고 정리하세요. 이 프랑스어 표현은 '모든 것이 제자리에'라는 의미이며 스트레스 없는 요리의 핵심입니다.", res_tip2_title: "요리하면서 맛보기", res_tip2_content: "요리에서 가장 중요한 기술은 과정 내내 음식을 맛보는 것입니다. 이렇게 하면 서빙 전에 간을 맞출 수 있습니다.", res_tip3_title: "날카로운 칼", res_tip3_content: "날카로운 칼은 무딘 칼보다 안전하고 효율적입니다. 좋은 칼에 투자하고 날을 관리하세요.", res_tip4_title: "실온 재료", res_tip4_content: "베이킹과 요리에서 재료를 실온으로 가져오면 균일한 조리와 더 나은 결과를 보장합니다.",
+  res_tool_1: "셰프 나이프와 과도", res_tool_2: "도마 (나무 또는 대나무)", res_tool_3: "주철 스킬렛", res_tool_4: "논스틱 팬", res_tool_5: "파스타와 수프용 큰 냄비", res_tool_6: "다양한 크기의 믹싱 볼", res_tool_7: "계량컵과 스푼", res_tool_8: "나무 스푼과 실리콘 스패츌러", res_tool_9: "고기 온도계", res_tool_10: "주방 타이머",
+  res_pantry_1: "올리브유와 식용유", res_pantry_2: "소금 (굵은 소금과 천일염)과 후추", res_pantry_3: "마늘과 양파", res_pantry_4: "다목적 밀가루", res_pantry_5: "설탕 (백설탕과 흑설탕)", res_pantry_6: "쌀과 파스타", res_pantry_7: "캔 토마토", res_pantry_8: "육수", res_pantry_9: "간장과 식초", res_pantry_10: "기본 향신료: 파프리카, 커민, 오레가노, 바질",
+  res_conv_1_from: "1컵", res_conv_1_to: "16큰술 또는 240ml", res_conv_2_from: "1큰술", res_conv_2_to: "3작은술 또는 15ml", res_conv_3_from: "1파운드", res_conv_3_to: "16온스 또는 453g", res_conv_4_from: "1온스", res_conv_4_to: "28g", res_conv_5_from: "350°F", res_conv_5_to: "175°C", res_conv_6_from: "400°F", res_conv_6_to: "200°C",
+  notfound_title: "이런! 페이지를 찾을 수 없습니다", notfound_desc: "찾고 있는 페이지가 존재하지 않거나 이동되었습니다.", notfound_home: "홈",
+  common_servings: "인분",
+};
+
+const pt: TranslationKeys = {
+  nav_home: "Início", nav_search: "Pesquisar", nav_categories: "Categorias", nav_generate: "Gerar", nav_recipes: "Receitas", nav_favorites: "Favoritos", nav_add_recipe: "Adicionar Receita", nav_profile: "Perfil", nav_sign_in: "Entrar",
+  home_hero_title: "Descubra Sua Próxima", home_hero_title_accent: "Aventura Culinária", home_hero_desc: "Geração de receitas com IA adaptada ao seu gosto, preferências alimentares e ingredientes disponíveis", home_search_placeholder: "Pesquisar receitas ou descrever o que quer cozinhar...", home_generate_ai: "Gerar Receita com IA", home_featured: "Receitas em Destaque", home_featured_desc: "Explore nossa coleção de delícias culinárias geradas por IA", home_loading: "Carregando receitas deliciosas...", home_no_recipes: "Ainda sem receitas. Seja o primeiro a criar!", home_first_recipe: "Gere Sua Primeira Receita",
+  footer_desc: "Descoberta e geração de receitas com IA para cozinheiros caseiros em todo lugar.", footer_explore: "Explorar", footer_search_recipes: "Pesquisar Receitas", footer_resources: "Recursos", footer_cooking_guides: "Guias de Culinária", footer_about: "Sobre Nós", footer_contact: "Contato", footer_account: "Conta", footer_my_favorites: "Meus Favoritos", footer_shopping_lists: "Listas de Compras", footer_profile: "Perfil", footer_copyright: "FlavorAI. Todos os direitos reservados. Powered por IA.",
+  gen_title: "Gerar Receita com IA", gen_desc: "Descreva o que quer cozinhar e deixe a IA criar uma receita personalizada", gen_what_cook: "O que gostaria de cozinhar?", gen_what_cook_placeholder: "Ex: Massa picante, Tigela de café da manhã saudável, Sobremesa de chocolate...", gen_cuisine: "Tipo de Cozinha (Opcional)", gen_ingredients: "Ingredientes Disponíveis (Opcional)", gen_add_ingredient_placeholder: "Adicionar ingrediente...", gen_add: "Adicionar", gen_dietary: "Preferências Alimentares (Opcional)", gen_category: "Categoria da Receita *", gen_generating: "Gerando Receita...", gen_generate: "Gerar Receita",
+  search_title: "Pesquisar Receitas", search_placeholder: "Pesquisar por nome, cozinha ou ingredientes...", search_searching: "Pesquisando receitas...", search_found: "Encontradas", search_recipe: "receita", search_recipes: "receitas", search_no_results: "Nenhuma receita encontrada para",
+  fav_title: "Minhas Receitas Favoritas", fav_loading: "Carregando favoritos...", fav_empty: "Ainda sem receitas favoritas", fav_empty_desc: "Explore receitas e salve suas favoritas!",
+  cat_title: "Explorar Categorias de Receitas", cat_desc: "Explore nossa coleção curada de receitas organizadas por categoria. Encontre o prato perfeito para qualquer ocasião.", cat_search_placeholder: "Pesquisar categorias...", cat_loading: "Carregando categorias...", cat_no_results: "Nenhuma categoria encontrada para", cat_recipes: "Receitas", cat_loading_recipes: "Carregando receitas...", cat_no_recipes: "Ainda sem receitas nesta categoria.", cat_be_first: "Seja o primeiro a criar!",
+  detail_back: "Voltar", detail_save: "Salvar", detail_saved: "Salva", detail_add_to_list: "Adicionar à Lista", detail_ingredients: "Ingredientes", detail_instructions: "Instruções", detail_more_recipes: "Mais Receitas", detail_loading: "Carregando...", detail_servings: "porções", detail_min: "min",
+  recipes_title: "Minhas Receitas", recipes_desc: "Gerencie todas as suas receitas salvas em um só lugar", recipes_search: "Pesquisar receitas...", recipes_no_found: "Nenhuma receita encontrada", recipes_no_yet: "Ainda sem receitas", recipes_adjust_search: "Tente ajustar sua pesquisa", recipes_start_creating: "Comece a criar receitas deliciosas!", recipes_create_first: "Crie Sua Primeira Receita", recipes_edit: "Editar", recipes_delete: "Excluir", recipes_delete_title: "Excluir Receita", recipes_delete_desc: "Tem certeza de que deseja excluir esta receita? Esta ação não pode ser desfeita.", recipes_cancel: "Cancelar",
+  edit_title: "Editar Receita", edit_recipe_title: "Título da Receita *", edit_description: "Descrição", edit_category: "Categoria", edit_cuisine: "Tipo de Cozinha", edit_difficulty: "Dificuldade", edit_prep_time: "Tempo de Preparo (min)", edit_cook_time: "Tempo de Cozimento (min)", edit_servings: "Porções", edit_dietary: "Preferências Alimentares", edit_ingredients: "Ingredientes", edit_add_ingredient: "Adicionar Ingrediente", edit_instructions: "Instruções", edit_add_step: "Adicionar Passo", edit_saving: "Salvando...", edit_save: "Salvar Alterações", edit_cancel: "Cancelar", edit_amount: "Quantidade", edit_ingredient: "Ingrediente", edit_step_placeholder: "Descreva este passo",
+  profile_title: "Perfil", profile_account_info: "Informações da Conta", profile_email: "Email", profile_display_name: "Nome de Exibição", profile_name_placeholder: "Seu nome", profile_updating: "Atualizando...", profile_update: "Atualizar Perfil", profile_actions: "Ações da Conta", profile_sign_out: "Sair", profile_loading: "Carregando...",
+  auth_reset_password: "Redefinir Senha", auth_welcome_back: "Bem-vindo de Volta", auth_create_account: "Criar Conta", auth_reset_desc: "Digite seu email para receber um link de redefinição", auth_sign_in_desc: "Entre para acessar suas receitas salvas", auth_sign_up_desc: "Junte-se ao FlavorAI e descubra receitas incríveis", auth_display_name: "Nome de Exibição", auth_email: "Email", auth_password: "Senha", auth_forgot: "Esqueceu a senha?", auth_loading: "Carregando...", auth_send_reset: "Enviar Link", auth_sign_in: "Entrar", auth_or_continue: "Ou continue com", auth_back_sign_in: "Voltar ao login", auth_no_account: "Não tem conta? Cadastre-se", auth_has_account: "Já tem conta? Entre",
+  about_title: "Sobre o FlavorAI", about_subtitle: "Revolucionando a culinária caseira com geração de receitas por IA", about_mission: "Nossa Missão", about_mission_p1: "O FlavorAI foi criado para tornar a culinária mais acessível, criativa e prazerosa para todos. Seja um chef experiente ou iniciante, nossa plataforma IA ajuda a descobrir novas receitas adequadas às suas preferências.", about_mission_p2: "Acreditamos que a boa culinária deve ser acessível a todos, independente do nível de experiência ou ingredientes disponíveis.", about_features: "Recursos Principais", about_tech: "Tecnologia", about_tech_desc: "FlavorAI é construído com tecnologia de ponta:", about_f1_title: "Geração de Receitas com IA", about_f1_desc: "IA avançada para criar receitas únicas e personalizadas.", about_f2_title: "Geração Visual", about_f2_desc: "Cada receita vem com uma imagem gerada por IA.", about_f3_title: "Resultados Instantâneos", about_f3_desc: "Receitas completas com ingredientes e instruções em segundos.", about_f4_title: "Seguro e Privado", about_f4_desc: "Seus dados estão protegidos.", about_tech_gemini: "Alimenta a geração de receitas e imagens", about_tech_cloud: "Infraestrutura backend segura", about_tech_react: "Experiência do usuário rápida e responsiva", about_tech_tailwind: "Designs bonitos e consistentes",
+  contact_title: "Fale Conosco", contact_subtitle: "Dúvidas ou feedback? Adoraríamos ouvir de você!", contact_email_title: "Envie um Email", contact_email_desc: "Para consultas gerais e suporte", contact_feedback_title: "Feedback", contact_feedback_desc: "Compartilhe suas ideias e sugestões", contact_send_message: "Envie uma Mensagem", contact_name: "Nome", contact_name_placeholder: "Seu nome", contact_email: "Email", contact_subject: "Assunto", contact_subject_placeholder: "Sobre o que é?", contact_message: "Mensagem", contact_message_placeholder: "Conte-nos mais...", contact_sending: "Enviando...", contact_send: "Enviar Mensagem",
+  res_title: "Recursos Culinários", res_subtitle: "Guias e dicas essenciais para aprimorar suas habilidades culinárias", res_cooking_tips: "Dicas Essenciais de Culinária", res_kitchen_tools: "Utensílios Essenciais de Cozinha", res_tools_desc: "Ferramentas fundamentais para todo cozinheiro:", res_pantry: "Essenciais da Despensa", res_pantry_desc: "Abasteça sua despensa com estes básicos:", res_conversions: "Guia Rápido de Conversões", res_conversions_desc: "Conversões de medidas comuns:",
+  res_tip1_title: "Mise en Place", res_tip1_content: "Sempre prepare e organize todos os ingredientes antes de cozinhar. Esta expressão francesa significa 'tudo em seu lugar' e é a chave para cozinhar sem estresse.", res_tip2_title: "Prove Enquanto Cozinha", res_tip2_content: "A habilidade mais importante na cozinha é provar a comida durante todo o processo. Isso ajuda a ajustar os temperos antes de servir.", res_tip3_title: "Facas Afiadas", res_tip3_content: "Uma faca afiada é mais segura e eficiente que uma sem corte. Invista em uma boa faca e mantenha o fio.", res_tip4_title: "Ingredientes em Temperatura Ambiente", res_tip4_content: "Para assar e cozinhar, trazer os ingredientes à temperatura ambiente garante cozimento uniforme e melhores resultados.",
+  res_tool_1: "Faca de chef e faca de descascar", res_tool_2: "Tábua de corte (madeira ou bambu)", res_tool_3: "Frigideira de ferro fundido", res_tool_4: "Frigideira antiaderente", res_tool_5: "Panela grande para massas e sopas", res_tool_6: "Tigelas de mistura de vários tamanhos", res_tool_7: "Copos e colheres medidoras", res_tool_8: "Colheres de madeira e espátulas de silicone", res_tool_9: "Termômetro de carne", res_tool_10: "Timer de cozinha",
+  res_pantry_1: "Azeite de oliva e óleo vegetal", res_pantry_2: "Sal (grosso e marinho) e pimenta-do-reino", res_pantry_3: "Alho e cebola", res_pantry_4: "Farinha de trigo", res_pantry_5: "Açúcar (branco e mascavo)", res_pantry_6: "Arroz e massa", res_pantry_7: "Tomates enlatados", res_pantry_8: "Caldo", res_pantry_9: "Molho de soja e vinagre", res_pantry_10: "Temperos básicos: páprica, cominho, orégano, manjericão",
+  res_conv_1_from: "1 xícara", res_conv_1_to: "16 colheres de sopa ou 240ml", res_conv_2_from: "1 colher de sopa", res_conv_2_to: "3 colheres de chá ou 15ml", res_conv_3_from: "1 libra", res_conv_3_to: "16 onças ou 453g", res_conv_4_from: "1 onça", res_conv_4_to: "28g", res_conv_5_from: "350°F", res_conv_5_to: "175°C", res_conv_6_from: "400°F", res_conv_6_to: "200°C",
+  notfound_title: "Ops! Página não encontrada", notfound_desc: "A página que você procura não existe ou foi movida.", notfound_home: "Início",
+  common_servings: "porções",
+};
+
+const it: TranslationKeys = {
+  nav_home: "Home", nav_search: "Cerca", nav_categories: "Categorie", nav_generate: "Genera", nav_recipes: "Ricette", nav_favorites: "Preferiti", nav_add_recipe: "Aggiungi Ricetta", nav_profile: "Profilo", nav_sign_in: "Accedi",
+  home_hero_title: "Scopri la Tua Prossima", home_hero_title_accent: "Avventura Culinaria", home_hero_desc: "Generazione di ricette con IA adattata ai tuoi gusti, preferenze alimentari e ingredienti disponibili", home_search_placeholder: "Cerca ricette o descrivi cosa vuoi cucinare...", home_generate_ai: "Genera Ricetta IA", home_featured: "Ricette in Evidenza", home_featured_desc: "Esplora la nostra collezione di delizie culinarie generate dall'IA", home_loading: "Caricamento ricette deliziose...", home_no_recipes: "Ancora nessuna ricetta. Sii il primo a crearne una!", home_first_recipe: "Genera la Tua Prima Ricetta",
+  footer_desc: "Scoperta e generazione di ricette con IA per cuochi casalinghi ovunque.", footer_explore: "Esplora", footer_search_recipes: "Cerca Ricette", footer_resources: "Risorse", footer_cooking_guides: "Guide di Cucina", footer_about: "Chi Siamo", footer_contact: "Contatti", footer_account: "Account", footer_my_favorites: "I Miei Preferiti", footer_shopping_lists: "Liste della Spesa", footer_profile: "Profilo", footer_copyright: "FlavorAI. Tutti i diritti riservati. Powered by IA.",
+  gen_title: "Genera Ricetta IA", gen_desc: "Descrivi cosa vuoi cucinare e lascia che l'IA crei una ricetta personalizzata", gen_what_cook: "Cosa vorresti cucinare?", gen_what_cook_placeholder: "Es: Pasta piccante, Ciotola colazione sana, Dessert al cioccolato...", gen_cuisine: "Tipo di Cucina (Opzionale)", gen_ingredients: "Ingredienti Disponibili (Opzionale)", gen_add_ingredient_placeholder: "Aggiungi ingrediente...", gen_add: "Aggiungi", gen_dietary: "Preferenze Alimentari (Opzionale)", gen_category: "Categoria Ricetta *", gen_generating: "Generazione in corso...", gen_generate: "Genera Ricetta",
+  search_title: "Cerca Ricette", search_placeholder: "Cerca per nome, cucina o ingredienti...", search_searching: "Ricerca in corso...", search_found: "Trovate", search_recipe: "ricetta", search_recipes: "ricette", search_no_results: "Nessuna ricetta trovata per",
+  fav_title: "Le Mie Ricette Preferite", fav_loading: "Caricamento preferiti...", fav_empty: "Ancora nessuna ricetta preferita", fav_empty_desc: "Esplora le ricette e salva i tuoi preferiti!",
+  cat_title: "Sfoglia Categorie Ricette", cat_desc: "Esplora la nostra collezione curata di ricette organizzate per categoria. Trova il piatto perfetto per ogni occasione.", cat_search_placeholder: "Cerca categorie...", cat_loading: "Caricamento categorie...", cat_no_results: "Nessuna categoria trovata per", cat_recipes: "Ricette", cat_loading_recipes: "Caricamento ricette...", cat_no_recipes: "Ancora nessuna ricetta in questa categoria.", cat_be_first: "Sii il primo a crearne una!",
+  detail_back: "Indietro", detail_save: "Salva", detail_saved: "Salvata", detail_add_to_list: "Aggiungi alla Lista", detail_ingredients: "Ingredienti", detail_instructions: "Istruzioni", detail_more_recipes: "Altre Ricette", detail_loading: "Caricamento...", detail_servings: "porzioni", detail_min: "min",
+  recipes_title: "Le Mie Ricette", recipes_desc: "Gestisci tutte le tue ricette salvate in un unico posto", recipes_search: "Cerca ricette...", recipes_no_found: "Nessuna ricetta trovata", recipes_no_yet: "Ancora nessuna ricetta", recipes_adjust_search: "Prova a modificare la ricerca", recipes_start_creating: "Inizia a creare ricette deliziose!", recipes_create_first: "Crea la Tua Prima Ricetta", recipes_edit: "Modifica", recipes_delete: "Elimina", recipes_delete_title: "Elimina Ricetta", recipes_delete_desc: "Sei sicuro di voler eliminare questa ricetta? Questa azione non può essere annullata.", recipes_cancel: "Annulla",
+  edit_title: "Modifica Ricetta", edit_recipe_title: "Titolo Ricetta *", edit_description: "Descrizione", edit_category: "Categoria", edit_cuisine: "Tipo di Cucina", edit_difficulty: "Difficoltà", edit_prep_time: "Tempo di Preparazione (min)", edit_cook_time: "Tempo di Cottura (min)", edit_servings: "Porzioni", edit_dietary: "Preferenze Alimentari", edit_ingredients: "Ingredienti", edit_add_ingredient: "Aggiungi Ingrediente", edit_instructions: "Istruzioni", edit_add_step: "Aggiungi Passaggio", edit_saving: "Salvataggio...", edit_save: "Salva Modifiche", edit_cancel: "Annulla", edit_amount: "Quantità", edit_ingredient: "Ingrediente", edit_step_placeholder: "Descrivi questo passaggio",
+  profile_title: "Profilo", profile_account_info: "Informazioni Account", profile_email: "Email", profile_display_name: "Nome Visualizzato", profile_name_placeholder: "Il tuo nome", profile_updating: "Aggiornamento...", profile_update: "Aggiorna Profilo", profile_actions: "Azioni Account", profile_sign_out: "Esci", profile_loading: "Caricamento...",
+  auth_reset_password: "Reimposta Password", auth_welcome_back: "Bentornato", auth_create_account: "Crea Account", auth_reset_desc: "Inserisci la tua email per ricevere un link di reimpostazione", auth_sign_in_desc: "Accedi per visualizzare le tue ricette salvate", auth_sign_up_desc: "Unisciti a FlavorAI e scopri ricette straordinarie", auth_display_name: "Nome Visualizzato", auth_email: "Email", auth_password: "Password", auth_forgot: "Password dimenticata?", auth_loading: "Caricamento...", auth_send_reset: "Invia Link", auth_sign_in: "Accedi", auth_or_continue: "Oppure continua con", auth_back_sign_in: "Torna all'accesso", auth_no_account: "Non hai un account? Registrati", auth_has_account: "Hai già un account? Accedi",
+  about_title: "Info su FlavorAI", about_subtitle: "Rivoluzionare la cucina casalinga con la generazione di ricette IA", about_mission: "La Nostra Missione", about_mission_p1: "FlavorAI è stato creato per rendere la cucina più accessibile, creativa e piacevole per tutti. Che tu sia uno chef esperto o un principiante, la nostra piattaforma IA ti aiuta a scoprire nuove ricette su misura per le tue preferenze.", about_mission_p2: "Crediamo che la grande cucina debba essere accessibile a tutti, indipendentemente dal livello di esperienza o dagli ingredienti disponibili.", about_features: "Funzionalità Principali", about_tech: "Tecnologia", about_tech_desc: "FlavorAI è costruito con tecnologia all'avanguardia:", about_f1_title: "Generazione Ricette con IA", about_f1_desc: "IA avanzata per creare ricette uniche e personalizzate.", about_f2_title: "Generazione Visiva", about_f2_desc: "Ogni ricetta include un'immagine generata dall'IA.", about_f3_title: "Risultati Istantanei", about_f3_desc: "Ricette complete con ingredienti e istruzioni in pochi secondi.", about_f4_title: "Sicuro e Privato", about_f4_desc: "I tuoi dati sono protetti.", about_tech_gemini: "Alimenta la generazione di ricette e immagini", about_tech_cloud: "Infrastruttura backend sicura", about_tech_react: "Esperienza utente veloce e reattiva", about_tech_tailwind: "Design belli e coerenti",
+  contact_title: "Contattaci", contact_subtitle: "Domande o feedback? Ci piacerebbe sentirvi!", contact_email_title: "Inviaci un'Email", contact_email_desc: "Per richieste generali e supporto", contact_feedback_title: "Feedback", contact_feedback_desc: "Condividi le tue idee e suggerimenti", contact_send_message: "Inviaci un Messaggio", contact_name: "Nome", contact_name_placeholder: "Il tuo nome", contact_email: "Email", contact_subject: "Oggetto", contact_subject_placeholder: "Di cosa si tratta?", contact_message: "Messaggio", contact_message_placeholder: "Dicci di più...", contact_sending: "Invio...", contact_send: "Invia Messaggio",
+  res_title: "Risorse di Cucina", res_subtitle: "Guide e consigli essenziali per migliorare le tue abilità culinarie", res_cooking_tips: "Consigli di Cucina Essenziali", res_kitchen_tools: "Utensili da Cucina Essenziali", res_tools_desc: "Strumenti fondamentali per ogni cuoco:", res_pantry: "Essenziali della Dispensa", res_pantry_desc: "Rifornisci la dispensa con questi basici:", res_conversions: "Guida Rapida alle Conversioni", res_conversions_desc: "Conversioni di misure comuni:",
+  res_tip1_title: "Mise en Place", res_tip1_content: "Prepara e organizza sempre tutti gli ingredienti prima di cucinare. Questa espressione francese significa 'tutto al suo posto' ed è la chiave per cucinare senza stress.", res_tip2_title: "Assaggia Mentre Cucini", res_tip2_content: "L'abilità più importante in cucina è assaggiare il cibo durante tutto il processo. Questo ti aiuta a regolare i condimenti prima di servire.", res_tip3_title: "Coltelli Affilati", res_tip3_content: "Un coltello affilato è più sicuro ed efficiente di uno smussato. Investi in un buon coltello e mantieni il filo.", res_tip4_title: "Ingredienti a Temperatura Ambiente", res_tip4_content: "Per la cottura in forno e ai fornelli, portare gli ingredienti a temperatura ambiente assicura una cottura uniforme e risultati migliori.",
+  res_tool_1: "Coltello da chef e spelucchino", res_tool_2: "Tagliere (legno o bambù)", res_tool_3: "Padella in ghisa", res_tool_4: "Padella antiaderente", res_tool_5: "Pentola grande per pasta e zuppe", res_tool_6: "Ciotole per mescolare di varie dimensioni", res_tool_7: "Tazze e cucchiai dosatori", res_tool_8: "Cucchiai di legno e spatole in silicone", res_tool_9: "Termometro per carne", res_tool_10: "Timer da cucina",
+  res_pantry_1: "Olio d'oliva e olio vegetale", res_pantry_2: "Sale (grosso e marino) e pepe nero", res_pantry_3: "Aglio e cipolle", res_pantry_4: "Farina multiuso", res_pantry_5: "Zucchero (bianco e di canna)", res_pantry_6: "Riso e pasta", res_pantry_7: "Pomodori in scatola", res_pantry_8: "Brodo", res_pantry_9: "Salsa di soia e aceto", res_pantry_10: "Spezie base: paprika, cumino, origano, basilico",
+  res_conv_1_from: "1 tazza", res_conv_1_to: "16 cucchiai o 240ml", res_conv_2_from: "1 cucchiaio", res_conv_2_to: "3 cucchiaini o 15ml", res_conv_3_from: "1 libbra", res_conv_3_to: "16 once o 453g", res_conv_4_from: "1 oncia", res_conv_4_to: "28g", res_conv_5_from: "350°F", res_conv_5_to: "175°C", res_conv_6_from: "400°F", res_conv_6_to: "200°C",
+  notfound_title: "Ops! Pagina non trovata", notfound_desc: "La pagina che stai cercando non esiste o è stata spostata.", notfound_home: "Home",
+  common_servings: "porzioni",
+};
+
+const nl: TranslationKeys = {
+  nav_home: "Home", nav_search: "Zoeken", nav_categories: "Categorieën", nav_generate: "Genereren", nav_recipes: "Recepten", nav_favorites: "Favorieten", nav_add_recipe: "Recept Toevoegen", nav_profile: "Profiel", nav_sign_in: "Inloggen",
+  home_hero_title: "Ontdek Je Volgende", home_hero_title_accent: "Culinair Avontuur", home_hero_desc: "AI-aangedreven receptgeneratie afgestemd op uw smaak, voedingsvoorkeuren en beschikbare ingrediënten", home_search_placeholder: "Zoek recepten of beschrijf wat je wilt koken...", home_generate_ai: "AI Recept Genereren", home_featured: "Uitgelichte Recepten", home_featured_desc: "Ontdek onze collectie van AI-gegenereerde culinaire lekkernijen", home_loading: "Heerlijke recepten laden...", home_no_recipes: "Nog geen recepten. Wees de eerste!", home_first_recipe: "Genereer Je Eerste Recept",
+  footer_desc: "AI-aangedreven receptontdekking en -generatie voor thuiskoks overal.", footer_explore: "Verkennen", footer_search_recipes: "Recepten Zoeken", footer_resources: "Bronnen", footer_cooking_guides: "Kookgidsen", footer_about: "Over Ons", footer_contact: "Contact", footer_account: "Account", footer_my_favorites: "Mijn Favorieten", footer_shopping_lists: "Boodschappenlijsten", footer_profile: "Profiel", footer_copyright: "FlavorAI. Alle rechten voorbehouden. Powered by AI.",
+  gen_title: "AI Recept Genereren", gen_desc: "Beschrijf wat je wilt koken en laat AI een op maat gemaakt recept maken", gen_what_cook: "Wat wil je graag koken?", gen_what_cook_placeholder: "Bijv: Pittig pastagerecht, Gezond ontbijtbowl, Chocoladedessert...", gen_cuisine: "Keuken Type (Optioneel)", gen_ingredients: "Beschikbare Ingrediënten (Optioneel)", gen_add_ingredient_placeholder: "Ingrediënt toevoegen...", gen_add: "Toevoegen", gen_dietary: "Voedingsvoorkeuren (Optioneel)", gen_category: "Receptcategorie *", gen_generating: "Recept genereren...", gen_generate: "Recept Genereren",
+  search_title: "Recepten Zoeken", search_placeholder: "Zoek op naam, keuken of ingrediënten...", search_searching: "Recepten zoeken...", search_found: "Gevonden", search_recipe: "recept", search_recipes: "recepten", search_no_results: "Geen recepten gevonden voor",
+  fav_title: "Mijn Favoriete Recepten", fav_loading: "Favorieten laden...", fav_empty: "Nog geen favoriete recepten", fav_empty_desc: "Ontdek recepten en sla je favorieten op!",
+  cat_title: "Receptcategorieën Bladeren", cat_desc: "Verken onze samengestelde collectie recepten per categorie. Vind het perfecte gerecht voor elke gelegenheid.", cat_search_placeholder: "Categorieën zoeken...", cat_loading: "Categorieën laden...", cat_no_results: "Geen categorieën gevonden voor", cat_recipes: "Recepten", cat_loading_recipes: "Recepten laden...", cat_no_recipes: "Nog geen recepten in deze categorie.", cat_be_first: "Wees de eerste!",
+  detail_back: "Terug", detail_save: "Opslaan", detail_saved: "Opgeslagen", detail_add_to_list: "Toevoegen aan Lijst", detail_ingredients: "Ingrediënten", detail_instructions: "Instructies", detail_more_recipes: "Meer Recepten", detail_loading: "Laden...", detail_servings: "porties", detail_min: "min",
+  recipes_title: "Mijn Recepten", recipes_desc: "Beheer al je opgeslagen recepten op één plek", recipes_search: "Recepten zoeken...", recipes_no_found: "Geen recepten gevonden", recipes_no_yet: "Nog geen recepten", recipes_adjust_search: "Probeer je zoekopdracht aan te passen", recipes_start_creating: "Begin met het maken van heerlijke recepten!", recipes_create_first: "Maak Je Eerste Recept", recipes_edit: "Bewerken", recipes_delete: "Verwijderen", recipes_delete_title: "Recept Verwijderen", recipes_delete_desc: "Weet je zeker dat je dit recept wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt.", recipes_cancel: "Annuleren",
+  edit_title: "Recept Bewerken", edit_recipe_title: "Recepttitel *", edit_description: "Beschrijving", edit_category: "Categorie", edit_cuisine: "Keuken Type", edit_difficulty: "Moeilijkheid", edit_prep_time: "Voorbereidingstijd (min)", edit_cook_time: "Kooktijd (min)", edit_servings: "Porties", edit_dietary: "Voedingsvoorkeuren", edit_ingredients: "Ingrediënten", edit_add_ingredient: "Ingrediënt Toevoegen", edit_instructions: "Instructies", edit_add_step: "Stap Toevoegen", edit_saving: "Opslaan...", edit_save: "Wijzigingen Opslaan", edit_cancel: "Annuleren", edit_amount: "Hoeveelheid", edit_ingredient: "Ingrediënt", edit_step_placeholder: "Beschrijf deze stap",
+  profile_title: "Profiel", profile_account_info: "Accountinformatie", profile_email: "E-mail", profile_display_name: "Weergavenaam", profile_name_placeholder: "Je naam", profile_updating: "Bijwerken...", profile_update: "Profiel Bijwerken", profile_actions: "Accountacties", profile_sign_out: "Uitloggen", profile_loading: "Laden...",
+  auth_reset_password: "Wachtwoord Resetten", auth_welcome_back: "Welkom Terug", auth_create_account: "Account Aanmaken", auth_reset_desc: "Voer je e-mail in om een resetlink te ontvangen", auth_sign_in_desc: "Log in om je opgeslagen recepten te bekijken", auth_sign_up_desc: "Word lid van FlavorAI en ontdek geweldige recepten", auth_display_name: "Weergavenaam", auth_email: "E-mail", auth_password: "Wachtwoord", auth_forgot: "Wachtwoord vergeten?", auth_loading: "Laden...", auth_send_reset: "Link Verzenden", auth_sign_in: "Inloggen", auth_or_continue: "Of ga verder met", auth_back_sign_in: "Terug naar inloggen", auth_no_account: "Geen account? Registreren", auth_has_account: "Al een account? Inloggen",
+  about_title: "Over FlavorAI", about_subtitle: "Revolutie in thuiskoken met AI-aangedreven receptgeneratie", about_mission: "Onze Missie", about_mission_p1: "FlavorAI is gemaakt om koken voor iedereen toegankelijker, creatiever en leuker te maken. Of je nu een ervaren chef bent of net begint, ons AI-platform helpt je nieuwe recepten te ontdekken.", about_mission_p2: "Wij geloven dat geweldig koken voor iedereen toegankelijk moet zijn, ongeacht ervaringsniveau of beschikbare ingrediënten.", about_features: "Belangrijkste Functies", about_tech: "Technologie", about_tech_desc: "FlavorAI is gebouwd met geavanceerde technologie:", about_f1_title: "AI-aangedreven Receptgeneratie", about_f1_desc: "Geavanceerde AI voor het maken van unieke, gepersonaliseerde recepten.", about_f2_title: "Visuele Generatie", about_f2_desc: "Elk recept bevat een AI-gegenereerde afbeelding.", about_f3_title: "Direct Resultaten", about_f3_desc: "Complete recepten met ingrediënten en instructies in seconden.", about_f4_title: "Veilig & Privé", about_f4_desc: "Je gegevens zijn beschermd.", about_tech_gemini: "Drijft recept- en beeldgeneratie aan", about_tech_cloud: "Veilige backend-infrastructuur", about_tech_react: "Snelle, responsieve gebruikerservaring", about_tech_tailwind: "Mooie, consistente ontwerpen",
+  contact_title: "Neem Contact Op", contact_subtitle: "Vragen of feedback? We horen graag van je!", contact_email_title: "Mail Ons", contact_email_desc: "Voor algemene vragen en ondersteuning", contact_feedback_title: "Feedback", contact_feedback_desc: "Deel je ideeën en suggesties", contact_send_message: "Stuur een Bericht", contact_name: "Naam", contact_name_placeholder: "Je naam", contact_email: "E-mail", contact_subject: "Onderwerp", contact_subject_placeholder: "Waar gaat het over?", contact_message: "Bericht", contact_message_placeholder: "Vertel ons meer...", contact_sending: "Verzenden...", contact_send: "Bericht Verzenden",
+  res_title: "Kookbronnen", res_subtitle: "Essentiële gidsen en tips om je kookvaardigheden te verbeteren", res_cooking_tips: "Essentiële Kooktips", res_kitchen_tools: "Essentieel Keukengerei", res_tools_desc: "Fundamenteel gereedschap voor elke thuiskok:", res_pantry: "Voorraadkast Essentials", res_pantry_desc: "Vul je voorraadkast met deze basics:", res_conversions: "Snelle Omrekentabel", res_conversions_desc: "Veelvoorkomende maatomrekeningen:",
+  res_tip1_title: "Mise en Place", res_tip1_content: "Bereid en organiseer altijd al je ingrediënten voordat je begint met koken. Deze Franse uitdrukking betekent 'alles op zijn plek' en is de sleutel tot stressvrij koken.", res_tip2_title: "Proef Tijdens het Koken", res_tip2_content: "De belangrijkste vaardigheid bij het koken is je eten proeven gedurende het hele proces. Dit helpt je de kruiden aan te passen voor het serveren.", res_tip3_title: "Scherpe Messen", res_tip3_content: "Een scherp mes is veiliger en efficiënter dan een bot mes. Investeer in een goed mes en houd het scherp.", res_tip4_title: "Ingrediënten op Kamertemperatuur", res_tip4_content: "Voor bakken en koken zorgt het op kamertemperatuur brengen van ingrediënten voor gelijkmatig garen en betere resultaten.",
+  res_tool_1: "Koksmes en schilmes", res_tool_2: "Snijplank (hout of bamboe)", res_tool_3: "Gietijzeren koekenpan", res_tool_4: "Anti-aanbakpan", res_tool_5: "Grote pan voor pasta en soepen", res_tool_6: "Mengkommen in diverse maten", res_tool_7: "Maatbekers en lepels", res_tool_8: "Houten lepels en siliconen spatels", res_tool_9: "Vleesthermometer", res_tool_10: "Keukentimer",
+  res_pantry_1: "Olijfolie en plantaardige olie", res_pantry_2: "Zout (grof en zeezout) en zwarte peper", res_pantry_3: "Knoflook en uien", res_pantry_4: "Bloem", res_pantry_5: "Suiker (wit en bruin)", res_pantry_6: "Rijst en pasta", res_pantry_7: "Tomaten uit blik", res_pantry_8: "Bouillon", res_pantry_9: "Sojasaus en azijn", res_pantry_10: "Basiskruiden: paprika, komijn, oregano, basilicum",
+  res_conv_1_from: "1 kopje", res_conv_1_to: "16 eetlepels of 240ml", res_conv_2_from: "1 eetlepel", res_conv_2_to: "3 theelepels of 15ml", res_conv_3_from: "1 pond", res_conv_3_to: "16 ounce of 453g", res_conv_4_from: "1 ounce", res_conv_4_to: "28g", res_conv_5_from: "350°F", res_conv_5_to: "175°C", res_conv_6_from: "400°F", res_conv_6_to: "200°C",
+  notfound_title: "Oeps! Pagina niet gevonden", notfound_desc: "De pagina die je zoekt bestaat niet of is verplaatst.", notfound_home: "Home",
+  common_servings: "porties",
+};
+
 export const translations: Record<Language, TranslationKeys> = {
-  en,
-  ar,
-  es: { ...en, nav_home: "Inicio", nav_search: "Buscar", nav_categories: "Categorías", nav_generate: "Generar", nav_shop: "Tienda", nav_recipes: "Recetas", nav_favorites: "Favoritos", nav_add_recipe: "Agregar Receta", nav_profile: "Perfil", nav_sign_in: "Iniciar Sesión", home_hero_title: "Descubre Tu Próxima", home_hero_title_accent: "Aventura Culinaria", home_hero_desc: "Generación de recetas con IA adaptada a tu gusto, preferencias dietéticas e ingredientes disponibles", home_search_placeholder: "Busca recetas o describe lo que quieres cocinar...", home_generate_ai: "Generar Receta con IA", home_featured: "Recetas Destacadas", home_featured_desc: "Explora nuestra colección de delicias culinarias generadas por IA", home_loading: "Cargando recetas deliciosas...", home_no_recipes: "No hay recetas aún. ¡Sé el primero en crear una!", home_first_recipe: "Genera Tu Primera Receta", footer_desc: "Descubrimiento y generación de recetas con IA para cocineros caseros en todas partes.", footer_explore: "Explorar", footer_search_recipes: "Buscar Recetas", footer_resources: "Recursos", footer_cooking_guides: "Guías de Cocina", footer_about: "Sobre Nosotros", footer_contact: "Contacto", footer_account: "Cuenta", footer_my_favorites: "Mis Favoritos", footer_shopping_lists: "Listas de Compras", footer_profile: "Perfil", footer_copyright: "FlavorAI. Todos los derechos reservados. Impulsado por IA.", gen_title: "Generar Receta con IA", gen_desc: "Describe lo que quieres cocinar y deja que la IA cree una receta personalizada", gen_what_cook: "¿Qué te gustaría cocinar?", gen_what_cook_placeholder: "Ej: Un plato de pasta picante, Bowl de desayuno saludable...", gen_cuisine: "Tipo de Cocina (Opcional)", gen_ingredients: "Ingredientes Disponibles (Opcional)", gen_add_ingredient_placeholder: "Agregar un ingrediente...", gen_add: "Agregar", gen_dietary: "Preferencias Dietéticas (Opcional)", gen_category: "Categoría de Receta *", gen_generating: "Generando Receta...", gen_generate: "Generar Receta", search_title: "Buscar Recetas", search_placeholder: "Buscar por nombre, cocina o ingredientes...", search_searching: "Buscando recetas...", search_found: "Encontradas", search_recipe: "receta", search_recipes: "recetas", search_no_results: "No se encontraron recetas para", fav_title: "Mis Recetas Favoritas", fav_loading: "Cargando tus favoritos...", fav_empty: "Sin recetas favoritas aún", fav_empty_desc: "¡Explora recetas y guarda tus favoritas!", cat_title: "Explorar Categorías de Recetas", cat_desc: "Explora nuestra colección curada de recetas organizadas por categoría.", cat_search_placeholder: "Buscar categorías...", cat_loading: "Cargando categorías...", cat_no_results: "No se encontraron categorías para", cat_recipes: "Recetas", cat_loading_recipes: "Cargando recetas...", cat_no_recipes: "No hay recetas en esta categoría aún.", cat_be_first: "¡Sé el primero en crear una!", detail_back: "Volver", detail_save: "Guardar", detail_saved: "Guardada", detail_add_to_list: "Agregar a Lista", detail_ingredients: "Ingredientes", detail_instructions: "Instrucciones", detail_more_recipes: "Más Recetas", detail_loading: "Cargando...", detail_servings: "porciones", detail_min: "min", recipes_title: "Mis Recetas", recipes_desc: "Administra todas tus recetas guardadas en un solo lugar", recipes_search: "Buscar recetas...", recipes_no_found: "No se encontraron recetas", recipes_no_yet: "Sin recetas aún", recipes_adjust_search: "Intenta ajustar tu búsqueda", recipes_start_creating: "¡Empieza a crear recetas deliciosas!", recipes_create_first: "Crea Tu Primera Receta", recipes_edit: "Editar", recipes_delete: "Eliminar", recipes_delete_title: "Eliminar Receta", recipes_delete_desc: "¿Estás seguro de que quieres eliminar esta receta? Esta acción no se puede deshacer.", recipes_cancel: "Cancelar", edit_title: "Editar Receta", edit_recipe_title: "Título de la Receta *", edit_description: "Descripción", edit_category: "Categoría", edit_cuisine: "Tipo de Cocina", edit_difficulty: "Dificultad", edit_prep_time: "Tiempo de Preparación (min)", edit_cook_time: "Tiempo de Cocción (min)", edit_servings: "Porciones", edit_dietary: "Preferencias Dietéticas", edit_ingredients: "Ingredientes", edit_add_ingredient: "Agregar Ingrediente", edit_instructions: "Instrucciones", edit_add_step: "Agregar Paso", edit_saving: "Guardando...", edit_save: "Guardar Cambios", edit_cancel: "Cancelar", edit_amount: "Cantidad", edit_ingredient: "Ingrediente", edit_step_placeholder: "Describe este paso", profile_title: "Perfil", profile_account_info: "Información de la Cuenta", profile_email: "Correo", profile_display_name: "Nombre para Mostrar", profile_name_placeholder: "Tu nombre", profile_updating: "Actualizando...", profile_update: "Actualizar Perfil", profile_actions: "Acciones de Cuenta", profile_sign_out: "Cerrar Sesión", profile_loading: "Cargando...", auth_reset_password: "Restablecer Contraseña", auth_welcome_back: "Bienvenido de Nuevo", auth_create_account: "Crear Cuenta", auth_reset_desc: "Ingresa tu correo para recibir un enlace de restablecimiento", auth_sign_in_desc: "Inicia sesión para acceder a tus recetas guardadas", auth_sign_up_desc: "Únete a FlavorAI y descubre recetas increíbles", auth_display_name: "Nombre para Mostrar", auth_email: "Correo", auth_password: "Contraseña", auth_forgot: "¿Olvidaste tu contraseña?", auth_loading: "Cargando...", auth_send_reset: "Enviar Enlace", auth_sign_in: "Iniciar Sesión", auth_or_continue: "O continúa con", auth_back_sign_in: "Volver a iniciar sesión", auth_no_account: "¿No tienes cuenta? Regístrate", auth_has_account: "¿Ya tienes cuenta? Inicia sesión", about_title: "Sobre FlavorAI", about_subtitle: "Revolucionando la cocina casera con generación de recetas con IA", about_mission: "Nuestra Misión", about_mission_p1: "FlavorAI fue creado para hacer la cocina más accesible, creativa y divertida para todos.", about_mission_p2: "Creemos que la gran cocina debe ser accesible para todos, independientemente del nivel de experiencia.", about_features: "Características Clave", about_tech: "Tecnología", about_tech_desc: "FlavorAI está construido con tecnología de vanguardia:", about_f1_title: "Generación de Recetas con IA", about_f1_desc: "IA avanzada para crear recetas únicas y personalizadas.", about_f2_title: "Generación Visual", about_f2_desc: "Cada receta incluye una imagen generada por IA.", about_f3_title: "Resultados Instantáneos", about_f3_desc: "Recetas completas en segundos.", about_f4_title: "Seguro y Privado", about_f4_desc: "Tus datos están protegidos.", contact_title: "Contáctanos", contact_subtitle: "¿Preguntas o comentarios? ¡Nos encantaría saber de ti!", contact_email_title: "Envíanos un Correo", contact_email_desc: "Para consultas generales y soporte", contact_feedback_title: "Comentarios", contact_feedback_desc: "Comparte tus ideas y sugerencias", contact_send_message: "Envíanos un Mensaje", contact_name: "Nombre", contact_name_placeholder: "Tu nombre", contact_email: "Correo", contact_subject: "Asunto", contact_subject_placeholder: "¿De qué se trata?", contact_message: "Mensaje", contact_message_placeholder: "Cuéntanos más...", contact_sending: "Enviando...", contact_send: "Enviar Mensaje", shop_badge: "Esenciales de Cocina", shop_title1: "Herramientas de Cocina Premium", shop_title2: "Para la Cocina Moderna", shop_desc: "Descubre la mejor selección de esenciales de cocina", shop_quality: "Calidad Premium", shop_top_rated: "Mejor Calificados", shop_fast_delivery: "Entrega Rápida", shop_collection: "Comprar la Colección", shop_collection_desc: "Cada producto seleccionado cuidadosamente", shop_now: "Comprar Ahora", shop_trending: "Tendencia", shop_why: "¿Por Qué Comprar Con Nosotros?", shop_why_desc: "Cada producto probado y aprobado por chefs profesionales.", res_title: "Recursos de Cocina", res_subtitle: "Guías y consejos esenciales para mejorar tus habilidades culinarias", res_cooking_tips: "Consejos de Cocina Esenciales", res_kitchen_tools: "Herramientas de Cocina Esenciales", res_tools_desc: "Herramientas fundamentales para todo cocinero:", res_pantry: "Esenciales de la Despensa", res_pantry_desc: "Abastece tu despensa con estos básicos:", res_conversions: "Guía Rápida de Conversiones", res_conversions_desc: "Conversiones de medidas comunes:", notfound_title: "¡Ups! Página no encontrada", notfound_desc: "La página que buscas no existe o fue movida.", notfound_home: "Inicio", common_servings: "porciones" },
-  fr: { ...en, nav_home: "Accueil", nav_search: "Rechercher", nav_categories: "Catégories", nav_generate: "Générer", nav_shop: "Boutique", nav_recipes: "Recettes", nav_favorites: "Favoris", nav_add_recipe: "Ajouter Recette", nav_profile: "Profil", nav_sign_in: "Se Connecter", home_hero_title: "Découvrez Votre Prochaine", home_hero_title_accent: "Aventure Culinaire", home_hero_desc: "Génération de recettes par IA adaptée à vos goûts, préférences alimentaires et ingrédients disponibles", home_search_placeholder: "Recherchez des recettes ou décrivez ce que vous voulez cuisiner...", home_generate_ai: "Générer une Recette IA", home_featured: "Recettes en Vedette", home_featured_desc: "Explorez notre collection de délices culinaires générés par IA", home_loading: "Chargement des recettes...", home_no_recipes: "Pas encore de recettes. Soyez le premier à en créer une!", home_first_recipe: "Générez Votre Première Recette", footer_desc: "Découverte et génération de recettes par IA pour les cuisiniers amateurs partout.", footer_explore: "Explorer", footer_search_recipes: "Rechercher des Recettes", footer_resources: "Ressources", footer_cooking_guides: "Guides de Cuisine", footer_about: "À Propos", footer_contact: "Contact", footer_account: "Compte", footer_my_favorites: "Mes Favoris", footer_shopping_lists: "Listes de Courses", footer_profile: "Profil", footer_copyright: "FlavorAI. Tous droits réservés. Propulsé par IA.", notfound_title: "Oups ! Page introuvable", notfound_desc: "La page que vous cherchez n'existe pas ou a été déplacée.", notfound_home: "Accueil", common_servings: "portions", gen_title: "Générer une Recette IA", gen_desc: "Décrivez ce que vous voulez cuisiner et laissez l'IA créer une recette personnalisée", gen_what_cook: "Que souhaitez-vous cuisiner ?", gen_what_cook_placeholder: "Ex: Un plat de pâtes épicé, Bol de petit-déjeuner sain...", gen_cuisine: "Type de Cuisine (Optionnel)", gen_ingredients: "Ingrédients Disponibles (Optionnel)", gen_add_ingredient_placeholder: "Ajouter un ingrédient...", gen_add: "Ajouter", gen_dietary: "Préférences Alimentaires (Optionnel)", gen_category: "Catégorie de Recette *", gen_generating: "Génération en cours...", gen_generate: "Générer la Recette", search_title: "Rechercher des Recettes", search_placeholder: "Rechercher par nom, cuisine ou ingrédients...", search_searching: "Recherche en cours...", search_found: "Trouvé", search_recipe: "recette", search_recipes: "recettes", search_no_results: "Aucune recette trouvée pour", fav_title: "Mes Recettes Favorites", fav_loading: "Chargement de vos favoris...", fav_empty: "Pas encore de recettes favorites", fav_empty_desc: "Explorez des recettes et sauvegardez vos favorites !", detail_back: "Retour", detail_save: "Sauvegarder", detail_saved: "Sauvegardée", detail_add_to_list: "Ajouter à la Liste", detail_ingredients: "Ingrédients", detail_instructions: "Instructions", detail_more_recipes: "Plus de Recettes", detail_loading: "Chargement...", detail_servings: "portions", detail_min: "min", cat_title: "Parcourir les Catégories", cat_desc: "Explorez notre collection de recettes organisées par catégorie.", cat_search_placeholder: "Rechercher des catégories...", cat_loading: "Chargement...", cat_no_results: "Aucune catégorie trouvée pour", cat_recipes: "Recettes", cat_loading_recipes: "Chargement...", cat_no_recipes: "Pas encore de recettes dans cette catégorie.", cat_be_first: "Soyez le premier à en créer une !", recipes_title: "Mes Recettes", recipes_desc: "Gérez toutes vos recettes en un seul endroit", recipes_search: "Rechercher des recettes...", recipes_no_found: "Aucune recette trouvée", recipes_no_yet: "Pas encore de recettes", recipes_adjust_search: "Essayez d'ajuster votre recherche", recipes_start_creating: "Commencez à créer des recettes délicieuses !", recipes_create_first: "Créez Votre Première Recette", recipes_edit: "Modifier", recipes_delete: "Supprimer", recipes_delete_title: "Supprimer la Recette", recipes_delete_desc: "Êtes-vous sûr de vouloir supprimer cette recette ? Cette action est irréversible.", recipes_cancel: "Annuler", edit_title: "Modifier la Recette", edit_recipe_title: "Titre *", edit_description: "Description", edit_category: "Catégorie", edit_cuisine: "Type de Cuisine", edit_difficulty: "Difficulté", edit_prep_time: "Temps de Préparation (min)", edit_cook_time: "Temps de Cuisson (min)", edit_servings: "Portions", edit_dietary: "Préférences Alimentaires", edit_ingredients: "Ingrédients", edit_add_ingredient: "Ajouter Ingrédient", edit_instructions: "Instructions", edit_add_step: "Ajouter Étape", edit_saving: "Sauvegarde...", edit_save: "Sauvegarder", edit_cancel: "Annuler", edit_amount: "Quantité", edit_ingredient: "Ingrédient", edit_step_placeholder: "Décrivez cette étape", profile_title: "Profil", profile_account_info: "Informations du Compte", profile_email: "Email", profile_display_name: "Nom d'Affichage", profile_name_placeholder: "Votre nom", profile_updating: "Mise à jour...", profile_update: "Mettre à jour", profile_actions: "Actions du Compte", profile_sign_out: "Se Déconnecter", profile_loading: "Chargement...", auth_reset_password: "Réinitialiser le Mot de Passe", auth_welcome_back: "Content de Vous Revoir", auth_create_account: "Créer un Compte", auth_reset_desc: "Entrez votre email pour recevoir un lien de réinitialisation", auth_sign_in_desc: "Connectez-vous pour accéder à vos recettes", auth_sign_up_desc: "Rejoignez FlavorAI et découvrez des recettes incroyables", auth_display_name: "Nom d'Affichage", auth_email: "Email", auth_password: "Mot de Passe", auth_forgot: "Mot de passe oublié ?", auth_loading: "Chargement...", auth_send_reset: "Envoyer le Lien", auth_sign_in: "Se Connecter", auth_or_continue: "Ou continuer avec", auth_back_sign_in: "Retour à la connexion", auth_no_account: "Pas de compte ? Inscrivez-vous", auth_has_account: "Déjà un compte ? Connectez-vous", about_title: "À Propos de FlavorAI", about_subtitle: "Révolutionner la cuisine maison avec la génération de recettes par IA", about_mission: "Notre Mission", about_mission_p1: "FlavorAI a été créé pour rendre la cuisine plus accessible, créative et agréable pour tous.", about_mission_p2: "Nous croyons que la grande cuisine doit être accessible à tous.", about_features: "Fonctionnalités Clés", about_tech: "Technologies", about_tech_desc: "FlavorAI est construit avec des technologies de pointe :", about_f1_title: "Génération par IA", about_f1_desc: "IA avancée pour des recettes uniques et personnalisées.", about_f2_title: "Génération Visuelle", about_f2_desc: "Chaque recette avec une image générée par IA.", about_f3_title: "Résultats Instantanés", about_f3_desc: "Recettes complètes en quelques secondes.", about_f4_title: "Sécurisé et Privé", about_f4_desc: "Vos données sont protégées.", contact_title: "Contactez-Nous", contact_subtitle: "Des questions ? Nous serions ravis de vous entendre !", contact_email_title: "Envoyez-nous un Email", contact_email_desc: "Pour les demandes générales et le support", contact_feedback_title: "Commentaires", contact_feedback_desc: "Partagez vos idées et suggestions", contact_send_message: "Envoyez-nous un Message", contact_name: "Nom", contact_name_placeholder: "Votre nom", contact_email: "Email", contact_subject: "Sujet", contact_subject_placeholder: "De quoi s'agit-il ?", contact_message: "Message", contact_message_placeholder: "Dites-nous en plus...", contact_sending: "Envoi...", contact_send: "Envoyer", shop_badge: "Essentiels de Cuisine", shop_title1: "Outils de Cuisine Premium", shop_title2: "Pour la Cuisine Moderne", shop_desc: "Découvrez la meilleure sélection d'essentiels de cuisine", shop_quality: "Qualité Premium", shop_top_rated: "Les Mieux Notés", shop_fast_delivery: "Livraison Rapide", shop_collection: "Acheter la Collection", shop_collection_desc: "Chaque produit soigneusement sélectionné", shop_now: "Acheter", shop_trending: "Tendance", shop_why: "Pourquoi Acheter Chez Nous ?", shop_why_desc: "Chaque produit testé et approuvé par des chefs professionnels.", res_title: "Ressources Culinaires", res_subtitle: "Guides et conseils essentiels pour élever vos compétences culinaires", res_cooking_tips: "Conseils de Cuisine Essentiels", res_kitchen_tools: "Outils de Cuisine Essentiels", res_tools_desc: "Outils fondamentaux pour tout cuisinier :", res_pantry: "Essentiels du Garde-Manger", res_pantry_desc: "Garnissez votre garde-manger avec ces bases :", res_conversions: "Guide Rapide de Conversions", res_conversions_desc: "Conversions de mesures courantes :" },
-  de: { ...en, nav_home: "Startseite", nav_search: "Suche", nav_categories: "Kategorien", nav_generate: "Generieren", nav_shop: "Shop", nav_recipes: "Rezepte", nav_favorites: "Favoriten", nav_add_recipe: "Rezept hinzufügen", nav_profile: "Profil", nav_sign_in: "Anmelden", home_hero_title: "Entdecke Dein Nächstes", home_hero_title_accent: "Kulinarisches Abenteuer", home_featured: "Empfohlene Rezepte", footer_explore: "Entdecken", footer_copyright: "FlavorAI. Alle Rechte vorbehalten. Powered by KI.", notfound_title: "Seite nicht gefunden", notfound_home: "Startseite", common_servings: "Portionen" },
-  tr: { ...en, nav_home: "Ana Sayfa", nav_search: "Ara", nav_categories: "Kategoriler", nav_generate: "Oluştur", nav_shop: "Mağaza", nav_recipes: "Tarifler", nav_favorites: "Favoriler", nav_add_recipe: "Tarif Ekle", nav_profile: "Profil", nav_sign_in: "Giriş Yap", home_hero_title: "Bir Sonraki", home_hero_title_accent: "Mutfak Maceranızı Keşfedin", home_featured: "Öne Çıkan Tarifler", footer_explore: "Keşfet", notfound_title: "Sayfa bulunamadı", notfound_home: "Ana Sayfa", common_servings: "porsiyon" },
-  zh: { ...en, nav_home: "首页", nav_search: "搜索", nav_categories: "分类", nav_generate: "生成", nav_shop: "商店", nav_recipes: "食谱", nav_favorites: "收藏", nav_add_recipe: "添加食谱", nav_profile: "个人资料", nav_sign_in: "登录", home_hero_title: "探索你的下一个", home_hero_title_accent: "烹饪冒险", home_featured: "精选食谱", footer_explore: "探索", notfound_title: "页面未找到", notfound_home: "首页", common_servings: "人份" },
-  ja: { ...en, nav_home: "ホーム", nav_search: "検索", nav_categories: "カテゴリ", nav_generate: "生成", nav_shop: "ショップ", nav_recipes: "レシピ", nav_favorites: "お気に入り", nav_add_recipe: "レシピ追加", nav_profile: "プロフィール", nav_sign_in: "ログイン", home_hero_title: "次の", home_hero_title_accent: "料理の冒険を見つけよう", home_featured: "おすすめレシピ", footer_explore: "探索", notfound_title: "ページが見つかりません", notfound_home: "ホーム", common_servings: "人前" },
-  ru: { ...en, nav_home: "Главная", nav_search: "Поиск", nav_categories: "Категории", nav_generate: "Создать", nav_shop: "Магазин", nav_recipes: "Рецепты", nav_favorites: "Избранное", nav_add_recipe: "Добавить рецепт", nav_profile: "Профиль", nav_sign_in: "Войти", home_hero_title: "Откройте Ваше Следующее", home_hero_title_accent: "Кулинарное Приключение", home_featured: "Избранные Рецепты", footer_explore: "Исследовать", notfound_title: "Страница не найдена", notfound_home: "Главная", common_servings: "порций" },
-  hi: { ...en, nav_home: "होम", nav_search: "खोजें", nav_categories: "श्रेणियाँ", nav_generate: "बनाएं", nav_shop: "दुकान", nav_recipes: "रेसिपी", nav_favorites: "पसंदीदा", nav_add_recipe: "रेसिपी जोड़ें", nav_profile: "प्रोफ़ाइल", nav_sign_in: "साइन इन", home_hero_title: "अपना अगला", home_hero_title_accent: "पाक साहसिक खोजें", home_featured: "विशेष रेसिपी", footer_explore: "अन्वेषण", notfound_title: "पेज नहीं मिला", notfound_home: "होम", common_servings: "सर्विंग्स" },
-  ko: { ...en, nav_home: "홈", nav_search: "검색", nav_categories: "카테고리", nav_generate: "생성", nav_shop: "쇼핑", nav_recipes: "레시피", nav_favorites: "즐겨찾기", nav_add_recipe: "레시피 추가", nav_profile: "프로필", nav_sign_in: "로그인", home_hero_title: "다음", home_hero_title_accent: "요리 모험을 발견하세요", home_featured: "추천 레시피", footer_explore: "탐색", notfound_title: "페이지를 찾을 수 없습니다", notfound_home: "홈", common_servings: "인분" },
-  pt: { ...en, nav_home: "Início", nav_search: "Pesquisar", nav_categories: "Categorias", nav_generate: "Gerar", nav_shop: "Loja", nav_recipes: "Receitas", nav_favorites: "Favoritos", nav_add_recipe: "Adicionar Receita", nav_profile: "Perfil", nav_sign_in: "Entrar", home_hero_title: "Descubra Sua Próxima", home_hero_title_accent: "Aventura Culinária", home_featured: "Receitas em Destaque", footer_explore: "Explorar", notfound_title: "Página não encontrada", notfound_home: "Início", common_servings: "porções" },
-  it: { ...en, nav_home: "Home", nav_search: "Cerca", nav_categories: "Categorie", nav_generate: "Genera", nav_shop: "Negozio", nav_recipes: "Ricette", nav_favorites: "Preferiti", nav_add_recipe: "Aggiungi Ricetta", nav_profile: "Profilo", nav_sign_in: "Accedi", home_hero_title: "Scopri la Tua Prossima", home_hero_title_accent: "Avventura Culinaria", home_featured: "Ricette in Evidenza", footer_explore: "Esplora", notfound_title: "Pagina non trovata", notfound_home: "Home", common_servings: "porzioni" },
-  nl: { ...en, nav_home: "Home", nav_search: "Zoeken", nav_categories: "Categorieën", nav_generate: "Genereren", nav_shop: "Winkel", nav_recipes: "Recepten", nav_favorites: "Favorieten", nav_add_recipe: "Recept Toevoegen", nav_profile: "Profiel", nav_sign_in: "Inloggen", home_hero_title: "Ontdek Je Volgende", home_hero_title_accent: "Culinair Avontuur", home_featured: "Uitgelichte Recepten", footer_explore: "Ontdekken", notfound_title: "Pagina niet gevonden", notfound_home: "Home", common_servings: "porties" },
+  en, ar, es, fr, de, tr, zh, ja, ru, hi, ko, pt, it, nl,
 };

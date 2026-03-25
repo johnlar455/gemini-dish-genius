@@ -1,6 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "./ui/button";
-import { ChefHat, Heart, Search, User, BookOpen, ShoppingCart, Menu, Sparkles, Notebook } from "lucide-react";
+import { ChefHat, Heart, Search, User, BookOpen, Menu, Sparkles, Notebook } from "lucide-react";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { User as SupabaseUser } from "@supabase/supabase-js";
@@ -31,7 +31,6 @@ export const Navbar = () => {
     { path: "/search", label: t("nav_search"), icon: Search },
     { path: "/categories", label: t("nav_categories"), icon: BookOpen },
     { path: "/generate", label: t("nav_generate"), icon: Sparkles },
-    { path: "/shop", label: t("nav_shop"), icon: ShoppingCart },
     ...(user ? [
       { path: "/recipes", label: t("nav_recipes"), icon: Notebook },
       { path: "/favorites", label: t("nav_favorites"), icon: Heart }
