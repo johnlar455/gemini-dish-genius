@@ -3,6 +3,7 @@ import { Footer } from "@/components/Footer";
 import { Card, CardContent } from "@/components/ui/card";
 import { Sparkles, Brain, Zap, Shield } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { SEO } from "@/components/SEO";
 
 export default function About() {
   const { t } = useLanguage();
@@ -15,6 +16,7 @@ export default function About() {
 
   return (
     <div className="min-h-screen bg-gradient-warm flex flex-col">
+      <SEO title="About FlavorAI — Our Mission & Technology" description="Learn how FlavorAI uses Google Gemini AI and modern web tech to help home cooks discover personalized recipes." path="/about" />
       <Navbar />
       <div className="container mx-auto py-12 px-4 flex-1">
         <div className="max-w-4xl mx-auto">

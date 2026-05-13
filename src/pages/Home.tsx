@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Search, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { SEO } from "@/components/SEO";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -37,6 +38,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-warm flex flex-col">
+      <SEO title="FlavorAI — AI-Powered Recipe Discovery" description="Discover, save, and generate personalized recipes powered by AI. Browse featured dishes or create your own from any ingredients." path="/" />
       <Navbar />
       <section className="relative py-20 px-4 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-hero opacity-10"></div>
