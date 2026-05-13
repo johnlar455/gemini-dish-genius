@@ -10,6 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Clock, Users, ChefHat, Heart, ShoppingCart, ArrowLeft, Loader2 } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { SEO } from "@/components/SEO";
 
 export default function RecipeDetail() {
   const { id } = useParams();
@@ -71,8 +72,33 @@ export default function RecipeDetail() {
   if (!recipe) return null;
   const totalTime = (recipe.prep_time || 0) + (recipe.cook_time || 0);
 
+  const recipeImage = recipe.image_data || recipe.image_url;
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Recipe",
+    name: recipe.title,
+    description: recipe.description || undefined,
+    image: recipeImage ? [recipeImage] : undefined,
+    recipeCuisine: recipe.cuisine_type || undefined,
+    recipeCategory: recipe.difficulty || undefined,
+    prepTime: recipe.prep_time ? `PT${recipe.prep_time}M` : undefined,
+    cookTime: recipe.cook_time ? `PT${recipe.cook_time}M` : undefined,
+    totalTime: totalTime ? `PT${totalTime}M` : undefined,
+    recipeYield: recipe.servings ? `${recipe.servings} servings` : undefined,
+    recipeIngredient: recipe.ingredients?.map((i: any) => `${i.amount || ""} ${i.item}`.trim()),
+    recipeInstructions: recipe.instructions?.map((s: any) => ({ "@type": "HowToStep", text: s.instruction })),
+  };
+
   return (
     <div className="min-h-screen bg-gradient-warm flex flex-col">
+      <SEO
+        title={`${recipe.title} — FlavorAI`}
+        description={(recipe.description || `Cook ${recipe.title} with step-by-step instructions, ingredients, and timings on FlavorAI.`).slice(0, 160)}
+        path={`/recipe/${recipe.id}`}
+        type="article"
+        image={recipeImage || undefined}
+        jsonLd={jsonLd}
+      />
       <Navbar />
       <div className="container mx-auto py-8 px-4 flex-1">
         <div className="flex items-center justify-between mb-4">

@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import * as Icons from "lucide-react";
 import { Search, Loader2 } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { SEO } from "@/components/SEO";
 
 export default function Categories() {
   const navigate = useNavigate();
@@ -47,6 +48,7 @@ export default function Categories() {
 
   return (
     <div className="min-h-screen bg-gradient-warm flex flex-col">
+      <SEO title="Recipe Categories — Cuisines & Dish Types" description="Explore recipes by cuisine and category. From Italian pasta to Asian stir-fries, find what you're craving on FlavorAI." path="/categories" />
       <Navbar />
       <main className="container mx-auto py-8 md:py-12 px-4 flex-1">
         <header className="mb-8 md:mb-12">

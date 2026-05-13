@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { BookOpen, Utensils, ChefHat, Thermometer } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { SEO } from "@/components/SEO";
 
 export default function Resources() {
   const { t } = useLanguage();
@@ -28,6 +29,7 @@ export default function Resources() {
 
   return (
     <div className="min-h-screen bg-gradient-warm flex flex-col">
+      <SEO title="Cooking Resources — Tips, Tools & Conversions" description="Essential cooking tips, kitchen tools, pantry staples, and measurement conversions to level up your home cooking." path="/resources" />
       <Navbar />
       <div className="container mx-auto py-12 px-4 flex-1">
         <div className="max-w-4xl mx-auto">

@@ -1,0 +1,22 @@
+# FlavorAI
+
+> AI-powered recipe discovery and generation. Create personalized recipes based on your ingredients, dietary needs, and preferences.
+
+FlavorAI helps home cooks discover, save, and generate recipes using AI. Multilingual UI with 14 languages including RTL support.
+
+## Pages
+
+- [Home](/): Browse featured AI-generated recipes and search the catalog.
+- [Generate Recipe](/generate): Create a custom recipe from ingredients and preferences.
+- [Recipes](/recipes): Browse all available recipes.
+- [Categories](/categories): Explore recipes by cuisine and category.
+- [Search](/search): Search recipes by name or ingredients.
+- [Favorites](/favorites): Saved recipes for signed-in users.
+- [Resources](/resources): Cooking tips, kitchen tools, pantry essentials, and conversion guides.
+- [About](/about): Mission and technology behind FlavorAI.
+- [Contact](/contact): Get in touch with the team.
+
+## Optional
+
+- [Sign In](/auth): Account access for saving recipes.
+- [Profile](/profile): User account settings.

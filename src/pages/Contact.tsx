@@ -9,6 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { Mail, MessageSquare, Send } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { SEO } from "@/components/SEO";
 
 export default function Contact() {
   const [name, setName] = useState("");
@@ -26,6 +27,7 @@ export default function Contact() {
 
   return (
     <div className="min-h-screen bg-gradient-warm flex flex-col">
+      <SEO title="Contact FlavorAI — Get in Touch" description="Questions, feedback, or partnership ideas? Reach the FlavorAI team by email or send us a message." path="/contact" />
       <Navbar />
       <div className="container mx-auto py-12 px-4 flex-1">
         <div className="max-w-3xl mx-auto">
