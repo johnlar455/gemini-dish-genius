@@ -12,3 +12,8 @@ Allow: /
 
 User-agent: *
 Allow: /
+Disallow: /auth
+Disallow: /profile
+Disallow: /favorites
+
+Sitemap: https://gemini-dish-genius.lovable.app/sitemap.xml
