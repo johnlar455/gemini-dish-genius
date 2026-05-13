@@ -10,6 +10,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Search, Pencil, Trash2, ChefHat, Loader2 } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { SEO } from "@/components/SEO";
 
 interface Recipe { id: string; title: string; description: string; image_data: string | null; difficulty: string | null; cuisine_type: string | null; prep_time: number | null; cook_time: number | null; servings: number | null; user_id: string; }
 
@@ -56,6 +57,7 @@ export default function Recipes() {
 
   return (
     <div className="min-h-screen bg-gradient-warm flex flex-col">
+      <SEO title="All Recipes — Browse the FlavorAI Library" description="Browse every AI-generated and saved recipe in the FlavorAI library. Filter by cuisine, difficulty, and prep time." path="/recipes" />
       <Navbar />
       <div className="container mx-auto py-12 px-4 flex-1">
         <div className="max-w-6xl mx-auto">

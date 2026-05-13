@@ -14,6 +14,7 @@ import { toast } from "sonner";
 import { Sparkles, Loader2, X } from "lucide-react";
 import { z } from "zod";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { SEO } from "@/components/SEO";
 
 const recipeInputSchema = z.object({
   prompt: z.string().trim().min(1, "Please describe what you'd like to cook").max(500, "Description is too long (max 500 characters)"),
@@ -91,6 +92,7 @@ export default function GenerateRecipe() {
 
   return (
     <div className="min-h-screen bg-gradient-warm flex flex-col">
+      <SEO title="Generate a Recipe with AI — FlavorAI" description="Describe what you want to cook and let AI craft a personalized recipe with ingredients, steps, and timings." path="/generate" />
       <Navbar />
       <div className="container mx-auto py-12 px-4 flex-1">
         <Card className="max-w-3xl mx-auto shadow-card">

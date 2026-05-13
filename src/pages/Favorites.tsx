@@ -7,6 +7,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Heart } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { SEO } from "@/components/SEO";
 
 export default function Favorites() {
   const navigate = useNavigate();
@@ -38,6 +39,7 @@ export default function Favorites() {
 
   return (
     <div className="min-h-screen bg-gradient-warm flex flex-col">
+      <SEO title="My Favorite Recipes — FlavorAI" description="Your saved recipes on FlavorAI, ready whenever you're hungry for inspiration." path="/favorites" />
       <Navbar />
       <div className="container mx-auto py-12 px-4 flex-1">
         <div className="flex items-center gap-3 mb-8">

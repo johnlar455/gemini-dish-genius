@@ -9,6 +9,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { Search as SearchIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { SEO } from "@/components/SEO";
 
 export default function Search() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -40,6 +41,7 @@ export default function Search() {
 
   return (
     <div className="min-h-screen bg-gradient-warm flex flex-col">
+      <SEO title="Search Recipes — FlavorAI" description="Search FlavorAI's recipe library by name, ingredient, or cuisine to find your next meal." path="/search" />
       <Navbar />
       <div className="container mx-auto py-12 px-4 flex-1">
         <div className="max-w-3xl mx-auto mb-12">
