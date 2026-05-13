@@ -51,25 +51,27 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/auth" element={<Auth />} />
-              <Route path="/generate" element={<GenerateRecipe />} />
-              <Route path="/recipes" element={<Recipes />} />
-              <Route path="/recipe/:id" element={<RecipeDetail />} />
-              <Route path="/recipe/:id/edit" element={<EditRecipe />} />
-              <Route path="/search" element={<Search />} />
-              <Route path="/categories" element={<Categories />} />
-              <Route path="/favorites" element={<Favorites />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/resources" element={<Resources />} />
-              
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
+          <main>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/auth" element={<Auth />} />
+                <Route path="/generate" element={<GenerateRecipe />} />
+                <Route path="/recipes" element={<Recipes />} />
+                <Route path="/recipe/:id" element={<RecipeDetail />} />
+                <Route path="/recipe/:id/edit" element={<EditRecipe />} />
+                <Route path="/search" element={<Search />} />
+                <Route path="/categories" element={<Categories />} />
+                <Route path="/favorites" element={<Favorites />} />
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/resources" element={<Resources />} />
+
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </main>
         </BrowserRouter>
       </TooltipProvider>
     </LanguageProvider>
