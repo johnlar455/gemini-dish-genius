@@ -43,9 +43,9 @@ export default function EditRecipe() {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { toast.error("Please sign in"); navigate("/auth"); return; }
-      const { data, error } = await supabase.from("recipes").select("*, categories(name)").eq("id", id).single();
+      const { data, error } = await supabase.from("recipes").select("*, categories(name)").eq("id", id).eq("user_id", user.id).maybeSingle();
       if (error) throw error;
-      if (data.user_id !== user.id) { toast.error("No permission"); navigate("/recipes"); return; }
+      if (!data) { toast.error("No permission"); navigate("/recipes"); return; }
       setTitle(data.title || ""); setDescription(data.description || ""); setCuisineType(data.cuisine_type || "");
       setDifficulty(data.difficulty || ""); setPrepTime(data.prep_time?.toString() || ""); setCookTime(data.cook_time?.toString() || "");
       setServings(data.servings?.toString() || ""); setIngredients(Array.isArray(data.ingredients) ? data.ingredients : []);
