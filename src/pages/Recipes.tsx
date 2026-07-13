@@ -12,7 +12,7 @@ import { Search, Pencil, Trash2, ChefHat, Loader2 } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { SEO } from "@/components/SEO";
 
-interface Recipe { id: string; title: string; description: string; image_data: string | null; difficulty: string | null; cuisine_type: string | null; prep_time: number | null; cook_time: number | null; servings: number | null; user_id: string; }
+interface Recipe { id: string; title: string; description: string; image_data: string | null; difficulty: string | null; cuisine_type: string | null; prep_time: number | null; cook_time: number | null; servings: number | null; }
 
 export default function Recipes() {
   const navigate = useNavigate();
