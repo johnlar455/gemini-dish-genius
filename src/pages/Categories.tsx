@@ -5,19 +5,30 @@ import { Footer } from "@/components/Footer";
 import { RecipeCard } from "@/components/RecipeCard";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
-import * as Icons from "lucide-react";
-import { Search, Loader2 } from "lucide-react";
+// Named imports only: `import * as Icons` pulls the whole lucide set into the bundle.
+import {
+  Search, Loader2, ChefHat, Cake, Coffee, Croissant, Drumstick, Egg, Fish,
+  IceCream, Leaf, Pizza, Salad, Sandwich, Soup, Utensils, Wheat, Wine,
+  type LucideIcon,
+} from "lucide-react";
+import { fetchCategories, fetchRecipes } from "@/lib/recipes";
+import type { Category, Recipe } from "@/types/recipe";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { SEO } from "@/components/SEO";
+
+/** Allow-list of category icons, keyed by the `icon_name` stored in the DB. */
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  ChefHat, Cake, Coffee, Croissant, Drumstick, Egg, Fish, IceCream, Leaf,
+  Pizza, Salad, Sandwich, Soup, Utensils, Wheat, Wine,
+};
 
 export default function Categories() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [categories, setCategories] = useState<any[]>([]);
-  const [filteredCategories, setFilteredCategories] = useState<any[]>([]);
-  const [recipes, setRecipes] = useState<any[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [filteredCategories, setFilteredCategories] = useState<Category[]>([]);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(searchParams.get("category"));
   const [searchQuery, setSearchQuery] = useState("");
   const [loading, setLoading] = useState(true);
@@ -31,26 +42,29 @@ export default function Categories() {
   }, [searchQuery, categories]);
 
   const loadCategories = async () => {
-    try { const { data, error } = await supabase.from("categories").select("*").order("name"); if (error) throw error; setCategories(data || []); setFilteredCategories(data || []); }
+    try { const data = await fetchCategories(); setCategories(data); setFilteredCategories(data); }
     catch (error: any) { console.error("Error:", error); toast.error("Failed to load categories"); }
     finally { setLoading(false); }
   };
 
   const loadRecipesByCategory = async (categoryId: string) => {
     setRecipesLoading(true);
-    try { const { data, error } = await supabase.from("recipes").select("*").eq("category_id", categoryId).order("created_at", { ascending: false }); if (error) throw error; setRecipes(data || []); }
+    try { setRecipes(await fetchRecipes({ categoryId })); }
     catch (error: any) { console.error("Error:", error); toast.error("Failed to load recipes"); }
     finally { setRecipesLoading(false); }
   };
 
   const handleCategoryClick = (categoryId: string) => { setSelectedCategory(categoryId); navigate(`/categories?category=${categoryId}`); };
-  const getIcon = (iconName: string) => { const Icon = (Icons as any)[iconName]; return Icon ? <Icon className="w-8 h-8" /> : <Icons.ChefHat className="w-8 h-8" />; };
+  const getIcon = (iconName?: string | null) => {
+    const Icon = (iconName && CATEGORY_ICONS[iconName]) || ChefHat;
+    return <Icon className="w-8 h-8" aria-hidden="true" />;
+  };
 
   return (
     <div className="min-h-screen bg-gradient-warm flex flex-col">
-      <SEO title="Recipe Categories — Cuisines & Dish Types" description="Explore recipes by cuisine and category. From Italian pasta to Asian stir-fries, find what you're craving on FlavorAI." path="/categories" />
+      <SEO title="Recipe Categories — Cuisines & Dish Types" description="Explore recipes by cuisine and category. From Italian pasta to Asian stir-fries, find what you're craving on FlavorAI." path="/categories" keywords="recipe categories, cuisines, dinner ideas, vegan recipes, dessert recipes" />
       <Navbar />
-      <main className="container mx-auto py-8 md:py-12 px-4 flex-1">
+      <div className="container mx-auto py-8 md:py-12 px-4 flex-1">
         <header className="mb-8 md:mb-12">
           <h1 className="text-3xl md:text-4xl font-bold mb-4 text-center text-foreground">{t("cat_title")}</h1>
           <p className="text-center text-muted-foreground max-w-2xl mx-auto mb-6">{t("cat_desc")}</p>
@@ -100,7 +114,7 @@ export default function Categories() {
             )}
           </section>
         )}
-      </main>
+      </div>
       <Footer />
     </div>
   );

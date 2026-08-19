@@ -4,6 +4,8 @@ import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { RecipeCard } from "@/components/RecipeCard";
 import { supabase } from "@/integrations/supabase/client";
+import { fetchFavoriteRecipes } from "@/lib/recipes";
+import type { Recipe } from "@/types/recipe";
 import { toast } from "sonner";
 import { Heart } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -11,7 +13,7 @@ import { SEO } from "@/components/SEO";
 
 export default function Favorites() {
   const navigate = useNavigate();
-  const [recipes, setRecipes] = useState<any[]>([]);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
   const { t } = useLanguage();
 
@@ -26,9 +28,7 @@ export default function Favorites() {
   const loadFavorites = async (userId: string) => {
     setLoading(true);
     try {
-      const { data, error } = await supabase.from("favorites").select(`recipe_id, recipes (*)`).eq("user_id", userId).order("created_at", { ascending: false });
-      if (error) throw error;
-      setRecipes(data?.map((fav: any) => fav.recipes) || []);
+      setRecipes(await fetchFavoriteRecipes(userId));
     } catch (error: any) {
       console.error("Error loading favorites:", error);
       toast.error("Failed to load recipes");
@@ -39,7 +39,7 @@ export default function Favorites() {
 
   return (
     <div className="min-h-screen bg-gradient-warm flex flex-col">
-      <SEO title="My Favorite Recipes — FlavorAI" description="Your saved recipes on FlavorAI, ready whenever you're hungry for inspiration." path="/favorites" />
+      <SEO title="My Favorite Recipes — FlavorAI" description="Your saved recipes on FlavorAI, ready whenever you're hungry for inspiration." path="/favorites" noindex />
       <Navbar />
       <div className="container mx-auto py-12 px-4 flex-1">
         <div className="flex items-center gap-3 mb-8">

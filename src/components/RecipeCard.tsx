@@ -66,28 +66,39 @@ export const RecipeCard = memo(function RecipeCard({
   const displayImage = image_data || image_url || "/placeholder.svg";
 
   return (
-    <Link to={`/recipe/${id}`}>
-      <Card className="group overflow-hidden hover:shadow-card transition-all duration-300 h-full">
+    // The favourite button lives outside the <Link> — a <button> nested inside
+    // an <a> is invalid HTML and breaks keyboard/screen-reader navigation.
+    <Card className="group relative overflow-hidden hover:shadow-card transition-all duration-300 h-full">
+      <Button
+        variant="ghost"
+        size="icon"
+        aria-label={localIsFavorite ? `Remove ${title} from favorites` : `Save ${title} to favorites`}
+        aria-pressed={localIsFavorite}
+        className="absolute top-2 right-2 z-10 bg-background/80 backdrop-blur-sm hover:bg-background"
+        onClick={handleFavoriteToggle}
+        disabled={isTogglingFavorite}
+      >
+        <Heart className={`w-5 h-5 ${localIsFavorite ? "fill-primary text-primary" : "text-foreground"}`} aria-hidden="true" />
+      </Button>
+      <Link to={`/recipe/${id}`} className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg">
         <div className="relative aspect-video overflow-hidden">
-          <img src={displayImage} alt={title} loading="lazy" decoding="async"
-            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110" />
-          <Button variant="ghost" size="icon"
-            className="absolute top-2 right-2 bg-background/80 backdrop-blur-sm hover:bg-background"
-            onClick={handleFavoriteToggle} disabled={isTogglingFavorite}>
-            <Heart className={`w-5 h-5 ${localIsFavorite ? "fill-primary text-primary" : "text-foreground"}`} />
-          </Button>
+          <img
+            src={displayImage}
+            alt={title}
+            loading="lazy"
+            decoding="async"
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+          />
         </div>
         <CardHeader>
-          <div className="flex items-start justify-between gap-2">
-            <h3 className="font-semibold text-lg line-clamp-2 group-hover:text-primary transition-colors">{title}</h3>
-          </div>
+          <h3 className="font-semibold text-lg line-clamp-2 group-hover:text-primary transition-colors">{title}</h3>
           {description && <p className="text-sm text-muted-foreground line-clamp-2 mt-2">{description}</p>}
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-2 mb-3">
             {difficulty && (
               <Badge variant="secondary" className="capitalize">
-                <ChefHat className="w-3 h-3 mr-1" />{difficulty}
+                <ChefHat className="w-3 h-3 mr-1" aria-hidden="true" />{difficulty}
               </Badge>
             )}
             {cuisine_type && <Badge variant="outline">{cuisine_type}</Badge>}
@@ -95,17 +106,17 @@ export const RecipeCard = memo(function RecipeCard({
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
             {totalTime > 0 && (
               <div className="flex items-center gap-1">
-                <Clock className="w-4 h-4" /><span>{totalTime} {t("detail_min")}</span>
+                <Clock className="w-4 h-4" aria-hidden="true" /><span>{totalTime} {t("detail_min")}</span>
               </div>
             )}
             {servings && (
               <div className="flex items-center gap-1">
-                <Users className="w-4 h-4" /><span>{servings} {t("common_servings")}</span>
+                <Users className="w-4 h-4" aria-hidden="true" /><span>{servings} {t("common_servings")}</span>
               </div>
             )}
           </div>
         </CardContent>
-      </Card>
-    </Link>
+      </Link>
+    </Card>
   );
 });

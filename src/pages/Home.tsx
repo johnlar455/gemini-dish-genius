@@ -5,7 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { RecipeCard } from "@/components/RecipeCard";
-import { supabase } from "@/integrations/supabase/client";
+import { fetchRecipes } from "@/lib/recipes";
+import type { Recipe } from "@/types/recipe";
 import { Search, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -14,7 +15,7 @@ import { SEO } from "@/components/SEO";
 export default function Home() {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
-  const [recipes, setRecipes] = useState<any[]>([]);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [loading, setLoading] = useState(true);
   const { t } = useLanguage();
 
@@ -23,9 +24,8 @@ export default function Home() {
   const loadRecipes = async () => {
     setLoading(true);
     try {
-      const { data, error } = await supabase.from("recipes").select("*").order("created_at", { ascending: false }).limit(12);
-      if (error) throw error;
-      setRecipes(data || []);
+      // Shared data layer: explicit columns (never user_id) + normalized JSON.
+      setRecipes(await fetchRecipes({ limit: 12 }));
     } catch (error: any) {
       console.error("Error loading recipes:", error);
       toast.error("Failed to load recipes");
@@ -38,7 +38,7 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-gradient-warm flex flex-col">
-      <SEO title="FlavorAI — AI-Powered Recipe Discovery" description="Discover, save, and generate personalized recipes powered by AI. Browse featured dishes or create your own from any ingredients." path="/" />
+      <SEO title="FlavorAI — AI-Powered Recipe Discovery" description="Discover, save, and generate personalized recipes powered by AI. Browse featured dishes or create your own from any ingredients." path="/" keywords="AI recipe generator, recipe ideas, cooking app, meal ideas, free recipes" />
       <Navbar />
       <section className="relative py-20 px-4 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-hero opacity-10"></div>
@@ -51,7 +51,7 @@ export default function Home() {
           <div className="flex gap-3 max-w-2xl mx-auto mb-6">
             <Input placeholder={t("home_search_placeholder")} value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              onKeyPress={(e) => e.key === "Enter" && handleSearch()} className="h-12 text-base" />
+              onKeyDown={(e) => e.key === "Enter" && handleSearch()} className="h-12 text-base" />
             <Button variant="hero" size="lg" onClick={handleSearch}><Search className="w-5 h-5" /></Button>
           </div>
           <Button variant="secondary" size="lg" onClick={() => navigate("/generate")} className="shadow-soft">

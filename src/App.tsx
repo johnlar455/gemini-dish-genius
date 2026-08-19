@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { Loader2 } from "lucide-react";
 import { LanguageProvider } from "@/i18n/LanguageContext";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 // Eager load critical pages
 import Home from "./pages/Home";
@@ -51,7 +52,10 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          {/* One <main> landmark for the whole app; ErrorBoundary keeps a
+              crashing route from blanking the entire page. */}
           <main>
+            <ErrorBoundary>
             <Suspense fallback={<PageLoader />}>
               <Routes>
                 <Route path="/" element={<Home />} />
@@ -71,6 +75,7 @@ const App = () => (
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </Suspense>
+            </ErrorBoundary>
           </main>
         </BrowserRouter>
       </TooltipProvider>
