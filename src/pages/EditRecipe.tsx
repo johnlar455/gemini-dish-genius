@@ -94,6 +94,7 @@ export default function EditRecipe() {
 
   return (
     <div className="min-h-screen bg-gradient-warm flex flex-col">
+      <SEO title="Edit Recipe — FlavorAI" description="Edit your saved recipe on FlavorAI." path={`/recipe/${id}/edit`} noindex />
       <Navbar />
       <div className="container mx-auto py-12 px-4 flex-1">
         <Card className="max-w-4xl mx-auto">
@@ -124,7 +125,7 @@ export default function EditRecipe() {
             <div className="space-y-2">
               <div className="flex items-center justify-between"><Label>{t("edit_instructions")}</Label><Button type="button" variant="outline" size="sm" onClick={addInstruction}>{t("edit_add_step")}</Button></div>
               <div className="space-y-2">{instructions.map((inst, i) => (
-                <div key={i} className="flex gap-2"><div className="flex items-center justify-center w-8 h-10 bg-secondary rounded text-sm font-semibold">{i + 1}</div><Textarea placeholder={t("edit_step_placeholder")} value={inst.text || ""} onChange={(e) => updateInstruction(i, e.target.value)} rows={2} className="flex-1" /><Button type="button" variant="ghost" size="icon" onClick={() => removeInstruction(i)}><X className="w-4 h-4" /></Button></div>
+                <div key={i} className="flex gap-2"><div className="flex items-center justify-center w-8 h-10 bg-secondary rounded text-sm font-semibold">{i + 1}</div><Textarea placeholder={t("edit_step_placeholder")} value={inst.instruction} onChange={(e) => updateInstruction(i, e.target.value)} rows={2} className="flex-1" /><Button type="button" variant="ghost" size="icon" onClick={() => removeInstruction(i)}><X className="w-4 h-4" /></Button></div>
               ))}</div>
             </div>
             <div className="flex gap-3 pt-4">
