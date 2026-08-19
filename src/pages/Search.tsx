@@ -26,16 +26,14 @@ export default function Search() {
   const searchRecipes = async (searchQuery: string) => {
     setLoading(true);
     try {
-      const { data, error } = await supabase.from("recipes").select("*")
-        .or(`title.ilike.%${searchQuery}%,description.ilike.%${searchQuery}%,cuisine_type.ilike.%${searchQuery}%`)
-        .order("created_at", { ascending: false });
-      if (error) throw error;
-      setRecipes(data || []);
-    } catch (error: any) {
-      console.error("Error searching recipes:", error);
+      const data = await searchRecipesQuery(searchQuery);
+      setRecipes(data);
+    } catch (error) {
+      console.error("Error searching recipes");
       toast.error("Failed to search recipes");
     } finally { setLoading(false); }
   };
+
 
   const handleSearch = () => { if (query.trim()) setSearchParams({ q: query }); };
 
