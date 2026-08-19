@@ -7,12 +7,13 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardDescription, CardHeader } from "@/components/ui/card";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
 import { supabase } from "@/integrations/supabase/client";
+import { deleteRecipe, fetchMyRecipes } from "@/lib/recipes";
+import type { Recipe } from "@/types/recipe";
 import { toast } from "sonner";
 import { Search, Pencil, Trash2, ChefHat, Loader2 } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
 import { SEO } from "@/components/SEO";
 
-interface Recipe { id: string; title: string; description: string; image_data: string | null; difficulty: string | null; cuisine_type: string | null; prep_time: number | null; cook_time: number | null; servings: number | null; }
 
 export default function Recipes() {
   const navigate = useNavigate();
@@ -29,11 +30,12 @@ export default function Recipes() {
   const checkAuthAndLoadRecipes = async () => {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) { toast.error("Please sign in"); navigate("/auth"); return; }
-    await loadRecipes(user.id);
+    await loadRecipes();
   };
 
-  const loadRecipes = async (userId: string) => {
-    try { const { data, error } = await supabase.from("recipes").select("*").eq("user_id", userId).order("created_at", { ascending: false }); if (error) throw error; setRecipes(data || []); }
+  // RLS scopes rows to the signed-in user; the user_id column is not readable.
+  const loadRecipes = async () => {
+    try { setRecipes(await fetchMyRecipes()); }
     catch (error: any) { console.error("Error:", error); toast.error("Failed to load recipes"); }
     finally { setLoading(false); }
   };
@@ -48,7 +50,7 @@ export default function Recipes() {
   };
 
   const handleDelete = async (recipeId: string) => {
-    try { const { error } = await supabase.from("recipes").delete().eq("id", recipeId); if (error) throw error; setRecipes(recipes.filter((r) => r.id !== recipeId)); toast.success("Recipe deleted"); }
+    try { await deleteRecipe(recipeId); setRecipes((prev) => prev.filter((r) => r.id !== recipeId)); toast.success("Recipe deleted"); }
     catch (error: any) { console.error("Error:", error); toast.error("Failed to delete recipe"); }
     finally { setDeleteRecipeId(null); }
   };
@@ -57,7 +59,7 @@ export default function Recipes() {
 
   return (
     <div className="min-h-screen bg-gradient-warm flex flex-col">
-      <SEO title="All Recipes — Browse the FlavorAI Library" description="Browse every AI-generated and saved recipe in the FlavorAI library. Filter by cuisine, difficulty, and prep time." path="/recipes" />
+      <SEO title="All Recipes — Browse the FlavorAI Library" description="Browse every AI-generated and saved recipe in the FlavorAI library. Filter by cuisine, difficulty, and prep time." path="/recipes" noindex />
       <Navbar />
       <div className="container mx-auto py-12 px-4 flex-1">
         <div className="max-w-6xl mx-auto">
