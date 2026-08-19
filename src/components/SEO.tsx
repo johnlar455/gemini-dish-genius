@@ -6,21 +6,38 @@ interface SEOProps {
   path?: string;
   image?: string;
   type?: "website" | "article";
-  jsonLd?: Record<string, any>;
+  /** Comma-separated topical keywords for the page. */
+  keywords?: string;
+  /** Keep private/auth-only routes out of search results. */
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown>;
 }
 
 const SITE = "https://gemini-dish-genius.lovable.app";
 
-export const SEO = ({ title, description, path = "", image, type = "website", jsonLd }: SEOProps) => {
+/** Per-route head tags: title, description, canonical, Open Graph, JSON-LD. */
+export const SEO = ({
+  title,
+  description,
+  path = "",
+  image,
+  type = "website",
+  keywords,
+  noindex = false,
+  jsonLd,
+}: SEOProps) => {
   const url = `${SITE}${path}`;
   const ogImage = image || `${SITE}/og-image.jpg`;
-  const fullTitle = title.length > 60 ? title.slice(0, 57) + "..." : title;
-  const desc = description.length > 160 ? description.slice(0, 157) + "..." : description;
+  // Keep tags within the lengths Google actually renders.
+  const fullTitle = title.length > 60 ? `${title.slice(0, 57)}...` : title;
+  const desc = description.length > 160 ? `${description.slice(0, 157)}...` : description;
 
   return (
     <Helmet>
       <title>{fullTitle}</title>
       <meta name="description" content={desc} />
+      {keywords && <meta name="keywords" content={keywords} />}
+      {noindex && <meta name="robots" content="noindex, nofollow" />}
       <link rel="canonical" href={url} />
       <meta property="og:title" content={fullTitle} />
       <meta property="og:description" content={desc} />
@@ -31,9 +48,7 @@ export const SEO = ({ title, description, path = "", image, type = "website", js
       <meta name="twitter:title" content={fullTitle} />
       <meta name="twitter:description" content={desc} />
       <meta name="twitter:image" content={ogImage} />
-      {jsonLd && (
-        <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>
-      )}
+      {jsonLd && <script type="application/ld+json">{JSON.stringify(jsonLd)}</script>}
     </Helmet>
   );
 };
