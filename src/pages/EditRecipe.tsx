@@ -13,6 +13,10 @@ import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Loader2, Save, X } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
+import { SEO } from "@/components/SEO";
+import { normalizeIngredients, normalizeInstructions } from "@/lib/recipeUtils";
+import { findCategoryIdByName } from "@/lib/recipes";
+import type { Ingredient, Instruction } from "@/types/recipe";
 
 const cuisineOptions = ["Italian", "Chinese", "Mexican", "Indian", "Japanese", "Thai", "Mediterranean", "French"];
 const difficultyOptions = [{ value: "easy", label: "Easy" }, { value: "medium", label: "Medium" }, { value: "hard", label: "Hard" }];
@@ -31,8 +35,8 @@ export default function EditRecipe() {
   const [prepTime, setPrepTime] = useState("");
   const [cookTime, setCookTime] = useState("");
   const [servings, setServings] = useState("");
-  const [ingredients, setIngredients] = useState<any[]>([]);
-  const [instructions, setInstructions] = useState<any[]>([]);
+  const [ingredients, setIngredients] = useState<Ingredient[]>([]);
+  const [instructions, setInstructions] = useState<Instruction[]>([]);
   const [dietaryPreferences, setDietaryPreferences] = useState<string[]>([]);
   const [category, setCategory] = useState("");
   const { t } = useLanguage();
@@ -43,13 +47,18 @@ export default function EditRecipe() {
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) { toast.error("Please sign in"); navigate("/auth"); return; }
-      const { data, error } = await supabase.from("recipes").select("*, categories(name)").eq("id", id).eq("user_id", user.id).maybeSingle();
+      // user_id is revoked for clients; ownership is enforced by RLS on UPDATE.
+      const { data, error } = await supabase
+        .from("recipes")
+        .select("title,description,cuisine_type,difficulty,prep_time,cook_time,servings,ingredients,instructions,dietary_preferences,categories(name)")
+        .eq("id", id)
+        .maybeSingle();
       if (error) throw error;
       if (!data) { toast.error("No permission"); navigate("/recipes"); return; }
       setTitle(data.title || ""); setDescription(data.description || ""); setCuisineType(data.cuisine_type || "");
       setDifficulty(data.difficulty || ""); setPrepTime(data.prep_time?.toString() || ""); setCookTime(data.cook_time?.toString() || "");
-      setServings(data.servings?.toString() || ""); setIngredients(Array.isArray(data.ingredients) ? data.ingredients : []);
-      setInstructions(Array.isArray(data.instructions) ? data.instructions : []);
+      setServings(data.servings?.toString() || ""); setIngredients(normalizeIngredients(data.ingredients));
+      setInstructions(normalizeInstructions(data.instructions));
       setDietaryPreferences(Array.isArray(data.dietary_preferences) ? data.dietary_preferences : []);
       if (data.categories && typeof data.categories === 'object' && 'name' in data.categories) setCategory(data.categories.name || "");
     } catch (error: any) { console.error("Error:", error); toast.error("Failed to load recipe"); navigate("/recipes"); }
@@ -60,13 +69,12 @@ export default function EditRecipe() {
     if (!title.trim()) { toast.error("Please enter a title"); return; }
     setSaving(true);
     try {
-      let categoryId = null;
-      if (category) { const { data: cd } = await supabase.from("categories").select("id").eq("name", category).maybeSingle(); if (cd) categoryId = cd.id; }
+      const categoryId = await findCategoryIdByName(category);
       const { error } = await supabase.from("recipes").update({
         title, description, cuisine_type: cuisineType || null, difficulty: difficulty || null,
         prep_time: prepTime ? parseInt(prepTime) : null, cook_time: cookTime ? parseInt(cookTime) : null,
         servings: servings ? parseInt(servings) : null, ingredients, instructions, dietary_preferences: dietaryPreferences, category_id: categoryId,
-      }).eq("id", id);
+      }).eq("id", id).select("id");
       if (error) throw error;
       toast.success("Recipe updated!"); navigate(`/recipe/${id}`);
     } catch (error: any) { console.error("Error:", error); toast.error("Failed to update recipe"); }
@@ -76,9 +84,10 @@ export default function EditRecipe() {
   const updateIngredient = (index: number, field: string, value: string) => { const u = [...ingredients]; u[index] = { ...u[index], [field]: value }; setIngredients(u); };
   const addIngredient = () => setIngredients([...ingredients, { item: "", amount: "" }]);
   const removeIngredient = (index: number) => setIngredients(ingredients.filter((_, i) => i !== index));
-  const updateInstruction = (index: number, value: string) => { const u = [...instructions]; u[index] = { step: index + 1, text: value }; setInstructions(u); };
-  const addInstruction = () => setInstructions([...instructions, { step: instructions.length + 1, text: "" }]);
-  const removeInstruction = (index: number) => setInstructions(instructions.filter((_, i) => i !== index).map((inst, i) => ({ step: i + 1, text: inst.text })));
+  // Store the same { step, instruction } shape the AI and the detail page use.
+  const updateInstruction = (index: number, value: string) => { const u = [...instructions]; u[index] = { step: index + 1, instruction: value }; setInstructions(u); };
+  const addInstruction = () => setInstructions([...instructions, { step: instructions.length + 1, instruction: "" }]);
+  const removeInstruction = (index: number) => setInstructions(instructions.filter((_, i) => i !== index).map((inst, i) => ({ step: i + 1, instruction: inst.instruction })));
   const toggleDietary = (option: string) => setDietaryPreferences((prev) => prev.includes(option) ? prev.filter((p) => p !== option) : [...prev, option]);
 
   if (loading) return (<div className="min-h-screen bg-gradient-warm"><Navbar /><div className="container mx-auto py-12 px-4 flex justify-center"><Loader2 className="w-8 h-8 animate-spin text-primary" /></div></div>);

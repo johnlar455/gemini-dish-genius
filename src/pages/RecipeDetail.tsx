@@ -7,6 +7,9 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { RecipeCard } from "@/components/RecipeCard";
 import { supabase } from "@/integrations/supabase/client";
+import { fetchRecipeById, fetchRelatedRecipes } from "@/lib/recipes";
+import { recipeImage as pickImage, totalTime as calcTotalTime } from "@/lib/recipeUtils";
+import type { Recipe } from "@/types/recipe";
 import { toast } from "sonner";
 import { Clock, Users, ChefHat, Heart, ShoppingCart, ArrowLeft, Loader2 } from "lucide-react";
 import { useLanguage } from "@/i18n/LanguageContext";
@@ -15,25 +18,26 @@ import { SEO } from "@/components/SEO";
 export default function RecipeDetail() {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [recipe, setRecipe] = useState<any>(null);
+  const [recipe, setRecipe] = useState<Recipe | null>(null);
   const [loading, setLoading] = useState(true);
   const [isFavorite, setIsFavorite] = useState(false);
-  const [otherRecipes, setOtherRecipes] = useState<any[]>([]);
+  const [otherRecipes, setOtherRecipes] = useState<Recipe[]>([]);
   const { t } = useLanguage();
 
   useEffect(() => { if (id) { loadRecipe(); checkFavorite(); loadOtherRecipes(); } }, [id]);
 
   const loadRecipe = async () => {
     try {
-      const { data, error } = await supabase.from("recipes").select("*").eq("id", id).single();
-      if (error) throw error;
+      // Normalized: mixed legacy JSON shapes become { item, amount } / { step, instruction }.
+      const data = await fetchRecipeById(id!);
+      if (!data) { toast.error("Recipe not found"); navigate("/"); return; }
       setRecipe(data);
     } catch (error) { console.error("Error loading recipe:", error); toast.error("Failed to load recipe"); navigate("/"); }
     finally { setLoading(false); }
   };
 
   const loadOtherRecipes = async () => {
-    try { const { data } = await supabase.from("recipes").select("*").neq("id", id).order("created_at", { ascending: false }).limit(6); setOtherRecipes(data || []); }
+    try { setOtherRecipes(await fetchRelatedRecipes(id!, 6)); }
     catch (error) { console.error("Error loading other recipes:", error); }
   };
 
@@ -57,7 +61,8 @@ export default function RecipeDetail() {
     const { data: { user } } = await supabase.auth.getUser();
     if (!user) { toast.error("Please sign in"); navigate("/auth"); return; }
     try {
-      const items = recipe.ingredients.map((ing: any) => ({ item: ing.item, amount: ing.amount, checked: false }));
+      if (!recipe) return;
+      const items = recipe.ingredients.map((ing) => ({ item: ing.item, amount: ing.amount, checked: false }));
       const { error } = await supabase.from("shopping_lists").insert({ user_id: user.id, name: `Ingredients for ${recipe.title}`, items });
       if (error) throw error;
       toast.success("Added to shopping list!");
@@ -70,23 +75,23 @@ export default function RecipeDetail() {
     </div>
   );
   if (!recipe) return null;
-  const totalTime = (recipe.prep_time || 0) + (recipe.cook_time || 0);
+  const totalTime = calcTotalTime(recipe);
 
-  const recipeImage = recipe.image_data || recipe.image_url;
+  const heroImage = pickImage(recipe);
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "Recipe",
     name: recipe.title,
     description: recipe.description || undefined,
-    image: recipeImage ? [recipeImage] : undefined,
+    image: [heroImage],
     recipeCuisine: recipe.cuisine_type || undefined,
     recipeCategory: recipe.difficulty || undefined,
     prepTime: recipe.prep_time ? `PT${recipe.prep_time}M` : undefined,
     cookTime: recipe.cook_time ? `PT${recipe.cook_time}M` : undefined,
     totalTime: totalTime ? `PT${totalTime}M` : undefined,
     recipeYield: recipe.servings ? `${recipe.servings} servings` : undefined,
-    recipeIngredient: recipe.ingredients?.map((i: any) => `${i.amount || ""} ${i.item}`.trim()),
-    recipeInstructions: recipe.instructions?.map((s: any) => ({ "@type": "HowToStep", text: s.instruction })),
+    recipeIngredient: recipe.ingredients.map((i) => `${i.amount} ${i.item}`.trim()),
+    recipeInstructions: recipe.instructions.map((step) => ({ "@type": "HowToStep", text: step.instruction })),
   };
 
   return (
@@ -96,7 +101,8 @@ export default function RecipeDetail() {
         description={(recipe.description || `Cook ${recipe.title} with step-by-step instructions, ingredients, and timings on FlavorAI.`).slice(0, 160)}
         path={`/recipe/${recipe.id}`}
         type="article"
-        image={recipeImage || undefined}
+        image={heroImage}
+        keywords={[recipe.title, recipe.cuisine_type, recipe.difficulty, "recipe", "how to cook"].filter(Boolean).join(", ")}
         jsonLd={jsonLd}
       />
       <Navbar />
@@ -105,13 +111,13 @@ export default function RecipeDetail() {
           <Button variant="ghost" onClick={() => navigate(-1)}><ArrowLeft className="w-4 h-4 mr-2" />{t("detail_back")}</Button>
         </div>
         <div className="grid lg:grid-cols-2 gap-8">
-          <div><img src={recipe.image_data || recipe.image_url || "/placeholder.svg"} alt={recipe.title} loading="lazy" className="w-full aspect-square object-cover rounded-lg shadow-card" /></div>
+          <div><img src={heroImage} alt={recipe.title} loading="lazy" className="w-full aspect-square object-cover rounded-lg shadow-card" /></div>
           <div className="space-y-6">
             <div><h1 className="text-4xl font-bold mb-3">{recipe.title}</h1>{recipe.description && <p className="text-lg text-muted-foreground">{recipe.description}</p>}</div>
             <div className="flex flex-wrap gap-2">
               {recipe.difficulty && <Badge variant="secondary" className="capitalize"><ChefHat className="w-3 h-3 mr-1" />{recipe.difficulty}</Badge>}
               {recipe.cuisine_type && <Badge variant="outline">{recipe.cuisine_type}</Badge>}
-              {recipe.dietary_preferences?.map((pref: string) => <Badge key={pref} variant="outline" className="capitalize">{pref}</Badge>)}
+              {recipe.dietary_preferences?.map((pref) => <Badge key={pref} variant="outline" className="capitalize">{pref}</Badge>)}
             </div>
             <div className="flex items-center gap-6 text-muted-foreground">
               {totalTime > 0 && <div className="flex items-center gap-2"><Clock className="w-5 h-5" /><span>{totalTime} {t("detail_min")}</span></div>}
@@ -128,13 +134,13 @@ export default function RecipeDetail() {
         <div className="grid lg:grid-cols-2 gap-8 mt-12">
           <Card className="shadow-card"><CardContent className="pt-6">
             <h2 className="text-2xl font-bold mb-4">{t("detail_ingredients")}</h2>
-            <ul className="space-y-3">{recipe.ingredients.map((ingredient: any, index: number) => (
+            <ul className="space-y-3">{recipe.ingredients.map((ingredient, index) => (
               <li key={index} className="flex items-start gap-3"><span className="w-2 h-2 bg-primary rounded-full mt-2 flex-shrink-0"></span><span><span className="font-medium">{ingredient.amount}</span> {ingredient.item}</span></li>
             ))}</ul>
           </CardContent></Card>
           <Card className="shadow-card"><CardContent className="pt-6">
             <h2 className="text-2xl font-bold mb-4">{t("detail_instructions")}</h2>
-            <ol className="space-y-4">{recipe.instructions.map((instruction: any) => (
+            <ol className="space-y-4">{recipe.instructions.map((instruction) => (
               <li key={instruction.step} className="flex gap-4"><span className="flex-shrink-0 w-8 h-8 bg-primary text-primary-foreground rounded-full flex items-center justify-center font-semibold">{instruction.step}</span><p className="pt-1">{instruction.instruction}</p></li>
             ))}</ol>
           </CardContent></Card>
