@@ -5,7 +5,7 @@ import { Footer } from "@/components/Footer";
 import { RecipeCard } from "@/components/RecipeCard";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
+import { searchRecipes as searchRecipesQuery } from "@/lib/recipes";
 import { Search as SearchIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useLanguage } from "@/i18n/LanguageContext";
