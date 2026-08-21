@@ -8,47 +8,47 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Base Colors - Bright editorial, warm cream + ink */
-    --background: 45 44% 96%;
-    --foreground: 30 10% 10%;
+    /* Base Colors - Clean white + soft gray, warm orange accent */
+    --background: 0 0% 97%;
+    --foreground: 0 0% 8%;
 
     --card: 0 0% 100%;
-    --card-foreground: 30 10% 10%;
+    --card-foreground: 0 0% 8%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 30 10% 10%;
+    --popover-foreground: 0 0% 8%;
 
-    /* Primary - Golden yolk yellow with ink text */
-    --primary: 43 96% 62%;
-    --primary-foreground: 30 12% 10%;
-    --primary-hover: 40 94% 55%;
+    /* Primary - Warm orange accent */
+    --primary: 34 92% 55%;
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 30 90% 49%;
 
-    /* Secondary - Soft cream chip */
-    --secondary: 42 40% 92%;
-    --secondary-foreground: 30 10% 12%;
+    /* Secondary - Light gray chip */
+    --secondary: 0 0% 95%;
+    --secondary-foreground: 0 0% 12%;
 
-    /* Muted - Warm paper */
-    --muted: 42 32% 94%;
-    --muted-foreground: 30 8% 42%;
+    /* Muted - Neutral gray surfaces */
+    --muted: 0 0% 96%;
+    --muted-foreground: 0 0% 45%;
 
-    /* Accent - Fresh herb green */
-    --accent: 140 32% 88%;
-    --accent-foreground: 150 40% 18%;
+    /* Accent - Subtle warm tint */
+    --accent: 34 60% 96%;
+    --accent-foreground: 26 60% 28%;
 
     --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 40 20% 89%;
-    --input: 40 20% 89%;
-    --ring: 43 96% 55%;
+    --border: 0 0% 91%;
+    --input: 0 0% 91%;
+    --ring: 34 92% 55%;
 
-    --radius: 1.25rem;
+    --radius: 1rem;
 
     /* Custom Design Tokens */
-    --gradient-hero: linear-gradient(135deg, hsl(43 96% 62%), hsl(36 92% 58%));
-    --gradient-warm: linear-gradient(160deg, hsl(140 45% 88%) 0%, hsl(48 60% 94%) 45%, hsl(38 55% 92%) 100%);
-    --shadow-soft: 0 10px 30px -12px hsl(35 40% 25% / 0.18);
-    --shadow-card: 0 18px 40px -24px hsl(30 30% 15% / 0.25);
+    --gradient-hero: linear-gradient(135deg, hsl(34 92% 55%), hsl(28 90% 52%));
+    --gradient-warm: linear-gradient(180deg, hsl(0 0% 98%) 0%, hsl(0 0% 96%) 100%);
+    --shadow-soft: 0 2px 12px -4px hsl(0 0% 0% / 0.08);
+    --shadow-card: 0 12px 32px -18px hsl(0 0% 0% / 0.18);
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     --sidebar-background: 0 0% 98%;
@@ -67,6 +67,7 @@ All colors MUST be HSL.
 
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
 
   .dark {
     --background: 25 35% 8%;
