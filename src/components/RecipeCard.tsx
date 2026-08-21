@@ -68,20 +68,20 @@ export const RecipeCard = memo(function RecipeCard({
   return (
     // The favourite button lives outside the <Link> — a <button> nested inside
     // an <a> is invalid HTML and breaks keyboard/screen-reader navigation.
-    <Card className="group relative overflow-hidden hover:shadow-card transition-all duration-300 h-full">
+    <Card className="group relative h-full overflow-hidden rounded-[2rem] border-0 bg-card p-2 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-card">
       <Button
         variant="ghost"
         size="icon"
         aria-label={localIsFavorite ? `Remove ${title} from favorites` : `Save ${title} to favorites`}
         aria-pressed={localIsFavorite}
-        className="absolute top-2 right-2 z-10 bg-background/80 backdrop-blur-sm hover:bg-background"
+        className="absolute right-4 top-4 z-10 rounded-full bg-card/85 shadow-soft backdrop-blur-sm hover:bg-card"
         onClick={handleFavoriteToggle}
         disabled={isTogglingFavorite}
       >
         <Heart className={`w-5 h-5 ${localIsFavorite ? "fill-primary text-primary" : "text-foreground"}`} aria-hidden="true" />
       </Button>
       <Link to={`/recipe/${id}`} className="block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-lg">
-        <div className="relative aspect-video overflow-hidden">
+        <div className="arch-top relative aspect-[4/3] overflow-hidden">
           <img
             src={displayImage}
             alt={title}
@@ -91,17 +91,17 @@ export const RecipeCard = memo(function RecipeCard({
           />
         </div>
         <CardHeader>
-          <h3 className="font-semibold text-lg line-clamp-2 group-hover:text-primary transition-colors">{title}</h3>
+          <h3 className="font-display text-lg font-bold line-clamp-2 group-hover:text-primary transition-colors">{title}</h3>
           {description && <p className="text-sm text-muted-foreground line-clamp-2 mt-2">{description}</p>}
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-2 mb-3">
             {difficulty && (
-              <Badge variant="secondary" className="capitalize">
+              <Badge variant="secondary" className="rounded-full capitalize">
                 <ChefHat className="w-3 h-3 mr-1" aria-hidden="true" />{difficulty}
               </Badge>
             )}
-            {cuisine_type && <Badge variant="outline">{cuisine_type}</Badge>}
+            {cuisine_type && <Badge variant="outline" className="rounded-full">{cuisine_type}</Badge>}
           </div>
           <div className="flex items-center gap-4 text-sm text-muted-foreground">
             {totalTime > 0 && (

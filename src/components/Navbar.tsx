@@ -38,13 +38,11 @@ export const Navbar = () => {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="container mx-auto flex h-16 items-center justify-between px-4">
+    <nav className="sticky top-0 z-50 w-full px-3 pt-3 sm:px-6 sm:pt-5">
+      <div className="container mx-auto flex h-16 items-center justify-between rounded-full bg-card/90 px-4 shadow-soft backdrop-blur-md sm:px-6">
         <Link to="/" className="flex items-center gap-2 font-bold text-xl">
           <ChefHat className="w-8 h-8 text-primary" />
-          <span className="bg-gradient-to-r from-primary to-primary-hover bg-clip-text text-transparent">
-            FlavorAI
-          </span>
+          <span className="font-display text-foreground tracking-tight">FlavorAI</span>
         </Link>
 
         <div className="hidden md:flex items-center gap-6">
@@ -55,8 +53,8 @@ export const Navbar = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`flex items-center gap-2 text-sm font-medium transition-colors hover:text-primary ${
-                  isActive ? "text-primary" : "text-muted-foreground"
+                className={`flex items-center gap-2 rounded-full px-3 py-2 text-sm font-medium transition-colors hover:bg-secondary ${
+                  isActive ? "bg-secondary text-foreground" : "text-muted-foreground"
                 }`}
               >
                 <Icon className="w-4 h-4" />
@@ -84,7 +82,7 @@ export const Navbar = () => {
               </Link>
             </Button>
           ) : (
-            <Button variant="default" size="sm" asChild className="hidden md:flex">
+            <Button variant="hero" size="sm" asChild className="hidden md:flex">
               <Link to="/auth">{t("nav_sign_in")}</Link>
             </Button>
           )}
