@@ -8,47 +8,47 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Base Colors - Warm, Food-Inspired Palette */
-    --background: 30 40% 98%;
-    --foreground: 25 30% 15%;
+    /* Base Colors - Bright editorial, warm cream + ink */
+    --background: 45 44% 96%;
+    --foreground: 30 10% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 25 30% 15%;
+    --card-foreground: 30 10% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 25 30% 15%;
+    --popover-foreground: 30 10% 10%;
 
-    /* Primary - Terracotta/Warm Orange */
-    --primary: 18 80% 55%;
-    --primary-foreground: 0 0% 100%;
-    --primary-hover: 18 85% 48%;
+    /* Primary - Golden yolk yellow with ink text */
+    --primary: 43 96% 62%;
+    --primary-foreground: 30 12% 10%;
+    --primary-hover: 40 94% 55%;
 
-    /* Secondary - Fresh Sage Green */
-    --secondary: 140 30% 55%;
-    --secondary-foreground: 0 0% 100%;
+    /* Secondary - Soft cream chip */
+    --secondary: 42 40% 92%;
+    --secondary-foreground: 30 10% 12%;
 
-    /* Muted - Soft Cream */
-    --muted: 30 30% 92%;
-    --muted-foreground: 25 20% 45%;
+    /* Muted - Warm paper */
+    --muted: 42 32% 94%;
+    --muted-foreground: 30 8% 42%;
 
-    /* Accent - Rich Espresso */
-    --accent: 25 40% 35%;
-    --accent-foreground: 0 0% 100%;
+    /* Accent - Fresh herb green */
+    --accent: 140 32% 88%;
+    --accent-foreground: 150 40% 18%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 30 20% 88%;
-    --input: 30 20% 88%;
-    --ring: 18 80% 55%;
+    --border: 40 20% 89%;
+    --input: 40 20% 89%;
+    --ring: 43 96% 55%;
 
-    --radius: 0.75rem;
+    --radius: 1.25rem;
 
     /* Custom Design Tokens */
-    --gradient-hero: linear-gradient(135deg, hsl(18 80% 55%), hsl(25 75% 45%));
-    --gradient-warm: linear-gradient(180deg, hsl(30 40% 98%), hsl(30 30% 94%));
-    --shadow-soft: 0 4px 20px -4px hsl(18 60% 50% / 0.15);
-    --shadow-card: 0 2px 12px -2px hsl(25 30% 15% / 0.08);
+    --gradient-hero: linear-gradient(135deg, hsl(43 96% 62%), hsl(36 92% 58%));
+    --gradient-warm: linear-gradient(160deg, hsl(140 45% 88%) 0%, hsl(48 60% 94%) 45%, hsl(38 55% 92%) 100%);
+    --shadow-soft: 0 10px 30px -12px hsl(35 40% 25% / 0.18);
+    --shadow-card: 0 18px 40px -24px hsl(30 30% 15% / 0.25);
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     --sidebar-background: 0 0% 98%;
@@ -78,9 +78,9 @@ All colors MUST be HSL.
     --popover: 25 30% 12%;
     --popover-foreground: 30 20% 95%;
 
-    --primary: 18 80% 55%;
-    --primary-foreground: 0 0% 100%;
-    --primary-hover: 18 85% 60%;
+    --primary: 43 96% 62%;
+    --primary-foreground: 30 12% 10%;
+    --primary-hover: 40 94% 55%;
 
     --secondary: 140 25% 45%;
     --secondary-foreground: 0 0% 100%;
@@ -98,8 +98,8 @@ All colors MUST be HSL.
     --input: 25 25% 22%;
     --ring: 18 80% 55%;
 
-    --gradient-hero: linear-gradient(135deg, hsl(18 75% 50%), hsl(25 70% 40%));
-    --gradient-warm: linear-gradient(180deg, hsl(25 35% 8%), hsl(25 30% 12%));
+    --gradient-hero: linear-gradient(135deg, hsl(43 90% 58%), hsl(36 88% 50%));
+    --gradient-warm: linear-gradient(160deg, hsl(150 20% 10%), hsl(30 20% 9%));
     --shadow-soft: 0 4px 20px -4px hsl(18 60% 40% / 0.25);
     --shadow-card: 0 2px 12px -2px hsl(0 0% 0% / 0.3);
     --sidebar-background: 240 5.9% 10%;
@@ -120,5 +120,22 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "cv02", "cv03", "cv04";
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-display tracking-tight;
+  }
+}
+
+@layer components {
+  /* Rounded white canvas that floats on the gradient page background */
+  .canvas-surface {
+    @apply bg-card rounded-[2.5rem] shadow-card;
+  }
+
+  /* Arch-topped media frame used across hero collage + cards */
+  .arch-top {
+    border-radius: 9999px 9999px 1.5rem 1.5rem;
   }
 }
