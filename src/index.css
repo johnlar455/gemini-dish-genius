@@ -131,13 +131,14 @@ All colors MUST be HSL.
 }
 
 @layer components {
-  /* Rounded white canvas that floats on the gradient page background */
+  /* Rounded white canvas that floats on the soft gray page background */
   .canvas-surface {
-    @apply bg-card rounded-[2.5rem] shadow-card;
+    @apply bg-card rounded-3xl shadow-soft;
   }
 
-  /* Arch-topped media frame used across hero collage + cards */
+  /* Soft rounded media frame used across hero collage + cards */
   .arch-top {
-    border-radius: 9999px 9999px 1.5rem 1.5rem;
+    @apply rounded-2xl;
   }
 }
+
