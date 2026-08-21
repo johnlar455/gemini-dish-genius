@@ -17,6 +17,7 @@ import { SEO } from "@/components/SEO";
 import { normalizeIngredients, normalizeInstructions } from "@/lib/recipeUtils";
 import { findCategoryIdByName } from "@/lib/recipes";
 import type { Ingredient, Instruction } from "@/types/recipe";
+import type { Json } from "@/integrations/supabase/types";
 
 const cuisineOptions = ["Italian", "Chinese", "Mexican", "Indian", "Japanese", "Thai", "Mediterranean", "French"];
 const difficultyOptions = [{ value: "easy", label: "Easy" }, { value: "medium", label: "Medium" }, { value: "hard", label: "Hard" }];
@@ -73,7 +74,11 @@ export default function EditRecipe() {
       const { error } = await supabase.from("recipes").update({
         title, description, cuisine_type: cuisineType || null, difficulty: difficulty || null,
         prep_time: prepTime ? parseInt(prepTime) : null, cook_time: cookTime ? parseInt(cookTime) : null,
-        servings: servings ? parseInt(servings) : null, ingredients, instructions, dietary_preferences: dietaryPreferences, category_id: categoryId,
+        servings: servings ? parseInt(servings) : null,
+        // JSON columns: cast the typed arrays to plain JSON for the generated types
+        ingredients: ingredients as unknown as Json,
+        instructions: instructions as unknown as Json,
+        dietary_preferences: dietaryPreferences, category_id: categoryId,
       }).eq("id", id).select("id");
       if (error) throw error;
       toast.success("Recipe updated!"); navigate(`/recipe/${id}`);
