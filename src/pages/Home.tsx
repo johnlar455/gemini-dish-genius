@@ -50,10 +50,11 @@ export default function Home() {
             <div>
               <h1 className="font-display text-5xl font-extrabold leading-[1.05] tracking-tight md:text-6xl">
                 {t("home_hero_title")}
-                <span className="mt-2 block">
-                  <span className="rounded-full bg-primary px-4 py-1 text-primary-foreground">{t("home_hero_title_accent")}</span>
+                <span className="mt-2 block text-primary">
+                  {t("home_hero_title_accent")}
                 </span>
               </h1>
+
               <p className="mt-6 max-w-md text-lg text-muted-foreground">{t("home_hero_desc")}</p>
 
               <div className="mt-8 flex max-w-lg gap-3">
