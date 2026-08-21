@@ -7,15 +7,13 @@ export const Footer = () => {
   const { t } = useLanguage();
 
   return (
-    <footer className="border-t border-border bg-background/80 backdrop-blur-sm mt-auto">
+    <footer className="mt-auto bg-transparent">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <Link to="/" className="flex items-center gap-2 font-bold text-xl">
               <ChefHat className="w-6 h-6 text-primary" />
-              <span className="bg-gradient-to-r from-primary to-primary-hover bg-clip-text text-transparent">
-                FlavorAI
-              </span>
+              <span className="font-display tracking-tight text-foreground">FlavorAI</span>
             </Link>
             <p className="text-sm text-muted-foreground">{t("footer_desc")}</p>
           </div>
